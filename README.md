@@ -1,17 +1,14 @@
 # ForestFireANN
 
-Forest Fire Prediction Project
+## Forest Fire Prediction Project
 
-Developers:
+****Developers:****
+- Luke Meyer
+- Savoy Schuler
+- Steven Huerta
 
-  *Luke Meyer
-  *Savoy Schuler
-  *Steven Huerta
+****Initial Workload factoring:****
+- Generating a general Back Prop Neural Net
+- Creating functionality to read in parameter file and store parameters
+- Creating functionality to read in csv file (Will need to read in file based on relevant parameters).
 
-
-Workload factoring:
-
-  1.Generating a general Back Prop Neural Net
-  2.Creating functionality to read in parameter file and store parameters
-  3.Creating functionality to read in csv file (Will need to read in file based on relevant parameters).
-  4.Other Ideas?
