@@ -1,39 +1,10 @@
-#include <vector>
-#include <time.h> // RAND
+#include "perceptron.h"
 
-
-class Perceptron{
-public:
-    // CONSTRUCTOR
-    Perceptron(int num_inputs);
-
-    // Feed the perceptron some inputs and get some output
-    float get_output(vector<float> inputs);
-
-    float adjust_weights(); // Need to do some thought on this
-
-private:
-    void activation(); // Activation function, using sigmoid function
-    void sum_weights(); // Calculate the output
-
-    vector<float> weights;	
-    
-    float sum ; // sum after application of weights
-    float output ; // result of sigmoid of sum
-
-    // USED LATER WITH ADJUSTING WEIGHTS
-    float sig_prime ; // the derivative of sigmoid applied to sum
-    float delta; 
-
-    int num_inputs;
-
-    alpha = .04 ;
-};
-
-
-Perceptron::Perceptron(int num_inputs)
+Perceptron::Perceptron(int num_inputs, double learning_rate)
 {
     num_inputs = num_inputs ;
+
+    alpha = learning_rate ;
 
     int rand_init_val ;
 
@@ -46,8 +17,10 @@ Perceptron::Perceptron(int num_inputs)
 
 }
 
-float Perceptron::get_output(vector<float> inputs)
+
+ double Perceptron::get_output(vector <double> inputs)
 {
+    inputs = inputs ;
     // Sum up all the weights
     sum_weights( inputs );
 
@@ -57,7 +30,8 @@ float Perceptron::get_output(vector<float> inputs)
     return output ;
 }
 
-void Perceptron::sum_weights(vector<float> inputs)
+
+void Perceptron::sum_weights(vector <double> inputs)
 {
     for(int i = 0; i < num_inputs; i++)
         sum += inputs[i] * weights[i] ;
@@ -72,4 +46,46 @@ void Perceptron::activation()
     // While we're here, let's calculate the sigmoid derivative for the 
     // purpose of backprop
     sig_prime = output * (1 - output);
+}
+
+// BACKPROP
+
+// Let's start by calculating the error
+
+// For our hidden layer weights
+void Perceptron::set_error(int position, vector<Perceptron> next_layer)
+{
+    double error = 0 ;
+
+    for(int i = 0; i < next_layer.size(); i++ )
+    {
+        error += next_layer[i].get_error(position)
+    }
+
+    error = error * sig_prime;
+
+}
+
+// Four our output layer weights
+void Perceptron::set_error(double correct_output)
+{
+    error = sig_prime * (correct_output - output) ;
+}
+
+
+// So we can reach back for those hidden layers
+double Perceptron::get_error(int perceptron_pos)
+{
+    return error * weights[perceptron_pos] ;
+}
+
+
+// Let's adjust weights for all layers
+void Perceptron::adjust_weights()
+{
+    for(int i = 0 ; i < weights.size(); i++)
+    {
+        weights[i] = weights[i] + alpha * error * inputs[i];
+    }
+
 }
