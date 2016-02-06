@@ -16,6 +16,20 @@ struct Params {   // Declare Param struct type
 
 	string trainFile; //date file for training and testing 
  
+	//Input of feature vector information
+	int yearsBurnedAcreage;	//num of years burned acreage
+	int	monthsPDSIData;	//NO less than # input layer nodes
+	int endMonth;	//end month of current year (numerically)
+
+	//Output class information
+	int numClasses; //NO LESS than of input layer nodes
+	
+	//Do we need class names and positions (zero based)?
+
+	//fire severity cutoffs (burned acres)
+	int	lowCutoff;
+	int highCutoff;
+
 
 } ANN;   // Define object of type Params
 

@@ -12,7 +12,7 @@ struct Params {   // Declare Param struct type
 	float momentum;
 	float errorThreshold   //training cutoff - testing acceptance
 	int numLayers;//layers of adjustable weights, one less than layers of nodes
-	vecotr<int> nodesPerLayer; // how many nodes in each layer
+	vector<int> nodesPerLayer; // how many nodes in each layer
 
 	string trainFile; //date file for training and testing 
  
@@ -33,7 +33,14 @@ struct Params {   // Declare Param struct type
 
 } ANN;   // Define object of type Params
 
+array<
 
+void getParams(string file)
+	{
+	fscanf(file, "%s %i %f %f %f %i", weightsFile, numEpochs, learningRate, momentum, errorThreshold);
+
+
+	}
 
 
 
