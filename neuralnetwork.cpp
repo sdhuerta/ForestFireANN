@@ -1,3 +1,6 @@
+#include "neuralnetwork.h"
+#include "perceptron.h"
+
 class neuralnetwork
 {
 public:
@@ -63,3 +66,50 @@ neuralnetwork::training(vector<float> inputs)
 
 
 }
+
+
+
+
+vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net )
+{
+    vector<vector<float>> weights;
+
+    vector<float> = curr_weights;
+         
+    
+    for( int i = 0; i < net.size(); i++ ) // for each layer in the net
+    {
+        for( int j = 0; j < net[i].size(); j++ )  // for each perceptron in current layer
+        {
+            net[i][j].get_weights( curr_weights );
+
+            weights[i].push_back( curr_weights );
+        }   
+    }
+
+    return weights;
+} 
+
+
+
+void neuralnetwork::set_weights( vector<vector<Perceptron>> net, vector<vector<float> weights )
+{
+    for( int = 0; i < net.size(); i++ )  // for each layer in the ANN
+    {
+        for( int j = 0; j < net[i].size(); j++)  // for each perceptron in each layer
+        {
+          // net[i][j].set_weights(
+
+        }
+        
+
+    }
+
+
+}
+
+
+
+
+
+
