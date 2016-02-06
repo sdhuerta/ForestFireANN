@@ -1,6 +1,6 @@
 #include "perceptron.h"
 
-Perceptron::Perceptron(int num_inputs, double learning_rate)
+Perceptron::Perceptron(int num_inputs, float learning_rate)
 {
     num_inputs = num_inputs ;
 
@@ -18,7 +18,7 @@ Perceptron::Perceptron(int num_inputs, double learning_rate)
 }
 
 
- double Perceptron::get_output(vector <double> inputs)
+ float Perceptron::get_output(vector <float> inputs)
 {
     inputs = inputs ;
     // Sum up all the weights
@@ -31,7 +31,7 @@ Perceptron::Perceptron(int num_inputs, double learning_rate)
 }
 
 
-void Perceptron::sum_weights(vector <double> inputs)
+void Perceptron::sum_weights(vector <float> inputs)
 {
     for(int i = 0; i < num_inputs; i++)
         sum += inputs[i] * weights[i] ;
@@ -55,7 +55,7 @@ void Perceptron::activation()
 // For our hidden layer weights
 void Perceptron::set_error(int position, vector<Perceptron> next_layer)
 {
-    double error = 0 ;
+    float error = 0 ;
 
     for(int i = 0; i < next_layer.size(); i++ )
     {
@@ -67,14 +67,14 @@ void Perceptron::set_error(int position, vector<Perceptron> next_layer)
 }
 
 // Four our output layer weights
-void Perceptron::set_error(double correct_output)
+void Perceptron::set_error(float correct_output)
 {
     error = sig_prime * (correct_output - output) ;
 }
 
 
 // So we can reach back for those hidden layers
-double Perceptron::get_error(int perceptron_pos)
+float Perceptron::get_error(int perceptron_pos)
 {
     return error * weights[perceptron_pos] ;
 }
@@ -89,3 +89,23 @@ void Perceptron::adjust_weights()
     }
 
 }
+
+
+void Perceptron::set_weights(vector<float> new_weights)
+{
+    for(int i = 0; i < new_weights.size(); i++)
+        weights[i] = new_weights[i] ;
+}
+
+void Perceptron::get_weights()
+{
+    return weights ;
+}
+
+ // Writing weights to file
+
+
+// Setting weights to file
+
+
+// 
