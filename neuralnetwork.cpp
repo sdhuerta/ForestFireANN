@@ -1,6 +1,9 @@
 #include "neuralnetwork.h"
 #include "perceptron.h"
 
+
+using namespace std;
+
 class neuralnetwork
 {
 public:
@@ -69,7 +72,8 @@ neuralnetwork::training(vector<float> inputs)
 
 
 
-
+/* untested code below:
+ *
 vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net )
 {
     vector<vector<float>> weights;
@@ -108,6 +112,7 @@ void neuralnetwork::set_weights( vector<vector<Perceptron>> net, vector<vector<f
 
 }
 
+*/
 
 
 
