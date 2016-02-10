@@ -4,6 +4,11 @@
 #include <fstream>
 using namespace std;
 
+struct Params;
+//typedef Params* Params;
+
+
+
 struct Params {   // Declare Param struct type
  
 	//ANN Parameters
@@ -30,9 +35,10 @@ struct Params {   // Declare Param struct type
 	//fire severity cutoffs (burned acres)
 	int lowCutoff;
 	int highCutoff;
-}
+};
 
-Params ANN;   // Define object of type Params
+Params ANN;
+ // Define object of type Params
 
 
 //void getParams(string file)
@@ -40,7 +46,7 @@ Params ANN;   // Define object of type Params
 //	fscanf(file, "%s %i %f %f %f %i", weightsFile, numEpochs, learningRate, momentum, 
 //	}
 
-int getParams()
+int main()
 {
     ifstream inputFile("nw.prm");
     ofstream outputFile("temp.txt");
@@ -52,7 +58,7 @@ int getParams()
         else
             outputFile << line << "\n";
     }
-    ifstream inputFile("temp.txt");
+    ifstream inputFile2("temp.txt");
     //variables    
   //  string weightsFile, trainFile;  
  //   int numEpochs, numLayers, yearsBurnedAcreage, monthsPDSIData;	
@@ -60,7 +66,7 @@ int getParams()
 //	float learningRate, momentum, errorThreshold;  
 //	vector<int> nodesPerLayer; 
 
-    while (getline(inputFile,line))
+    while (getline(inputFile2,line))
     {
         istringstream ss(line);
         ss >> 
@@ -86,7 +92,7 @@ int getParams()
 
 
 /*
-int main() {
+int mai() {
 
 	//Create a dynamic array to hold the values
 	vector<int> numbers;
