@@ -4,6 +4,7 @@
 
 using namespace std;
 
+/*  
 class neuralnetwork
 {
 public:
@@ -15,7 +16,7 @@ private:
 vector<int> layers;
 vector<vector<Perceptron>> net ;
 float learning;
-float momentum;
+float momentum;                    This header info is now in neuralnetwork.h
 float threshold;
 
 // For training and testing
@@ -23,6 +24,7 @@ vector<float> input ;
 vector<float> output ;
 
 };
+*/  
 
 
 neuralnetwork::neuralnetwork(Param net_define)
@@ -85,7 +87,7 @@ vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net
     {
         for( int j = 0; j < net[i].size(); j++ )  // for each perceptron in current layer
         {
-            net[i][j].get_weights( curr_weights );
+            net[i][j].get_weights( curr_weights );  // get them weights
 
             weights[i].push_back( curr_weights );
         }   
@@ -96,13 +98,13 @@ vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net
 
 
 
-void neuralnetwork::set_weights( vector<vector<Perceptron>> net, vector<vector<float> weights )
+void neuralnetwork::set_weights( vector<vector<Perceptron>> net, vector<vector<vector<float>>> weights )
 {
     for( int = 0; i < net.size(); i++ )  // for each layer in the ANN
     {
-        for( int j = 0; j < net[i].size(); j++)  // for each perceptron in each layer
+        for( int j = 0; j < net[i].size(); j++)  // for each perceptron in current layer
         {
-          // net[i][j].set_weights(
+           net[i][j].set_weights( weights[i][j]);  // set them weights
 
         }
         
