@@ -4,7 +4,7 @@
 
 class neuralnetwork{
 
-
+/*
 public:
 	neuralnetwork(Param net_define);
 
@@ -24,6 +24,7 @@ void set_weights( vector<vector<Perceptron>> net, vector<vector<vector<float>>> 
 // For training and testing
 vector<float> input ;
 vector<float> output ;
+*/
 
 
 

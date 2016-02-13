@@ -4,7 +4,7 @@
 
 using namespace std;
 
-/*  
+ 
 class neuralnetwork
 {
 public:
@@ -24,7 +24,7 @@ vector<float> input ;
 vector<float> output ;
 
 };
-*/  
+  
 
 
 neuralnetwork::neuralnetwork(Param net_define)
