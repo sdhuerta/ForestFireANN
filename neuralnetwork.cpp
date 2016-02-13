@@ -78,7 +78,7 @@ neuralnetwork::training(vector<float> inputs)
  *
 vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net )
 {
-    vector<vector<float>> weights;
+    vector<vector<vector<float>>> weights;
 
     vector<float> = curr_weights;
          
@@ -89,7 +89,7 @@ vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net
         {
             net[i][j].get_weights( curr_weights );  // get them weights
 
-            weights[i].push_back( curr_weights );
+            weights[i][j].push_back( curr_weights );
         }   
     }
 
