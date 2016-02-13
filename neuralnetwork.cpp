@@ -101,12 +101,41 @@ neuralnetwork::feed_foward()
 
 neuralnetwork::calculate_delta()
 {
+    
+
 
 }
 
 
-neuralnetwork::adjust_weights()
+public void neuralnetwork::adjust_weights()
 {
+
+    for( int i = layers.size() -1 ; i > 0; i-- )
+    {  
+        if( i == layers.size() - 1 )  // if we are processing the output layer
+        {
+            for( int j = 0; j < net[i].size(); j++ )
+            { 
+                setDelta( net[i][j].output)
+
+                net[i][j].adjust_weights();
+            }
+
+        }
+        else   // processing a hidden layer 
+        {
+
+            for( int j = 0; j < net[i].size(); j++)
+            {
+                setDelta( j, net[i+1] );
+
+                net[i][j].adjust_weights();
+
+            }
+        }
+
+    }
+
 
 }
 
@@ -114,7 +143,7 @@ neuralnetwork::adjust_weights()
 
 /* untested code below:
  *
-vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net )
+vector<vector<vector<float>>> neuralnetwork::get_weights()//vector<vector<Perceptron>> net )
 {
     vector<vector<vector<float>>> weights;
 
@@ -136,7 +165,7 @@ vector<vector<float>> neuralnetwork::get_weights( vector<vector<Perceptron>> net
 
 
 
-void neuralnetwork::set_weights( vector<vector<Perceptron>> net, vector<vector<vector<float>>> weights )
+void neuralnetwork::set_weights( vector<vector<vector<float>>> weights) //vector<vector<Perceptron>> net, vector<vector<vector<float>>> weights )
 {
     for( int = 0; i < net.size(); i++ )  // for each layer in the ANN
     {
