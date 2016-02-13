@@ -41,22 +41,18 @@ Params ANN;
  // Define object of type Params
 
 
-//void getParams(string file)
-//	{
-//	fscanf(file, "%s %i %f %f %f %i", weightsFile, numEpochs, learningRate, momentum, 
-//	}
 
-int main()
+
+int main(char* argv[1])
 {
-    ifstream inputFile("nw.prm");
+    ifstream inputFile( argv[1]);
     ofstream outputFile("temp.txt");
-    string line;
-	string cmp ="#";
+    string line, pnd ="#",emp = "";
+	vector<string> tempVals;
     while(getline(inputFile,line))
     {
-        if( line[0]==cmp[0]) 
+        if( line[0]==pnd[0]||line[0]==emp[0]) 
 		{
-			//getline(inputFile,line)
 		}
         else
             outputFile << line << "\n";
@@ -71,24 +67,52 @@ int main()
 
     while (getline(inputFile2,line))
     {	
-		cout<<line;
-        istringstream ss(line);
-        ss >> 
-	    ANN.weightsFile>>
-	    ANN.numEpochs>>
-	    ANN.learningRate>>      
-        ANN.momentum>>
-        ANN.errorThreshold>>
-    	ANN.numLayers>>
-    	ANN.nodesPerLayer>> 
-    	ANN.trainFile>>
-    	ANN.yearsBurnedAcreage>>
-    	ANN.monthsPDSIData>>
-    	ANN.endMonth>>
-    	ANN.numClasses>>
-    	ANN.lowCutoff>>
-    	ANN.highCutoff;
-    }
+		tempVals.push_back(line);
+	}
+ 
+	stringstream ss; 
+
+    ANN.weightsFile=tempVals[0];
+	
+	ss<<tempVals[1];
+    ss>>ANN.numEpochs;
+	
+	ss<<tempVals[2];
+    ss>>ANN.learningRate;      
+    
+	ss<<tempVals[3];
+    ss>>ANN.momentum;
+
+	ss<<tempVals[4];
+    ss>>ANN.errorThreshold;
+
+	ss<<tempVals[5];
+    ss>>ANN.numLayers;
+
+   	ss<<tempVals[6];
+    ss>>ANN.nodesPerLayer;
+
+   	ss<<tempVals[7];
+    ss>>ANN.trainFile;
+
+   	ss<<tempVals[8];
+    ss>>ANN.yearsBurnedAcreage;
+
+   	ss<<tempVals[9];
+    ss>>ANN.monthsPDSIData;
+
+   	ss<<tempVals[10];
+    ss>>ANN.endMonth;
+
+   	ss<<tempVals[11];
+    ss>>ANN.numClasses;
+
+   	ss<<tempVals[12];
+    ss>>ANN.lowCutoff;
+
+   	ss<<tempVals[13];
+    ss>>ANN.highCutoff;
+   
 
 	cout<<ANN.weightsFile;
 	cout<<ANN.numEpochs;
@@ -96,7 +120,14 @@ int main()
 	cout<<ANN.momentum;
 	cout<<ANN.errorThreshold;
 	cout<<ANN.numLayers;
-
+	cout<<ANN.nodesPerLayer;
+   	cout<<ANN.trainFile;
+   	cout<<ANN.yearsBurnedAcreage;
+   	cout<<ANN.monthsPDSIData;
+   	cout<<ANN.endMonth;
+   	cout<<ANN.numClasses;
+   	cout<<ANN.lowCutoff;
+   	cout<<ANN.highCutoff;
 
  //   ANN (weightsFile, numEpochs, learningRate, momentum, errorThreshold, numLayers, nodesPerLayer, trainFile, yearsBurnedAcreage, monthsPDSIData, endMonth, numClasses, lowCutoff, highCutoff);
     return 0;
