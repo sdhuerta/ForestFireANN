@@ -52,9 +52,12 @@ int main()
     ofstream outputFile("temp.txt");
     string line;
 	string cmp ="#";
-    while(inputFile >> line)
+    while(getline(inputFile,line))
     {
-        if( line[0]==cmp[0]) {}
+        if( line[0]==cmp[0]) 
+		{
+			//getline(inputFile,line)
+		}
         else
             outputFile << line << "\n";
     }
@@ -67,7 +70,8 @@ int main()
 //	vector<int> nodesPerLayer; 
 
     while (getline(inputFile2,line))
-    {
+    {	
+		cout<<line;
         istringstream ss(line);
         ss >> 
 	    ANN.weightsFile>>
@@ -85,6 +89,14 @@ int main()
     	ANN.lowCutoff>>
     	ANN.highCutoff;
     }
+
+	cout<<ANN.weightsFile;
+	cout<<ANN.numEpochs;
+	cout<<ANN.learningRate;
+	cout<<ANN.momentum;
+	cout<<ANN.errorThreshold;
+	cout<<ANN.numLayers;
+
 
  //   ANN (weightsFile, numEpochs, learningRate, momentum, errorThreshold, numLayers, nodesPerLayer, trainFile, yearsBurnedAcreage, monthsPDSIData, endMonth, numClasses, lowCutoff, highCutoff);
     return 0;
