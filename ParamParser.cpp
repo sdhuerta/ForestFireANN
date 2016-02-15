@@ -50,14 +50,14 @@ int main(int argc, char* argv[1])
 	vector<string> tempVals;
     while(getline(inputFile,line))
     {
-     //   if( line[0]==pnd[0]||line[0]==emp[0]) 
-		//{
-		//}
-        //else
-		//{
-			 outputFile<<"dog"<<"\n";   
-			//outputFile << line << "\n";
-		//}
+       if( line[0]==pnd[0]||line[0]==emp[0]) 
+		{
+		}
+        else
+		{
+	  
+			outputFile << line << "\n";
+		}
 	}
     ifstream inputFile2("temp.txt");
 
@@ -65,18 +65,20 @@ int main(int argc, char* argv[1])
     {	
 		tempVals.push_back(line);
 	}
- /*
-	stringstream ss; 
-
-	string token, mystring(tempVals[1]);
-	while(token != mystring)
-	{
-		token = mystring.substr(0,mystring.find_first_of(" "));
-		mystring = mystring.substr(mystring.find_first_of(" ") + 1);
-		printf("%s ",token.c_str());	
-	}
+ 
+ 	cout<<tempVals[1];
+//	stringstream ss; 
 
 
+	//mystring=tempVals[1];
+	//while(token != mystring)
+	//{
+	//	token = mystring.substr(0,mystring.find_first_of(" "));
+	//	mystring = mystring.substr(mystring.find_first_of(" ") + 1);
+	//	cout<<("%s ",token.c_str());	
+	//}
+
+/*
     ANN.weightsFile=tempVals[0];
 	
 	ss<<tempVals[1];
