@@ -9,101 +9,115 @@ using namespace std;
 struct Params;
 //typedef Params* Params;
 
-struct Params {   // Declare Param struct type
+	// Declare Param struct type
+struct Params {   
  
-	//ANN Parameters
-	string weightsFile;   //name of ANN weights file
-	int numEpochs;	//Number of training epochs
+	//ANN PARAMETERS
+	//name of ANN weights file
+	string weightsFile;   
+	//Number of training epochs
+	int numEpochs;	
 	float learningRate;      
 	float momentum;
-	float errorThreshold;   //training cutoff - testing acceptance
-	int numLayers;//layers of adjustable weights, one less than layers of nodes
-	vector<int> nodesPerLayer; // how many nodes in each layer
+	//Number of training epochs
+	float errorThreshold;  
+	//layers of adjustable weights (one less than layers of nodes)
+	int numLayers;
+	// how many nodes in each layer
+	vector<int> nodesPerLayer; 
 
-	string trainFile; //date file for training and testing 
+	//TRAINING AND TESTING FILE
+	string trainFile;  
  
-	//Input of feature vector information
-	int yearsBurnedAcreage;	//num of years burned acreage
-	int monthsPDSIData;	//NO less than # input layer nodes
-	int endMonth;	//end month of current year (numerically)
+	//INPUT FEATURE VECTOR INFO
+	//num of years burned acreage
+	int yearsBurnedAcreage;	
+	//NO less than # input layer nodes
+	int monthsPDSIData;	
+	//end month of current year (numerically)
+	int endMonth;	
 
-	//Output class information
-	int numClasses; //NO LESS than of input layer nodes
+	//OUTPUT CLASS INFO
+	//NO LESS than of input layer nodes
+	int numClasses; 
 	
-	//Do we need class names and positions (zero based)?
-
-	//fire severity cutoffs (burned acres)
+	//FIRE SEVERITY PARAMETERS
+	//fire severity cutoffs (burned acres) high and low
 	int lowCutoff;
 	int highCutoff;
 };
 
+//Define ANN as an instance of struct Params
 Params ANN;
- // Define object of type Params
-
 
 
 int main(int argc, char* argv[1])
 {
-
-	remove("temp.txt");
-	
-    ifstream inputFile( argv[1]);
-    ofstream outputFile("temp.txt");
+	//Open stream for input/output files
+	ifstream inputFile( argv[1]);
+  
+	//line will be used for file reading
+	//pnd and emp are comparators for skipping comments and blank lines
     string line, pnd ="#",emp = "";
+
+	/*tempVals will store all variables read from input file as temporary 
+	strings until type sorting*/
 	vector<string> tempVals;
+
+	/*Stringstream variables are used to ensure correct type casting from 
+    string to proper type assignment. I hoped to avoid using so many, but if
+    each instance of type casting wasn't redefined, the values were lost.*/
+	stringstream s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13; 
+
+	/*The while loop reads through the input file, skipping any lines that 
+    begin with an empty string or a comment indicator. It stores all 
+    variables as strings (which is necessary given they are followed by 
+    comments) into a vector. I am aware fstreamf may have seemed like a 
+    viable option for simplifying the process by g just rabbing the 
+    variables, but the numNodesPerLayer variable inhibits this by having an
+    unspecified number of values on a single line. Thus getline was 
+    necessary.*/
     while(getline(inputFile,line))
     {
        if( line[0]==pnd[0]||line[0]==emp[0]) 
 		{
 		}
         else
-		{
-			outputFile << line << "\n";
-		}
+			tempVals.push_back(line);
 	}
+
+	//Made sure to close input file.
 	inputFile.close();
- 	outputFile.close();	
-    ifstream inputFile2("temp.txt");
-
-    while (getline(inputFile2,line))
-    {		
-		tempVals.push_back(line);
-	}
-
-
+ 
+	
+    /*Here I used substrings and delimiters as a method for separating 
+    variables from their comments and storing the variable back as a 
+    string into the tempVals vector for holding. I made a special case 
+    for line numNodesPerLayer line by splitting it on the '#' to make 
+    sure it captured all numerical values. */
 	for (int vecPos=0;vecPos<tempVals.size();vecPos++)
 	{
 		if(vecPos==6)
 		{
-		string token, mystring=tempVals[vecPos];
-		token = mystring.substr(0,mystring.find_first_of("#"));
-		//mystring = mystring.substr(mystring.find_first_of(" ") + 1);
-		tempVals[vecPos]=token;
-
+		string substring, intString=tempVals[vecPos];
+		substring = intString.substr(0,intString.find_first_of("#"));
+		tempVals[vecPos]=substring;
 		}
 		else
 		{
-		string token, mystring=tempVals[vecPos];
-		token = mystring.substr(0,mystring.find_first_of(" "));
-		tempVals[vecPos]=token;
+		string substring, intString=tempVals[vecPos];
+		substring = intString.substr(0,intString.find_first_of(" "));
+		tempVals[vecPos]=substring;
 		}	
 	}
 
-
-
-	//vector<int> tempVec(tempVals[6].begin(), tempVals[6].end());
-	
-//	vector<int> tempVec=as.integer(unlist(strsplit(tempVals," ")));
-	//for(int i =0; i<tempVec.size();i++)
-		//cout<<tempVec[i]<<endl;
-
-
-
-	stringstream s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14; 
-
+    /*Here I make use of stringstream to read the string type variables 
+    out of the tempVals vectors and store them into the struct paramaters
+    by using stringstream to identify type. As mentioned, either separate
+    or reinitialized variables are necessary for each new value*/	
     s0<<tempVals[0];
 	s0>>ANN.weightsFile;
-	
+
 	s1<<tempVals[1];
     s1>>ANN.numEpochs;
 	
@@ -119,15 +133,19 @@ int main(int argc, char* argv[1])
 	s5<<tempVals[5];
     s5>>ANN.numLayers;
 
-	vector<int> tempVec;
+    /*Because this variable is a vector, it is necessary to set the values
+    independantly by assignment using emplace, as indexing produces a seg
+    fault since the system considers that referencing and cannot intialize
+    new vector spaces.*/
 	s6<<tempVals[6];
-	while(1) {
-   		int n;
-  		s6 >> n;
+	while(1) 
+	{
+   		int vecValue;
+  		s6 >> vecValue;
    		if(!s6)
       		break;
-  		ANN.nodesPerLayer.push_back(n);
-}
+  		ANN.nodesPerLayer.push_back(vecValue);
+	}
 
    	s7<<tempVals[7];
     s7>>ANN.trainFile;
@@ -150,20 +168,15 @@ int main(int argc, char* argv[1])
    	s13<<tempVals[13];
     s13>>ANN.highCutoff;
 
-	cout<< "\n\nFinal Output Set: \n\n";
-
-
+	/*cout<< "\n\nFinal Output Set: \n\n";
 	cout<<ANN.weightsFile<<endl;
 	cout<<ANN.numEpochs<<endl;
 	cout<<ANN.learningRate<<endl;
 	cout<<ANN.momentum<<endl;
 	cout<<ANN.errorThreshold<<endl;
 	cout<<ANN.numLayers<<endl;
-
 	for(int j =0; j<ANN.nodesPerLayer.size();j++)
 		cout<<ANN.nodesPerLayer[j]<<" ";
-
-//	cout<<ANN.nodesPerLayer<<endl;
    	cout<<endl<<ANN.trainFile<<endl;
    	cout<<ANN.yearsBurnedAcreage<<endl;
    	cout<<ANN.monthsPDSIData<<endl;
@@ -171,46 +184,7 @@ int main(int argc, char* argv[1])
    	cout<<ANN.numClasses<<endl;
    	cout<<ANN.lowCutoff<<endl;
    	cout<<ANN.highCutoff<<endl;
-
-
-	cout<<endl;
+	cout<<endl;*/
 
     return 0;
 }
-
-
-/*
-int mai() {
-
-	//Create a dynamic array to hold the values
-	vector<int> numbers;
-
-	//Create an input file stream
-	ifstream in("nw.prm",ios::in);
-
-	int number;  //Variable to hold each number as it is read
-	
-        //Read number using the extraction (>>) operator
-        while (in >> number) {
-		//Add the number to the end of the array
-		numbers.push_back(number);
-	}
-
-	//Close the file stream
-	in.close();
-
-	/* 
-	    Now, the vector<int> object "numbers" contains both the array of numbers, 
-            and its length (the number count from the file).
-	
-
-	//Display the numbers
-	cout << "Numbers:\n";
-	for (int i=0; i<numbers.size(); i++) {
-		cout << numbers[i] << '\n';
-	}
-
-	cin.get(); //Keep program open until "enter" is pressed
-	return 0;
-}
-*/
