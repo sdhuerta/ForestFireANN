@@ -2,12 +2,12 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
+#include <string>
+
 using namespace std;
 
 struct Params;
 //typedef Params* Params;
-
-
 
 struct Params {   // Declare Param struct type
  
@@ -42,8 +42,7 @@ Params ANN;
 
 
 
-
-int main(char* argv[1])
+int main(int argc, char* argv[1])
 {
     ifstream inputFile( argv[1]);
     ofstream outputFile("temp.txt");
@@ -51,26 +50,32 @@ int main(char* argv[1])
 	vector<string> tempVals;
     while(getline(inputFile,line))
     {
-        if( line[0]==pnd[0]||line[0]==emp[0]) 
-		{
-		}
-        else
-            outputFile << line << "\n";
-    }
+     //   if( line[0]==pnd[0]||line[0]==emp[0]) 
+		//{
+		//}
+        //else
+		//{
+			 outputFile<<"dog"<<"\n";   
+			//outputFile << line << "\n";
+		//}
+	}
     ifstream inputFile2("temp.txt");
-    //variables    
-  //  string weightsFile, trainFile;  
- //   int numEpochs, numLayers, yearsBurnedAcreage, monthsPDSIData;	
-//	int endMonth, numClasses, lowCutoff, highCutoff;
-//	float learningRate, momentum, errorThreshold;  
-//	vector<int> nodesPerLayer; 
 
     while (getline(inputFile2,line))
     {	
 		tempVals.push_back(line);
 	}
- 
+ /*
 	stringstream ss; 
+
+	string token, mystring(tempVals[1]);
+	while(token != mystring)
+	{
+		token = mystring.substr(0,mystring.find_first_of(" "));
+		mystring = mystring.substr(mystring.find_first_of(" ") + 1);
+		printf("%s ",token.c_str());	
+	}
+
 
     ANN.weightsFile=tempVals[0];
 	
@@ -127,7 +132,7 @@ int main(char* argv[1])
    	cout<<ANN.endMonth;
    	cout<<ANN.numClasses;
    	cout<<ANN.lowCutoff;
-   	cout<<ANN.highCutoff;
+   	cout<<ANN.highCutoff;*/
 
  //   ANN (weightsFile, numEpochs, learningRate, momentum, errorThreshold, numLayers, nodesPerLayer, trainFile, yearsBurnedAcreage, monthsPDSIData, endMonth, numClasses, lowCutoff, highCutoff);
     return 0;
