@@ -18,7 +18,7 @@ struct Params {   // Declare Param struct type
 	float momentum;
 	float errorThreshold;   //training cutoff - testing acceptance
 	int numLayers;//layers of adjustable weights, one less than layers of nodes
-	string nodesPerLayer; // how many nodes in each layer
+	vector<int> nodesPerLayer; // how many nodes in each layer
 
 	string trainFile; //date file for training and testing 
  
@@ -71,7 +71,6 @@ int main(int argc, char* argv[1])
 	}
 
 
-	cout<< "Starting output: "<<endl;
 	for (int vecPos=0;vecPos<tempVals.size();vecPos++)
 	{
 		if(vecPos==6)
@@ -90,11 +89,14 @@ int main(int argc, char* argv[1])
 		}	
 	}
 
-	for (int vecPos=0;vecPos<tempVals.size();vecPos++)
-	{
-	 	cout<<endl<<tempVals[vecPos];
-	}
-	cout<<endl;
+
+
+	//vector<int> tempVec(tempVals[6].begin(), tempVals[6].end());
+	
+//	vector<int> tempVec=as.integer(unlist(strsplit(tempVals," ")));
+	//for(int i =0; i<tempVec.size();i++)
+		//cout<<tempVec[i]<<endl;
+
 
 
 	stringstream s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14; 
@@ -117,8 +119,15 @@ int main(int argc, char* argv[1])
 	s5<<tempVals[5];
     s5>>ANN.numLayers;
 
-   	s6<<tempVals[6];
-    s6>>ANN.nodesPerLayer;
+	vector<int> tempVec;
+	s6<<tempVals[6];
+	while(1) {
+   		int n;
+  		s6 >> n;
+   		if(!s6)
+      		break;
+  		ANN.nodesPerLayer.push_back(n);
+}
 
    	s7<<tempVals[7];
     s7>>ANN.trainFile;
@@ -150,8 +159,12 @@ int main(int argc, char* argv[1])
 	cout<<ANN.momentum<<endl;
 	cout<<ANN.errorThreshold<<endl;
 	cout<<ANN.numLayers<<endl;
-	cout<<ANN.nodesPerLayer<<endl;
-   	cout<<ANN.trainFile<<endl;
+
+	for(int j =0; j<ANN.nodesPerLayer.size();j++)
+		cout<<ANN.nodesPerLayer[j]<<" ";
+
+//	cout<<ANN.nodesPerLayer<<endl;
+   	cout<<endl<<ANN.trainFile<<endl;
    	cout<<ANN.yearsBurnedAcreage<<endl;
    	cout<<ANN.monthsPDSIData<<endl;
    	cout<<ANN.endMonth<<endl;
