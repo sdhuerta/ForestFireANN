@@ -30,10 +30,11 @@ public:
 	bool load_weights(string filename);
 	bool save_weights(string filename);
 
-	void training(vector<float> train_inputs, vector<float> train_ouputs, 
+	void training(vector<vector<float>> train_inputs, 
+				  vector<vector<float>> train_ouputs, 
 				  int max_iterations);
 
-	void testing(vector<float> test_inputs);
+	vector<float> testing(vector<float> test_inputs);
 
 
 

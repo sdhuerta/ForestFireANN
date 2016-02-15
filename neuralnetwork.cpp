@@ -29,71 +29,99 @@ neuralnetwork::neuralnetwork(Param net_define)
 
 
 
-void neuralnetwork::training(vector<float> train_inputs, 
-							 vector<float> train_ouputs, 
+void neuralnetwork::training(vector<vector<float>> train_inputs, 
+							 vector<vector<float>> train_ouputs, 
 							 int max_iterations)
 {
 	// Get the training block needed
 	// Training block will be larger 
-	input = train_inputs;
-	output = train_ouputs;
-
+	int train_set_size = train_inputs.size() ;
+	vector<int> selections;
+	vector<float> calc_output ;
 	int iterations = 0 ;
-
 	float error ;
+	int select ;
 
 	while(iterations++ < max_iterations)
 	{
-		vector<float> ff_output ;
+		if( selections.size() == train_set_size )
+			selections.clear();
 
-		ff_output = feed_forward();
+		select = rand() % train_set_size ;
 
-		error = calc_error(ff_output) ;
+		vector<int>::iterator list_check = find.(selections.begin(),
+												 selections.end(), select);
+
+		if( list_check != selections.end() )
+		{
+			select = rand() % train_set_size ;
+
+			vector<int>::iterator list_check = find.(selections.begin(),
+													 selections.end(), select);	
+		}
+
+		input = train_inputs[select] ;
+		output = train_ouputs[select] ;
+
+		calc_output = feed_forward();
+
+		error = calc_error(calc_output) ;
 
 		if(error < threshold) 
 			break ;
-
-		// If we need to adjust the weights, lets calc the
-		// deltas first
 
 		adjust_weights();
 
-		if(error < threshold) 
-			break ;
-
 	}
 
+}
+
+
+vector<float> neuralnetwork::testing(vector<float> test_inputs)
+{
+	input = test_inputs ;
+
+	calc_output = feed_forward();
+
+	return output;
 }
 
 
 vector<float> neuralnetwork::feed_forward()
 {
-	// Setup input layer to feed to first hidden layer
-	vector<float> curr_inputs = input ;
-	vector<float> curr_outputs ;
+	vector<float> hidden_outputs;
+	vector<float> hidden_inputs;
 
-	// For every layer starting with the hidden layer to the output layer
-	for(int i = 1; i < layers.size(); i++)
+
+	//Start with input layer to hidden layer
+	for(int i = 0; i < net[0].size(); i++ )
 	{
-		curr_outputs.clear() ;
-		
-		// For every perceptron in this current layer
-		for(int j = 0; j < net[i].size(); j++)
-		{
-			curr_outputs.push_back(net[i][j].calc_output(curr_inputs) );
-		}
-
-		if( i != layers.size() - 1)
-		{
-			vector<float> curr_inputs ;
-			curr_inputs = curr_outputs ;
-		}
-
+		hidden_inputs.push_back( net[0][i].calc_output( input );
 	}
 
-	return curr_outputs ;
 
+	// NOW, for the hidden layers leading up to the output layer
+	// Start with 1 since we have taken care of the first hidden layer,
+	// subtract 1 from the size of the layers as we are not dealing with 
+	// the input layer
+	for(int i = 1; i < layers.size()-1; i++)
+	{
+		hidden_outputs.clear();
+		hidden_outputs = hidden_inputs ;
+		hidden_inputs.clear();
+
+		for(int j = 0; j < net[i].size(); j++)
+		{
+			hidden_inputs.push_back( net[i][j].calc_output( hidden_outputs )) ;
+		}
+	}
+
+
+	// Return the calculated output layer outputs
+	return hidden_inputs ;
 }
+
+
 
 void neuralnetwork::adjust_weights()
 {	
@@ -138,50 +166,3 @@ float neuralnetwork::calc_error(vector<float> estimates)
 
 	return error_sum;
 }
-
-/* untested code below:
- *
-vector<vector<vector<float>>> neuralnetwork::get_weights()//vector<vector<Perceptron>> net )
-{
-    vector<vector<vector<float>>> weights;
-
-    vector<float> = curr_weights;
-         
-    
-    for( int i = 0; i < net.size(); i++ ) // for each layer in the net
-    {
-        for( int j = 0; j < net[i].size(); j++ )  // for each perceptron in current layer
-        {
-            net[i][j].get_weights( curr_weights );  // get them weights
-
-            weights[i][j].push_back( curr_weights );
-        }   
-    }
-
-    return weights;
-} 
-
-
-
-void neuralnetwork::set_weights( vector<vector<vector<float>>> weights) //vector<vector<Perceptron>> net, vector<vector<vector<float>>> weights )
-{
-    for( int = 0; i < net.size(); i++ )  // for each layer in the ANN
-    {
-        for( int j = 0; j < net[i].size(); j++)  // for each perceptron in current layer
-        {
-           net[i][j].set_weights( weights[i][j]);  // set them weights
-
-        }
-        
-
-    }
-
-
-}
-
-*/
-
-
-
-
-
