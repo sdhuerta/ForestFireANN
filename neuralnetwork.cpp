@@ -25,6 +25,35 @@ neuralnetwork::neuralnetwork(Param net_define)
 
 	}
 
+
+
+			// TESTING!!!!
+		// vector<float> weights ;
+		// for( int i = 0 ; i < net.size(); i++)
+		// {
+		// 	printf("LAYER: %d\n", i);
+
+		// 	for(int j = 0; j < net[i].size(); j++ )
+		// 	{
+		// 		printf("NODE: %d WEIGHTS: ", j) ;
+
+		// 		weights = net[i][j].get_weights();
+
+		// 		for(int k = 0; k < weights.size(); k++ )
+		// 		{
+		// 			printf("%6.4f", weights[k]);
+		// 		}
+
+		// 		printf("\n");
+		// 		weights.clear();
+		// 	}
+		// 	printf("\n");
+		// }
+
+
+
+
+
 }
 
 
@@ -37,6 +66,7 @@ void neuralnetwork::training(vector<vector<float>> train_inputs,
 	// Training block will be larger 
 	int train_set_size = train_inputs.size() ;
 	vector<int> selections;
+	vector<int>::iterator list_check ;
 	vector<float> calc_output ;
 	int iterations = 0 ;
 	float error ;
@@ -49,15 +79,13 @@ void neuralnetwork::training(vector<vector<float>> train_inputs,
 
 		select = rand() % train_set_size ;
 
-		vector<int>::iterator list_check = find.(selections.begin(),
-												 selections.end(), select);
+		list_check = find(selections.begin(), selections.end(), select);
 
 		if( list_check != selections.end() )
 		{
 			select = rand() % train_set_size ;
 
-			vector<int>::iterator list_check = find.(selections.begin(),
-													 selections.end(), select);	
+			list_check = find(selections.begin(), selections.end(), select);	
 		}
 
 		input = train_inputs[select] ;
@@ -67,10 +95,36 @@ void neuralnetwork::training(vector<vector<float>> train_inputs,
 
 		error = calc_error(calc_output) ;
 
+		// TESTING!!!
+		printf("error: %f\n", error);
+
 		if(error < threshold) 
 			break ;
 
 		adjust_weights();
+
+		// TESTING!!!!
+		// vector<float> weights ;
+		// for( int i = 0 ; i < net.size(); i++)
+		// {
+		// 	printf("TRAINING: %d LAYER: %d\n", (iterations + 1), i);
+
+		// 	for(int j = 0; j < net[i].size(); j++ )
+		// 	{
+		// 		printf("NODE: %d WEIGHTS: ", j) ;
+
+		// 		weights = net[i][j].get_weights();
+
+		// 		for(int k = 0; k < weights.size(); k++ )
+		// 		{
+		// 			printf("%6.4f", weights[k]);
+		// 		}
+
+		// 		printf("\n");
+		// 		weights.clear();
+		// 	}
+		// 	printf("\n");
+		// }
 
 	}
 
@@ -81,9 +135,8 @@ vector<float> neuralnetwork::testing(vector<float> test_inputs)
 {
 	input = test_inputs ;
 
-	calc_output = feed_forward();
+	return feed_forward();
 
-	return output;
 }
 
 
@@ -92,11 +145,10 @@ vector<float> neuralnetwork::feed_forward()
 	vector<float> hidden_outputs;
 	vector<float> hidden_inputs;
 
-
 	//Start with input layer to hidden layer
 	for(int i = 0; i < net[0].size(); i++ )
 	{
-		hidden_inputs.push_back( net[0][i].calc_output( input );
+		hidden_inputs.push_back( net[0][i].calc_output( input ));
 	}
 
 
@@ -126,15 +178,15 @@ vector<float> neuralnetwork::feed_forward()
 void neuralnetwork::adjust_weights()
 {	
 
-    for( int i = layers.size() - 1; i > 0; i-- )
+    for( int i = net.size()-1; i > -1; i-- )
     {  
-        if( i == layers.size() - 1 )  // if we are processing the output layer
+    	
+        if( i == net.size()-1 )  // if we are processing the output layer
         {
+
             for( int j = 0; j < net[i].size(); j++ )
             { 
             	net[i][j].set_delta(output[j]);
-
-                net[i][j].adjust_weights();
             }
 
         }
@@ -145,15 +197,16 @@ void neuralnetwork::adjust_weights()
             {
 
                 net[i][j].set_delta(j, net[i+1]);
-
-                net[i][j].adjust_weights();
             }
         }
 
     }
 
-
+    for( int i = 0; i < net.size(); i++ )
+    	for(int j = 0; j < net[i].size(); j++)
+    		net[i][j].adjust_weights();
 }
+
 
 float neuralnetwork::calc_error(vector<float> estimates)
 {
@@ -161,7 +214,7 @@ float neuralnetwork::calc_error(vector<float> estimates)
 
 	for(int i = 0; i < output.size(); i++ )
 	{
-		error_sum += pow((output[i] - estimates[i]), 2);
+		error_sum += 0.5 * pow((output[i] - estimates[i]), 2);
 	}
 
 	return error_sum;

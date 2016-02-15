@@ -18,21 +18,21 @@ using namespace std;
 	*/
 
 
-const vector<int> A = {0, 1, 1, 0,
+const vector<float> A = {0, 1, 1, 0,
 					   1, 0, 0, 1,
 					   1, 0, 0, 1, 
 					   1, 1, 1, 1,
 					   1, 0, 0, 1,
 					   1, 0, 0, 1 };
 
-const vector<int> B = {1, 1, 1, 0,
+const vector<float> B = {1, 1, 1, 0,
 					   1, 0, 0, 1,
 					   1, 1, 1, 0, 
 					   1, 0, 0, 1,
 					   1, 0, 0, 1,
 					   1, 1, 1, 0 } ;
 
-const vector<int> C = {0, 1, 1, 1,
+const vector<float> C = {0, 1, 1, 1,
 					   1, 0, 0, 0,
 					   1, 0, 0, 0, 
 					   1, 0, 0, 0,
@@ -40,7 +40,7 @@ const vector<int> C = {0, 1, 1, 1,
 					   0, 1, 1, 1 } ;
 
 
-const vector<int> D = {1, 1, 1, 0,
+const vector<float> D = {1, 1, 1, 0,
 					   1, 0, 0, 1,
 					   1, 0, 0, 1, 
 					   1, 0, 0, 1,
@@ -48,7 +48,7 @@ const vector<int> D = {1, 1, 1, 0,
 					   1, 1, 1, 0 } ;
 
 
-const vector<int> E = {1, 1, 1, 1,
+const vector<float> E = {1, 1, 1, 1,
 					   1, 0, 0, 0,
 					   1, 1, 1, 0, 
 					   1, 0, 0, 0,
@@ -56,7 +56,7 @@ const vector<int> E = {1, 1, 1, 1,
 					   1, 1, 1, 1 } ;
 
 
-const vector<int> F = {1, 1, 1, 1,
+const vector<float> F = {1, 1, 1, 1,
 					   1, 0, 0, 0,
 					   1, 1, 1, 0, 
 					   1, 0, 0, 0,
@@ -64,7 +64,7 @@ const vector<int> F = {1, 1, 1, 1,
 					   1, 0, 0, 0 } ;
 
 
-const vector<int> One =  {0, 1, 0, 0,
+const vector<float> One =  {0, 1, 0, 0,
 					      1, 1, 0, 0,
 					      0, 1, 0, 0, 
 					      0, 1, 0, 0,
@@ -72,12 +72,23 @@ const vector<int> One =  {0, 1, 0, 0,
 					      1, 1, 1, 0 } ;
 
 
-const vector<int> Nine = {0, 0, 1, 1,
+const vector<float> Nine = {0, 0, 1, 1,
 					      0, 1, 0, 1,
 					      0, 0, 1, 1, 
 					      0, 0, 0, 1,
 					      0, 0, 0, 1,
 					      0, 0, 0, 1 } ;
+
+
+const vector<vector<float>> answers = {{1,0,0,0,0,0,0,0},
+								     {0,1,0,0,0,0,0,0},
+								     {0,0,1,0,0,0,0,0},
+								     {0,0,0,1,0,0,0,0},
+								     {0,0,0,0,1,0,0,0},
+								     {0,0,0,0,0,1,0,0},
+								     {0,0,0,0,0,0,1,0},
+								     {0,0,0,0,0,0,0,1}};
+
 
 
 
@@ -99,20 +110,20 @@ int main(int argc, char* argv[])
 
     neuralnetwork testnet = neuralnetwork(definitions) ;
 
+    vector<vector<float>> test_data = {A,B,C,D,E,F,One,Nine} ;
 
+    testnet.training(test_data, answers, 100);
 
+    vector<float> response ;
 
+    response = testnet.testing(D);
 
+    printf("RESPONSE: ");
 
+   	for(int i = 0; i < response.size(); i++ )
+   		printf("%.3f\t", response[i]);
 
-
-
-
-
-
-
-
-
+   	printf("\n");
 
 	return 0;
 }

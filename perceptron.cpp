@@ -7,11 +7,11 @@ Perceptron::Perceptron(int num_in, float learning_rate)
 
     alpha = learning_rate ;
 
-    int rand_init_val ;
+    float rand_init_val ;
 
     for(int i = 0; i < num_inputs; i++)
     {
-        rand_init_val =  (rand() % 100 + 1) / 1000 ;
+        rand_init_val = ((rand() % 21) - 10)/10.0 ;
         weights.push_back(rand_init_val) ;
     }
 
@@ -42,10 +42,6 @@ void Perceptron::activation()
 {
     //Sigmoid function
     output = 1.0 / (1 + exp(-sum)) ;
-
-    // While we're here, let's calculate the sigmoid derivative for the 
-    // purpose of backprop
-    sig_prime = output * (1 - output);
 }
 
 // BACKPROP
@@ -56,27 +52,32 @@ void Perceptron::activation()
 void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
 {
     float delta = 0 ;
+    float next_delta;
+    float next_weight;
 
+    // FOR EVERY NODE IN THE FOLLOWING LAYER 
+    // delta of that layer * connecting weight
     for(int i = 0; i < next_layer.size(); i++ )
     {
-        delta += next_layer[i].get_delta(position);
+        next_delta = next_layer[i].get_delta(); 
+        next_weight = next_layer[i].get_weights()[position] ;
+        delta += next_delta * next_weight   ;
     }
 
-    delta = delta * sig_prime;
-
+    delta = delta * output * (1 - output) ;
 }
 
 // Four our output layer weights
 void Perceptron::set_delta(float correct_output)
 {
-    delta = sig_prime * (correct_output - output) ;
+    delta = -(correct_output - output) * output * (1.0 - output);
 }
 
 
 // So we can reach back for those hidden layers
-float Perceptron::get_delta(int perceptron_pos)
+float Perceptron::get_delta()
 {
-    return delta * weights[perceptron_pos] ;
+    return delta ;
 }
 
 
@@ -85,7 +86,7 @@ void Perceptron::adjust_weights()
 {
     for(int i = 0 ; i < weights.size(); i++)
     {
-        weights[i] = weights[i] + alpha * delta * inputs[i];
+        weights[i] = weights[i] - alpha * delta * inputs[i];
     }
 
 }

@@ -8,11 +8,10 @@
 
 using namespace std;
 
-//srand (time(NULL));
+
 
 class Perceptron{
 public:
-
     // CONSTRUCTOR
     Perceptron(int num_in, float learning_rate);
 
@@ -21,7 +20,7 @@ public:
     float get_output(); // grab what has been calculated
 
     // Getting the delta from the previous weights
-    float get_delta(int perceptron_pos);
+    float get_delta();
     void adjust_weights(); //may make this a private function
 
     // Setters and getters
@@ -33,7 +32,6 @@ public:
 
 
 private:
-
     void activation(); // Activation function, using sigmoid function
     void sum_weights(); // Calculate the output
 

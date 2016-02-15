@@ -3,6 +3,7 @@
 
 
 #include <vector>
+#include <algorithm>
 #include <string>
 #include <fstream>
 #include "perceptron.h"
@@ -30,7 +31,7 @@ public:
 	bool load_weights(string filename);
 	bool save_weights(string filename);
 
-	void training(vector<vector<float>> train_inputs, 
+    void training(vector<vector<float>> train_inputs, 
 				  vector<vector<float>> train_ouputs, 
 				  int max_iterations);
 
