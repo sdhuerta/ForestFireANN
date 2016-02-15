@@ -2,40 +2,51 @@
 #define PERCEPTRON_H
 
 #include <vector>
-#include <time.h> // RAND
+#include <math.h>
+#include <time.h> 
+#include <stdlib.h>
 
+using namespace std;
+
+//srand (time(NULL));
 
 class Perceptron{
 public:
+
     // CONSTRUCTOR
-    Perceptron(int num_inputs, double learning_rate);
+    Perceptron(int num_in, float learning_rate);
 
     // Feed the perceptron some inputs and get some output
-    double get_output(vector <double> inputs);
+    float calc_output(vector <float> inputs);
+    float get_output(); // grab what has been calculated
 
-    // Getting the error from the previous weights
-    double get_error(int perceptron_pos);
+    // Getting the delta from the previous weights
+    float get_delta(int perceptron_pos);
     void adjust_weights(); //may make this a private function
 
-    void Perceptron::set_error(int position, vector<Perceptron> next_layer);
-    void Perceptron::set_error(double correct_output);
+    // Setters and getters
+    void set_weights(vector<float> new_weights);
+    vector<float> get_weights();
 
-    double Perceptron::get_error(int perceptron_pos);
+    void set_delta(int position, vector<Perceptron> next_layer);
+    void set_delta(float correct_output);
+
 
 private:
+
     void activation(); // Activation function, using sigmoid function
     void sum_weights(); // Calculate the output
 
     // Store our weights and inputs between previous and current layer
-    vector<double> weights;
-    vector<double> inputs ;	
+    vector<float> weights;
+    vector<float> inputs;
     
-    double sum ; // sum after application of weights
-    double output ; // result of sigmoid of sum
+    float sum ; // sum after application of weights
+    float output ; // result of sigmoid of sum
 
     // USED LATER WITH ADJUSTING WEIGHTS
-    double sig_prime ; // the derivative of sigmoid applied to sum
-    double error ;
+    float sig_prime ; // the derivative of sigmoid applied to sum
+    float delta ;
 
     int num_inputs; // do i need num_inputs if I'm carrying a vector of inputs??
 
