@@ -3,7 +3,19 @@
 
 
 #include <vector>
+#include <string>
+#include <fstream>
 #include "perceptron.h"
+
+// TEMPORARY STRUCTURE FOR TESTING ONLY
+// REMOVE BEFORE SUBMISSION!!!
+struct Param{
+	vector<int> layers ;
+	float learning_rate ;
+	float momentum ;
+	float min_error;
+} ;
+
 
 
 using namespace std;
@@ -15,25 +27,31 @@ class neuralnetwork{
 public:
 	neuralnetwork(Param net_define);
 
+	bool load_weights(string filename);
+	bool save_weights(string filename);
+
+	void training(vector<float> train_inputs, vector<float> train_ouputs, 
+				  int max_iterations);
+
+	void testing(vector<float> test_inputs);
+
 
 
 private:
-vector<int> layers;
-vector<vector<Perceptron>> net ;
-float learning;
-float momentum;
-float threshold;
+	vector<int> layers;
+	vector<vector<Perceptron>> net ;
 
-vector<vector<float>> get_weights( vector<vector<Perceptron>> );
+	float learning;
+	float momentum;
+	float threshold;
 
-void set_weights( vector<vector<Perceptron>>, vector<vector<vector<float>>>);
+	// For training and testing
+	vector<float> input ;
+	vector<float> output ;
 
-// For training and testing
-vector<float> input ;
-vector<float> output ;
-
-
-
+	vector<float> feed_forward();
+	void adjust_weights();
+	float calc_error(vector<float> estimates);
 
 };
 

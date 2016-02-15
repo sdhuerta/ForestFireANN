@@ -1,29 +1,22 @@
 #include "neuralnetwork.h"
-#include "perceptron.h"
-
-
-using namespace std;
-
-
 
 
 neuralnetwork::neuralnetwork(Param net_define)
 {
 
-	layers = net_define.get_layers() ;
-	learning = net_define.get_learning() ;
-	momentum = net_define.get_momentumd() ;
-	threshold = net_define.get_threshold();
+	layers = net_define.layers ;
+	learning = net_define.learning_rate ;
+	momentum = net_define.momentum ;
+	threshold = net_define.min_error;
 
-	// Skip the input layer node. The layer is n-1, so 
-	// the 1st hidden layer node is layer 0.
-	for(int i = 0; i < layers.size ; i++)
+	// Skip the input layer node.
+	for(int i = 1; i < layers.size() ; i++)
 	{
 		vector<Perceptron> layer ;
 
 		for(int j = 0; j < layers[i]; j++)
 		{
-			Perceptron new_node = Perceptron(layers[i])
+			Perceptron new_node = Perceptron(layers[i-1],learning) ;
 		
 			layer.push_back(new_node) ;
 		}
@@ -35,34 +28,37 @@ neuralnetwork::neuralnetwork(Param net_define)
 }
 
 
-neuralnetwork::training(vector<float> train_inputs, 
-						vector<float> train_ouputs, 
-						int max_iterations, 
-						float min_error)
+
+void neuralnetwork::training(vector<float> train_inputs, 
+							 vector<float> train_ouputs, 
+							 int max_iterations)
 {
+	// Get the training block needed
+	// Training block will be larger 
 	input = train_inputs;
-	output = train_outputs;
+	output = train_ouputs;
 
 	int iterations = 0 ;
+
+	float error ;
 
 	while(iterations++ < max_iterations)
 	{
 		vector<float> ff_output ;
 
-		ff_output = feed_foward();
+		ff_output = feed_forward();
 
 		error = calc_error(ff_output) ;
 
-		if(error < min_error) 
+		if(error < threshold) 
 			break ;
 
 		// If we need to adjust the weights, lets calc the
 		// deltas first
-		calculate_delta(ff_output);
 
 		adjust_weights();
 
-		if(error < min_error) 
+		if(error < threshold) 
 			break ;
 
 	}
@@ -70,20 +66,21 @@ neuralnetwork::training(vector<float> train_inputs,
 }
 
 
-neuralnetwork::feed_foward()
+vector<float> neuralnetwork::feed_forward()
 {
 	// Setup input layer to feed to first hidden layer
-	vector<float> curr_inputs = inputs ;
+	vector<float> curr_inputs = input ;
+	vector<float> curr_outputs ;
 
 	// For every layer starting with the hidden layer to the output layer
-	for(int i = 0; i < layers.size(); i++)
+	for(int i = 1; i < layers.size(); i++)
 	{
-		vector<float> curr_outputs ;
+		curr_outputs.clear() ;
 		
 		// For every perceptron in this current layer
 		for(int j = 0; j < net[i].size(); j++)
 		{
-			curr_outputs.pushback(net[i][j].get_output(curr_inputs) ;
+			curr_outputs.push_back(net[i][j].calc_output(curr_inputs) );
 		}
 
 		if( i != layers.size() - 1)
@@ -98,25 +95,16 @@ neuralnetwork::feed_foward()
 
 }
 
+void neuralnetwork::adjust_weights()
+{	
 
-neuralnetwork::calculate_delta()
-{
-    
-
-
-}
-
-
-public void neuralnetwork::adjust_weights()
-{
-
-    for( int i = layers.size() -1 ; i > 0; i-- )
+    for( int i = layers.size() - 1; i > 0; i-- )
     {  
         if( i == layers.size() - 1 )  // if we are processing the output layer
         {
             for( int j = 0; j < net[i].size(); j++ )
             { 
-                setDelta( net[i][j].output)
+            	net[i][j].set_delta(output[j]);
 
                 net[i][j].adjust_weights();
             }
@@ -127,10 +115,10 @@ public void neuralnetwork::adjust_weights()
 
             for( int j = 0; j < net[i].size(); j++)
             {
-                setDelta( j, net[i+1] );
+
+                net[i][j].set_delta(j, net[i+1]);
 
                 net[i][j].adjust_weights();
-
             }
         }
 
@@ -139,7 +127,17 @@ public void neuralnetwork::adjust_weights()
 
 }
 
+float neuralnetwork::calc_error(vector<float> estimates)
+{
+	float error_sum = 0;
 
+	for(int i = 0; i < output.size(); i++ )
+	{
+		error_sum += pow((output[i] - estimates[i]), 2);
+	}
+
+	return error_sum;
+}
 
 /* untested code below:
  *
