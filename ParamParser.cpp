@@ -44,6 +44,9 @@ Params ANN;
 
 int main(int argc, char* argv[1])
 {
+
+	remove("temp.txt");
+	
     ifstream inputFile( argv[1]);
     ofstream outputFile("temp.txt");
     string line, pnd ="#",emp = "";
@@ -55,88 +58,110 @@ int main(int argc, char* argv[1])
 		}
         else
 		{
-	  
 			outputFile << line << "\n";
 		}
 	}
+	inputFile.close();
+ 	outputFile.close();	
     ifstream inputFile2("temp.txt");
 
     while (getline(inputFile2,line))
-    {	
+    {		
 		tempVals.push_back(line);
 	}
- 
- 	cout<<tempVals[1];
-//	stringstream ss; 
 
 
-	//mystring=tempVals[1];
-	//while(token != mystring)
-	//{
-	//	token = mystring.substr(0,mystring.find_first_of(" "));
-	//	mystring = mystring.substr(mystring.find_first_of(" ") + 1);
-	//	cout<<("%s ",token.c_str());	
-	//}
+	cout<< "Starting output: "<<endl;
+	for (int vecPos=0;vecPos<tempVals.size();vecPos++)
+	{
+		if(vecPos==6)
+		{
+		string token, mystring=tempVals[vecPos];
+		token = mystring.substr(0,mystring.find_first_of("#"));
+		//mystring = mystring.substr(mystring.find_first_of(" ") + 1);
+		tempVals[vecPos]=token;
 
-/*
-    ANN.weightsFile=tempVals[0];
+		}
+		else
+		{
+		string token, mystring=tempVals[vecPos];
+		token = mystring.substr(0,mystring.find_first_of(" "));
+		tempVals[vecPos]=token;
+		}	
+	}
+
+	for (int vecPos=0;vecPos<tempVals.size();vecPos++)
+	{
+	 	cout<<endl<<tempVals[vecPos];
+	}
+	cout<<endl;
+
+
+	stringstream s0,s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14; 
+
+    s0<<tempVals[0];
+	s0>>ANN.weightsFile;
 	
-	ss<<tempVals[1];
-    ss>>ANN.numEpochs;
+	s1<<tempVals[1];
+    s1>>ANN.numEpochs;
 	
-	ss<<tempVals[2];
-    ss>>ANN.learningRate;      
+	s2<<tempVals[2];
+    s2>>ANN.learningRate;      
     
-	ss<<tempVals[3];
-    ss>>ANN.momentum;
+	s3<<tempVals[3];
+    s3>>ANN.momentum;
 
-	ss<<tempVals[4];
-    ss>>ANN.errorThreshold;
+	s4<<tempVals[4];
+    s4>>ANN.errorThreshold;
 
-	ss<<tempVals[5];
-    ss>>ANN.numLayers;
+	s5<<tempVals[5];
+    s5>>ANN.numLayers;
 
-   	ss<<tempVals[6];
-    ss>>ANN.nodesPerLayer;
+   	s6<<tempVals[6];
+    s6>>ANN.nodesPerLayer;
 
-   	ss<<tempVals[7];
-    ss>>ANN.trainFile;
+   	s7<<tempVals[7];
+    s7>>ANN.trainFile;
 
-   	ss<<tempVals[8];
-    ss>>ANN.yearsBurnedAcreage;
+   	s8<<tempVals[8];
+    s8>>ANN.yearsBurnedAcreage;
 
-   	ss<<tempVals[9];
-    ss>>ANN.monthsPDSIData;
+   	s9<<tempVals[9];
+    s9>>ANN.monthsPDSIData;
 
-   	ss<<tempVals[10];
-    ss>>ANN.endMonth;
+   	s10<<tempVals[10];
+    s10>>ANN.endMonth;
 
-   	ss<<tempVals[11];
-    ss>>ANN.numClasses;
+   	s11<<tempVals[11];
+    s11>>ANN.numClasses;
 
-   	ss<<tempVals[12];
-    ss>>ANN.lowCutoff;
+   	s12<<tempVals[12];
+    s12>>ANN.lowCutoff;
 
-   	ss<<tempVals[13];
-    ss>>ANN.highCutoff;
-   
+   	s13<<tempVals[13];
+    s13>>ANN.highCutoff;
 
-	cout<<ANN.weightsFile;
-	cout<<ANN.numEpochs;
-	cout<<ANN.learningRate;
-	cout<<ANN.momentum;
-	cout<<ANN.errorThreshold;
-	cout<<ANN.numLayers;
-	cout<<ANN.nodesPerLayer;
-   	cout<<ANN.trainFile;
-   	cout<<ANN.yearsBurnedAcreage;
-   	cout<<ANN.monthsPDSIData;
-   	cout<<ANN.endMonth;
-   	cout<<ANN.numClasses;
-   	cout<<ANN.lowCutoff;
-   	cout<<ANN.highCutoff;*/
+	cout<< "\n\nFinal Output Set: \n\n";
 
- //   ANN (weightsFile, numEpochs, learningRate, momentum, errorThreshold, numLayers, nodesPerLayer, trainFile, yearsBurnedAcreage, monthsPDSIData, endMonth, numClasses, lowCutoff, highCutoff);
+
+	cout<<ANN.weightsFile<<endl;
+	cout<<ANN.numEpochs<<endl;
+	cout<<ANN.learningRate<<endl;
+	cout<<ANN.momentum<<endl;
+	cout<<ANN.errorThreshold<<endl;
+	cout<<ANN.numLayers<<endl;
+	cout<<ANN.nodesPerLayer<<endl;
+   	cout<<ANN.trainFile<<endl;
+   	cout<<ANN.yearsBurnedAcreage<<endl;
+   	cout<<ANN.monthsPDSIData<<endl;
+   	cout<<ANN.endMonth<<endl;
+   	cout<<ANN.numClasses<<endl;
+   	cout<<ANN.lowCutoff<<endl;
+   	cout<<ANN.highCutoff<<endl;
+
+
+	cout<<endl;
+
     return 0;
 }
 
