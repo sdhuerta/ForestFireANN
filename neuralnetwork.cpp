@@ -283,6 +283,7 @@ void neuralnetwork::load_weights()
     }
 
   // The above code produces an expected value that is 1 less than the actual value. Needs fixing or maybe we just discard the actual vs. expected check
+  */
 
    
     ifstream fin( weightsFile.c_str());
