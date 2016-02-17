@@ -81,16 +81,16 @@ const vector<float> Nine = {0, 0, 1, 1,
 
 
 const vector<vector<float>> answers = {{1,0,0,0,0,0,0,0},
-								     {0,1,0,0,0,0,0,0},
-								     {0,0,1,0,0,0,0,0},
-								     {0,0,0,1,0,0,0,0},
-								     {0,0,0,0,1,0,0,0},
-								     {0,0,0,0,0,1,0,0},
-								     {0,0,0,0,0,0,1,0},
-								     {0,0,0,0,0,0,0,1}};
+								       {0,1,0,0,0,0,0,0},
+								       {0,0,1,0,0,0,0,0},
+								       {0,0,0,1,0,0,0,0},
+								       {0,0,0,0,1,0,0,0},
+								       {0,0,0,0,0,1,0,0},
+								       {0,0,0,0,0,0,1,0},
+								       {0,0,0,0,0,0,0,1}};
+ 
 
-
-
+void print_response(neuralnetwork net, vector<float> character);
 
 int main(int argc, char* argv[])
 {
@@ -102,9 +102,9 @@ int main(int argc, char* argv[])
     * hidden = 14
     * output = 8
     */
-    definitions.layers = {20,14,8} ;
+    definitions.layers = {24,14,8} ;
 
-    definitions.learning_rate = 0.5;
+    definitions.learning_rate = 0.6;
     definitions.momentum = 1 ;
     definitions.min_error = .05 ;
 
@@ -112,20 +112,34 @@ int main(int argc, char* argv[])
 
     vector<vector<float>> test_data = {A,B,C,D,E,F,One,Nine} ;
 
-    testnet.training(test_data, answers, 100);
+    testnet.training(test_data, answers, 1000);
 
     vector<float> response ;
 
-    response = testnet.testing(D);
+    print_response(testnet, A);
+    print_response(testnet, B);
+    print_response(testnet, C);
+    print_response(testnet, D);
+    print_response(testnet, E);
+    print_response(testnet, F);
+    print_response(testnet, One);
+    print_response(testnet, Nine);
+
+	return 0;
+}
+
+
+void print_response(neuralnetwork net, vector<float> character)
+{
+    vector<float> response ;
+    response = net.testing(character);
 
     printf("RESPONSE: ");
 
-   	for(int i = 0; i < response.size(); i++ )
-   		printf("%.3f\t", response[i]);
+    for(int i = 0; i < response.size(); i++ )
+        printf("%.3f\t", response[i]);
 
-   	printf("\n");
-
-	return 0;
+    printf("\n");
 }
 
 

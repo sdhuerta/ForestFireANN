@@ -38,6 +38,9 @@ public:
 	vector<float> testing(vector<float> test_inputs);
 
 
+	void print_weights(int training_iter);
+
+
 
 private:
 	vector<int> layers;
