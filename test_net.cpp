@@ -104,15 +104,15 @@ int main(int argc, char* argv[])
     */
     definitions.layers = {24,14,8} ;
 
-    definitions.learning_rate = 0.6;
-    definitions.momentum = 1 ;
-    definitions.min_error = .05 ;
+    definitions.learning_rate = 0.4;
+    definitions.momentum = 0 ;
+    definitions.min_error = .1 ;
 
     neuralnetwork testnet = neuralnetwork(definitions) ;
 
     vector<vector<float>> test_data = {A,B,C,D,E,F,One,Nine} ;
 
-    testnet.training(test_data, answers, 1000);
+    testnet.training(test_data, answers, 10000);
 
     vector<float> response ;
 

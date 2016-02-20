@@ -17,7 +17,7 @@ neuralnetwork::neuralnetwork(Param net_define)
 
 		for(int j = 0; j < layers[i]; j++)
 		{
-			Perceptron new_node = Perceptron(layers[i-1],learning) ;
+			Perceptron new_node = Perceptron(layers[i-1],learning, momentum) ;
 		
 			layer.push_back(new_node) ;
 		}
@@ -75,10 +75,12 @@ void neuralnetwork::training(vector<vector<float>> train_inputs,
 			selections.clear();
 			iterations++ ;
 
-			printf("error: %f\n", (error / train_set_size));
+      if(iterations % 10 == 0)
+			   printf("epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
 
 			if( (error / train_set_size) < threshold) 
 			{
+        printf("epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
 				//printf("NUM ITERATIONS: %d\n", iterations);
 				return ;
 			}

@@ -14,7 +14,7 @@ using namespace std;
 class Perceptron{
 public:
     // CONSTRUCTOR
-    Perceptron(int num_in, float learning_rate);
+    Perceptron(int num_in, float learning_rate, float mtm);
 
     // Feed the perceptron some inputs and get some output
     float calc_output(vector <float> inputs);
@@ -39,6 +39,7 @@ private:
     // Store our weights and inputs between previous and current layer
     vector<float> weights;
     vector<float> inputs;
+    vector<float> old_weights;
     
     float sum ; // sum after application of weights
     float output ; // result of sigmoid of sum
@@ -50,6 +51,7 @@ private:
     int num_inputs; // do i need num_inputs if I'm carrying a vector of inputs??
 
     float alpha ;
+    float momentum ;
 };
 
 #endif
