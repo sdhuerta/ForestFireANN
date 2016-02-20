@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <algorithm>
 #include <iostream>
 #include "perceptron.h"
 
@@ -28,23 +29,23 @@ class neuralnetwork{
 
 
 public:
-	neuralnetwork(Param net_define);
+	neuralnetwork(Param net_define);	
 
 //	bool load_weights(string filename);
 	//bool save_weights(string filename);
 	void load_weights();
-        void save_weights();
+    void save_weights();
 
-	void training(vector<float> train_inputs, vector<float> train_ouputs, 
+	void training(vector<vector<float>> train_inputs, vector<vector<float>> train_ouputs, 
 				  int max_iterations);
 
-	void testing(vector<float> test_inputs);
+	vector<float> testing(vector<float> test_inputs);
 
-        int get_number_o_layers();
+    int get_number_o_layers();
 
-        int get_number_o_nodes( int index );
+    int get_number_o_nodes( int index );
 
-        vector<float> get_perceptron_weights( int layerIndex, int nodeIndex );
+    vector<float> get_perceptron_weights( int layerIndex, int nodeIndex );
 
 
 	void print_weights(int training_iter);
