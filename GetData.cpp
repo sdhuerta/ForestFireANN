@@ -156,41 +156,36 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
 }
 
 
-vector<float> createSet(vector<PDSI> data, )
-{
+//int main()
+//{	
 
-}
-
-
-int main()
-{	
 
 	/* Still need to code the functionality to receive input from a parameter file*/
 
 	
-	string pdsi_bh = "PDSI_BH_1978-2015.csv";
-	string pdsi_nw = "PDSI_NW_1998_2015.csv";
-	string temp;
+//	string pdsi_bh = "PDSI_BH_1978-2015.csv";
+//	string pdsi_nw = "PDSI_NW_1998_2015.csv";
+//	string temp;
 
-	string input = pdsi_bh;
+//	string input = pdsi_bh;
 
-	ifstream fin(input.c_str());
+//	ifstream fin(input.c_str());
 
-	if (!fin)
-	{
-		std::cout << "There was an error opening the input file";
-		return -1;
-	}
+//	if (!fin)
+//	{
+//		std::cout << "There was an error opening the input file";
+//		return -1;
+//	}
 	
-	vector<PDSI> fVector = pdsiFeatureVector(fin);
+//	vector<PDSI> fVector = pdsiFeatureVector(fin);
 
-	fin.close();
+//	fin.close();
 
 	
 
-	fVector;		
+//	fVector;		
 
 
-    return 0;
-}
+  //  return 0;
+//}
 
