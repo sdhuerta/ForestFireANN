@@ -156,6 +156,12 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
 }
 
 
+vector<float> createSet(vector<PDSI> data, )
+{
+
+}
+
+
 int main()
 {	
 

@@ -3,6 +3,8 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include "GetData.h"
+
 
 using namespace std;
 
@@ -46,6 +48,7 @@ struct Params {
 	int lowCutoff;
 	int highCutoff;
 };
+
 
 //Define ANN as an instance of struct Params
 Params ANN;
