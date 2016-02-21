@@ -31,8 +31,21 @@ using namespace std;
 
 int main( int argc, char* argv[] )
 {
+    //string of paramater file name
     string parameterFile = "";
-    int max_iterations = -1;
+
+    //position in results vector
+    int resPos; 
+
+    //vector of floats storing input data
+    vector<float> testInput
+
+    //vector of results returned from testing
+    vector<float> results
+
+    //Params struct to hold the .prm designated parameters for ANN
+    Params parameters
+
 
     //check for .prm file and excutable
     if( argc != 2 )  
@@ -46,23 +59,26 @@ int main( int argc, char* argv[] )
     parameterFile = argv[1];  
     
     //Call getParams to store .prm values into parameter struct for quick access 
-    Params parameters = getParams(parameterFile);
-
+    parameters = getParams(parameterFile);
 
     //The birth of the neural network
     neuralnetwork Ann = new neuralnetwork( parameters );  
   
-
     //load weights for the network
     Ann.load_weights();  
   
     //call function to produce input set as vector of floats
-    vector<float> testInput = getInputSet
+    testInput = getInputSet
 
     //test network on input vector and stor 
-    vector<float> results = ANN.testing( testInput );
+    results = ANN.testing( testInput );
 
-    //OUTPUT
+    //Terminal Output
+    cout<<"Fire danger severity for year "<< "FIX THIS STEVEN "<<":"<<endl;
+    for(resPos=0;resPos<results.size();resPos++)
+    {
+        cout<<results[resPos]<<endl;
+    }
 
     //Return Success
     return 0;
