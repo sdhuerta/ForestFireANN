@@ -1,26 +1,5 @@
 
-
-#include <iostream>
-#include <vector>
-#include <string>
-#include <fstream>
-#include <ctime>
-#include <algorithm>
 #include "GetData.h"
-
-
-using namespace std;
-
-
-struct PDSI
-{
-	int year;
-	
-	float acresBurned;
-
-	vector<float> pdsiVal;
-
-};
 
 void normalizePdsiData(vector<PDSI> &fVector, float maxBurned, float minBurned, float maxRating, float minRating)
 {

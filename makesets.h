@@ -11,8 +11,8 @@ struct trainer{
 
 
 
-vector<trainer> createSet(vector<PDSI> data, Params specs);
-vector<float> createTest(vector<PDSI> data, Params specs);
+vector<trainer> createSet(vector<PDSI> data, Parameters specs);
+vector<float> createTest(vector<PDSI> data, Parameters specs);
 
 
 #endif

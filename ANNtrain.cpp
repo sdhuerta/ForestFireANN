@@ -1,7 +1,7 @@
 #include "ParamParser.h"
 #include "GetData.h"
 #include "neuralnetwork.h"
-#include "make_sets.h"
+#include "makesets.h"
 #include <fstream>
 #include <iostream>
 
@@ -14,8 +14,8 @@ using namespace std;
 int main( int argc, char* argv[] )
 {
     string parameterFile = "";
-    trainer train = new trainer();
     int max_iterations = -1;
+    vector<trainer> train ;
 
 
     if( argc != 2 )  // check to make sure user is passing a parameter file with the executable
@@ -29,12 +29,12 @@ int main( int argc, char* argv[] )
     parameterFile = argv[1];  // get name of parameter file 
 
     
-    Params parameters = getParams( parameterFile );  // get parameters via the parameter file
+    Parameters params = getParams( parameterFile );  // get params via the parameter file
 
-    max_iterations = parameters.numEpochs;   // get the max number of epochs to train for
+    max_iterations = params.numEpochs;   // get the max number of epochs to train for
 
     
-    ifstream fin( parameters.trainfile.c_str()) ;   // open the file containing training data
+    ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
 
     if( !fin )
     {
@@ -49,12 +49,12 @@ int main( int argc, char* argv[] )
     fin.close();   // streams should be closed but never crossed!
 
     
-    neuralnetwork Ann = new neuralnetwork( parameters );  // the birth of the neural network
+    neuralnetwork Ann( params );  // the birth of the neural network
 
-    trainer.createSet( fVector, parameters );  // populate the trainer object to be passed into the neural net training process
+    train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
 
 
-    Ann.training( trainer, max_iterations );  // training phase of the network
+    Ann.training( train, max_iterations );  // training phase of the network
 
 
     if( !Ann.save_weights() )  // save the weights to the file

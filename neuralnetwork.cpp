@@ -1,8 +1,7 @@
 #include "neuralnetwork.h"
-#include "make_sets.h"
 
 
-neuralnetwork::neuralnetwork(Param net_define)
+neuralnetwork::neuralnetwork(Parameters net_define)
 {
 
 	layers = net_define.layers ;
@@ -36,7 +35,7 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 {
 	// Get the training block needed
 	// Training block will be larger 
-	int train_set_size = train_inputs.size() ;
+	int train_set_size = train.size() ;
 	vector<int> selections;
 	vector<int>::iterator list_check ;
 	vector<float> calc_output ;
@@ -60,8 +59,8 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 
 		selections.push_back(select) ;
 
-		input = train_inputs[select] ;
-		output = train_ouputs[select] ;
+		input = train[select].input ;
+		output = train[select].output ;
 
 		calc_output = feed_forward();
 

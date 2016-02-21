@@ -1,6 +1,6 @@
 
 
-vector<trainer> createSet(vector<PDSI> data, Params specs)
+vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 {
 	int months_left = specs.monthsPDSIData;
 	int burned_left = specs.yearsBurnedAcreage;
@@ -64,7 +64,7 @@ vector<trainer> createSet(vector<PDSI> data, Params specs)
 }
 
 
-vector<float> createTest(vector<PDSI> data, Params specs)
+vector<float> createTest(vector<PDSI> data, Parameters specs)
 {
 	int months_left = specs.monthsPDSIData;
 	int burned_left = specs.yearsBurnedAcreage;

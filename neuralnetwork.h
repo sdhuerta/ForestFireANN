@@ -7,7 +7,9 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
+#include "makesets.h"
 #include "perceptron.h"
+#include "ParamParser.h"
 
 // TEMPORARY STRUCTURE FOR TESTING ONLY
 // REMOVE BEFORE SUBMISSION!!!
@@ -29,13 +31,12 @@ class neuralnetwork{
 
 
 public:
-	neuralnetwork(Param net_define);	
+	neuralnetwork(Parameters net_define);	
 
 	void load_weights();
         bool save_weights();
 
-	void training(vector<vector<float>> train_inputs, vector<vector<float>> train_ouputs, 
-				  int max_iterations);
+	void training(vector<trainer> train, int max_iterations);
 
 	vector<float> testing(vector<float> test_inputs);
 
