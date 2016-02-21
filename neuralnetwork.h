@@ -31,10 +31,8 @@ class neuralnetwork{
 public:
 	neuralnetwork(Param net_define);	
 
-//	bool load_weights(string filename);
-	//bool save_weights(string filename);
 	void load_weights();
-    void save_weights();
+        bool save_weights();
 
 	void training(vector<vector<float>> train_inputs, vector<vector<float>> train_ouputs, 
 				  int max_iterations);

@@ -1,13 +1,14 @@
 #include "ParamParser.h"
 #include "GetData.h"
 #include "neuralnetwork.h"
+#include "make_sets.h"
 #include <fstream>
 #include <iostream>
 
 
 
 using namespace std;
-i
+
 
 
 int main( int argc, char* argv[] )
@@ -21,6 +22,7 @@ int main( int argc, char* argv[] )
     {
         cout << "ANNtrain requires a parameter file as an argument" << endl;
         cout << "USAGE: ANNtrain [parameter file] " << endl;
+        return -1;
 
     }
 
@@ -48,6 +50,8 @@ int main( int argc, char* argv[] )
 
     
     neuralnetwork Ann = new neuralnetwork( parameters );  // the birth of the neural network
+
+    trainer.createSet( fVector, parameters );  // populate the trainer object to be passed into the neural net training process
 
 
     Ann.training( trainer, max_iterations );  // training phase of the network

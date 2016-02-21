@@ -1,5 +1,5 @@
-#ifndef NEURALNETWORK_H
-#define NEURALNETWORK_H
+#ifndef MAKESETS_H
+#define MAKESETS_H
 
 #include "GetData.h"
 #include "ParamParser.h"
@@ -12,3 +12,5 @@ struct trainer{
 
 
 vector<trainer> createSet(vector<PDSI> data, Params specs)
+
+#endif

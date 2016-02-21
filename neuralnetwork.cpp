@@ -1,4 +1,5 @@
 #include "neuralnetwork.h"
+#include "make_sets.h"
 
 
 neuralnetwork::neuralnetwork(Param net_define)
@@ -95,7 +96,7 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 
 vector<float> neuralnetwork::testing(vector<float> test_inputs)
 {
-	input = test_inputs ;
+	input = test_inputs.test_input ;
 
 	return feed_forward();
 
