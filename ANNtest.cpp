@@ -68,7 +68,7 @@ int main( int argc, char* argv[] )
     Ann.load_weights();  
   
     //call function to produce input set as vector of floats
-    testInput = getInputSet
+    testInput = getInputSet();
 
     //test network on input vector and stor 
     results = ANN.testing( testInput );
