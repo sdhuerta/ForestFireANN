@@ -225,6 +225,8 @@ void neuralnetwork::print_weights(int training_iter)
 
 void neuralnetwork::load_weights()
 {
+  vector<float> temp_weights;
+  float next_weight;
   /*
     int inputNum = -10;
     vector<int> hNodes;
