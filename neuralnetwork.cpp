@@ -225,6 +225,7 @@ void neuralnetwork::print_weights(int training_iter)
 
 void neuralnetwork::load_weights()
 {
+  /*
     int inputNum = -10;
     vector<int> hNodes;
     vector<float> curr_weights;
@@ -257,7 +258,7 @@ void neuralnetwork::load_weights()
 
     int numWeightsTotal = -1;  //will hold the expected number of weights to be loaded
     int weightCount = 0;   // will track actual number of weights that were loaded in
-    
+    */
 
     /*
     // calculate the expected total number of weights
@@ -296,10 +297,25 @@ void neuralnetwork::load_weights()
 
     }
 
-   
+    for(int i = 0; i < net.size(); i++)
+      for( int j = 0; j < net[i].size(); j++)
+      {
+        temp_weights.clear();
+
+        for( int k = 0; k < layers[i] + 1; k++)
+        {
+          fin >> next_weight ;
+          temp_weights.push_back( next_weight );
+        }
+
+        net[i][j].set_weights(temp_weights);
+
+      }
+
+   /*
 
     // load weights for all hidden layer nodes
-    for( int i = 0; i < hNodes.size(); i++ )  // for each of the hidden layers
+    for( int i = 0; i < net.size(); i++ )  // for each of the hidden layers
     {
         cout << "The number of hidden layers is: " << hNodes.size() << endl;
 
@@ -368,7 +384,7 @@ void neuralnetwork::load_weights()
          curr_weights.clear();
 
      }
-     
+     */
 
     fin.close();
 
