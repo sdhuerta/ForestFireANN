@@ -31,9 +31,7 @@ neuralnetwork::neuralnetwork(Param net_define)
 
 
 
-void neuralnetwork::training(vector<vector<float>> train_inputs, 
-							 vector<vector<float>> train_ouputs, 
-							 int max_iterations)
+void neuralnetwork::training(vector<trainer> train, int max_iterations)
 {
 	// Get the training block needed
 	// Training block will be larger 
@@ -74,6 +72,7 @@ void neuralnetwork::training(vector<vector<float>> train_inputs,
 		{
 			selections.clear();
 			iterations++ ;
+                }
 
       if(iterations % 10 == 0)
 			   printf("epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
@@ -404,15 +403,15 @@ void neuralnetwork::load_weights()
 
 
 
-void neuralnetwork::save_weights()
+bool neuralnetwork::save_weights()
 {
     ofstream fout( weightsFile.c_str());
    
     
     if( !fout )
     {
-        std::cout << "There was an error saving the weights to the file: " << weightsFile << endl;
-        return;
+        std::cout << "Could not locate the file: " << weightsFile << endl;
+        return false;
 
     }
 
@@ -438,6 +437,8 @@ void neuralnetwork::save_weights()
     }
 
     fout.close();
+
+    return true;
 
 
 }
