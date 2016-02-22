@@ -38,13 +38,15 @@ int main( int argc, char* argv[] )
     int resPos; 
 
     //vector of floats storing input data
-    vector<float> testInput
+    vector<float> testInput ;
 
     //vector of results returned from testing
-    vector<float> results
+    vector<float> results ;
 
-    //Params struct to hold the .prm designated parameters for ANN
-    Params parameters
+    vector<trainer> train ;
+
+    //Params struct to hold the .prm designated params for ANN
+    Parameters params ;
 
 
     //check for .prm file and excutable
@@ -59,25 +61,48 @@ int main( int argc, char* argv[] )
     parameterFile = argv[1];  
     
     //Call getParams to store .prm values into parameter struct for quick access 
-    parameters = getParams(parameterFile);
+    params = getParams(parameterFile);
+
+    ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
+
+    if( !fin )
+    {
+
+        cout << "There was an error opening the training data";
+        return -1;
+
+    }
+
+    vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
+
+    fin.close();   // streams should be closed but never crossed!
 
     //The birth of the neural network
-    neuralnetwork Ann = new neuralnetwork( parameters );  
+    neuralnetwork ann(params);  
   
     //load weights for the network
-    Ann.load_weights();  
+    ann.load_weights();  
   
     //call function to produce input set as vector of floats
-    testInput = getInputSet();
+    //testInput = createTest(fVector, params);
 
     //test network on input vector and stor 
-    results = ANN.testing( testInput );
+    
+    train = createSet( fVector, params );
 
-    //Terminal Output
-    cout<<"Fire danger severity for year "<< "FIX THIS STEVEN "<<":"<<endl;
-    for(resPos=0;resPos<results.size();resPos++)
+    for(int i = 0; i < train.size(); i++ )
     {
-        cout<<results[resPos]<<endl;
+
+        results = ann.testing( train[i].input );
+
+        //Terminal Output
+        cout<<"Fire danger severity for year "<< fVector[i+1].year <<":"<<endl;
+        for(resPos=0;resPos<results.size();resPos++)
+        {
+            cout << results[resPos] << "     " ;
+        }
+
+        cout << endl;
     }
 
     //Return Success
