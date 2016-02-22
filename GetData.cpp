@@ -8,7 +8,7 @@ void normalizePdsiData(vector<PDSI> &fVector, float maxBurned, float minBurned, 
 
 	for (int i = 0; i < fVector.size(); i++)
 	{
-		fVector[i].acresBurned = (fVector[i].acresBurned - minBurned) / denomB;  // normalize the acres burned
+		fVector[i].normAcresBurned = (fVector[i].normAcresBurned - minBurned) / denomB;  // normalize the acres burned
 
 		vector<float> pdsiData = fVector[i].pdsiVal;
 
@@ -69,7 +69,9 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
 
 		// read the acres burned for that year
 		getline(fin, temp, ',');
-		feature.acresBurned = atof(temp.c_str());  
+		feature.normAcresBurned = atof(temp.c_str());
+
+                feature.rawAcresBurned = feature.normAcresBurned;  //preserve the unnormalized arcres burned data
 
 
 		// search for max and min burn values for normalization later
@@ -134,37 +136,4 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
 	return fVector;
 }
 
-
-//int main()
-//{	
-
-
-	/* Still need to code the functionality to receive input from a parameter file*/
-
-	
-//	string pdsi_bh = "PDSI_BH_1978-2015.csv";
-//	string pdsi_nw = "PDSI_NW_1998_2015.csv";
-//	string temp;
-
-//	string input = pdsi_bh;
-
-//	ifstream fin(input.c_str());
-
-//	if (!fin)
-//	{
-//		std::cout << "There was an error opening the input file";
-//		return -1;
-//	}
-	
-//	vector<PDSI> fVector = pdsiFeatureVector(fin);
-
-//	fin.close();
-
-	
-
-//	fVector;		
-
-
-  //  return 0;
-//}
 

@@ -16,7 +16,9 @@ struct PDSI
 {
 	int year;
 	
-	float acresBurned;
+	float normAcresBurned;
+
+        float rawAcresBurned;
 
 	vector<float> pdsiVal;
 
