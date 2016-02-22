@@ -4,11 +4,11 @@
 neuralnetwork::neuralnetwork(Parameters net_define)
 {
 
-	layers = net_define.layers ;
-	learning = net_define.learning_rate ;
+	layers = net_define.nodesPerLayer ;
+	learning = net_define.learningRate ;
 	momentum = net_define.momentum ;
-	threshold = net_define.min_error;
-        weightsFile = net_define.weightsFile;
+	threshold = net_define.errorThreshold;
+  weightsFile = net_define.weightsFile;
 
 	// Skip the input layer node.
 	for(int i = 1; i < layers.size() ; i++)
@@ -24,7 +24,6 @@ neuralnetwork::neuralnetwork(Parameters net_define)
 
 		net.push_back(layer) ;
 
-
 	}
 
 }
@@ -36,6 +35,7 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 	// Get the training block needed
 	// Training block will be larger 
 	int train_set_size = train.size() ;
+
 	vector<int> selections;
 	vector<int>::iterator list_check ;
 	vector<float> calc_output ;
@@ -43,14 +43,15 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 	float error = 0.0;
 	int select ;
 
-	while(iterations < max_iterations)
-	{
+  //max_iterations = 5 ;
 
+	while(iterations < max_iterations)
+	{ 
 		select = rand() % train_set_size ;
 
 		list_check = find(selections.begin(), selections.end(), select);
 
-		if( list_check != selections.end() )
+		while( list_check != selections.end() )
 		{
 			select = rand() % train_set_size ;
 
@@ -72,30 +73,31 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 		{
 			selections.clear();
 			iterations++ ;
-                }
 
       if(iterations % 10 == 0)
-			   printf("epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
+  		   printf("Epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
 
-			if( (error / train_set_size) < threshold) 
-			{
-        printf("epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
-				//printf("NUM ITERATIONS: %d\n", iterations);
-				return ;
-			}
+  		if( (error / train_set_size) < threshold) 
+  		{
+        printf("Epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
+  			//printf("NUM ITERATIONS: %d\n", iterations);
+  			return ;
+  		}
 
-			error = 0 ;
-		}
+		  error = 0 ;
+    }
 
-		adjust_weights();
+    adjust_weights();
 	}
 
+		
 }
+
 
 
 vector<float> neuralnetwork::testing(vector<float> test_inputs)
 {
-	input = test_inputs.test_input ;
+	input = test_inputs ;
 
 	return feed_forward();
 

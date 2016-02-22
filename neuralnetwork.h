@@ -59,7 +59,7 @@ private:
 	float learning;
 	float momentum;
 	float threshold;
-        string weightsFile;
+    string weightsFile;
 
 	// For training and testing
 	vector<float> input ;

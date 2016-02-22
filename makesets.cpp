@@ -1,4 +1,4 @@
-
+#include "makesets.h"
 
 vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 {
@@ -9,18 +9,27 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 	int correct_output;
 	vector<trainer> train_set ;
 
-	int sample_size = (specs.monthsPDSIData - specs.endMonth) / 12 ;
+	trainer new_set;
+	vector<float> input_set;
+	vector<float> output_set;
+
+
+	// Let's reverse our set so that we can process it the way 
+	// we want to
+	reverse(data.begin(), data.end()) ;
+
+	int sample_size = (specs.monthsPDSIData - specs.endMonth) / 12 + 2;
 
 	int total_samples = data.size() - sample_size + 1;
 
-	for(int i = 1; i < total_samples-1; i++ )
-	{
-		vector<float> input_set;
-		vector<float> output_set(specs.numClasses, 0);
-		
+	for(int i = 1; i < total_samples; i++ )
+	{	
+		input_set.clear();
+		output_set.clear();
+
 		// Let's load our burned data first.
 		for(int j = 0; j < burned_left; j++)
-			intput_set.push_back(data[i+1].acresBurned);
+			input_set.push_back(data[i+1].acresBurned);
 
 		// Load up our end months
 		for(int j = 0; j < end_month; j++ )
@@ -30,11 +39,12 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 		}
 
 		next_year = 1 ;
+
 		while( months_left > 0 ) 
 		{
 			for(int j = 0; j < 12 && months_left > 0; j++ )
 			{
-				input_set.push_back(data[i+next_year].pdsiVal[j])
+				input_set.push_back(data[i+next_year].pdsiVal[j]);
 				months_left-- ;
 			}
 
@@ -44,21 +54,22 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 
 		new_set.input = input_set ;
 
-		if( data[i].acresBurned >= specs.lowCutoff)
-			output_set[1] = 1.0 ;
+		output_set.assign(specs.numClasses, 0);
 
-		else if ( data[i].acresBurned >= specs.highCutoff)
-			output_set[2] = 1.0 ;
-
-		else
+		if( data[i].acresBurned < specs.lowCutoff )
 			output_set[0] = 1.0 ;
 
-		new_set.input = output_set ;
+		else if ( data[i].acresBurned < specs.highCutoff)
+			output_set[1] = 1.0 ;
+
+		else
+			output_set[2] = 1.0 ;
+
+		new_set.output = output_set ;
 
 		train_set.push_back(new_set) ;
 
 	}
-
 
 	return train_set ;
 }
@@ -72,7 +83,10 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
 	vector<float> test_input ;
 	int next_year = 1 ;
 
-	for(int i = 0; i < specs.yearsBurnedAcreage )
+	// Change the order
+	reverse(data.begin(), data.end()) ;
+
+	for(int i = 0; i < burned_left; i++ )
 	{
 		test_input.push_back(data[i].acresBurned);
 	}
@@ -97,5 +111,5 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
 
 	}
 
-	return test_intput ;
+	return test_input ;
 }
