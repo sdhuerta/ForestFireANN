@@ -13,23 +13,19 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 	vector<float> input_set;
 	vector<float> output_set;
 
-
-	// Let's reverse our set so that we can process it the way 
-	// we want to
-	reverse(data.begin(), data.end()) ;
-
 	int sample_size = (specs.monthsPDSIData - specs.endMonth) / 12 + 2;
 
 	int total_samples = data.size() - sample_size + 1;
 
 	for(int i = 1; i < total_samples; i++ )
-	{	
+	{
+		months_left = specs.monthsPDSIData;
 		input_set.clear();
 		output_set.clear();
 
 		// Let's load our burned data first.
 		for(int j = 0; j < burned_left; j++)
-			input_set.push_back(data[i+1].acresBurned);
+			input_set.push_back(data[i+1].normAcresBurned);
 
 		// Load up our end months
 		for(int j = 0; j < end_month; j++ )
@@ -56,10 +52,10 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 
 		output_set.assign(specs.numClasses, 0);
 
-		if( data[i].acresBurned < specs.lowCutoff )
+		if( data[i].rawAcresBurned < specs.lowCutoff )
 			output_set[0] = 1.0 ;
 
-		else if ( data[i].acresBurned < specs.highCutoff)
+		else if ( data[i].rawAcresBurned < specs.highCutoff)
 			output_set[1] = 1.0 ;
 
 		else
@@ -83,12 +79,9 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
 	vector<float> test_input ;
 	int next_year = 1 ;
 
-	// Change the order
-	reverse(data.begin(), data.end()) ;
-
 	for(int i = 0; i < burned_left; i++ )
 	{
-		test_input.push_back(data[i].acresBurned);
+		test_input.push_back(data[i].normAcresBurned);
 	}
 
 	for(int i = 0; i < end_month; i++)
@@ -96,8 +89,6 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
 		test_input.push_back(data[0].pdsiVal[i]);
 		months_left-- ;
 	}
-
-
 
 	while(months_left > 0)
 	{

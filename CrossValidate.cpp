@@ -1,7 +1,7 @@
 #include "ParamParser.h"
 #include "GetData.h"
 #include "neuralnetwork.h"
-#include "make_sets.h"
+#include "makesets.h"
 #include <fstream>
 #include <iostream>
 #include <stdlib.h>
@@ -15,13 +15,20 @@ using namespace std;
 
 int main( int argc, char* argv[] )
 {
+    srand(time(NULL));
+
+    vector<trainer> temp_trainer ;
+    vector<int> selections ;
+    vector<int>::iterator list_check ;
+    vector<float> result ;
+
     string parameterFile = "";
     int max_iterations = -1;
     int vectSize = -1;
     int randIndex = -1;
-
-    
-
+    int train_set_size ;
+    int select ;
+    trainer sample ;
 
     if( argc != 2 )  // check to make sure user is passing a parameter file with the executable
     {
@@ -34,12 +41,12 @@ int main( int argc, char* argv[] )
     parameterFile = argv[1];  // get name of parameter file 
 
     
-    Params parameters = getParams( parameterFile );  // get parameters via the parameter file
+    Parameters params = getParams( parameterFile );  // get parameters via the parameter file
 
-    max_iterations = parameters.numEpochs;   // get the max number of epochs to train for
+    max_iterations = params.numEpochs;   // get the max number of epochs to train for
 
     
-    ifstream fin( parameters.trainfile.c_str()) ;   // open the file containing training data
+    ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
 
     if( !fin )
     {
@@ -51,40 +58,56 @@ int main( int argc, char* argv[] )
 
     vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector    
 
+    reverse(fVector.begin(), fVector.end()) ;
+
     fin.close();   // streams should be closed but never crossed!
 
-    
-    neuralnetwork Ann = new neuralnetwork( parameters );  // the birth of the neural network
 
-    vector<trainer> train = createSet( fVector, parameters );  // populate the trainer object to be passed into the neural net training process
+    vector<trainer> train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
 
     vectSize = train.size();
 
-    srand(time(NULL));
+    train_set_size = vectSize - 1 ;
 
-    randIndex = rand() % vectSize = + 1; 
+    for(int i = 0 ; i < train_set_size ; i++ )
+    {
+        neuralnetwork ann(params);  // the birth of the neural network
 
-    if( randIndex == vectSize )  // if the random index would overstep the bounds of our vector
-      { 
-          randIndex -= 1;  // decrement it by one 
-      }
+        temp_trainer = train ;
 
-    
-    trainer outCast = train[randIndex];  // grab the entry to be left out, will be used for testing later
+        select = rand() % train_set_size ;
 
-    train.erase( randIndex ); // remove the element from the vector
+        list_check = find(selections.begin(), selections.end(), select);
 
-    Ann.training( train, max_iterations );  // training phase of the network
+        while( list_check != selections.end() )
+        {
+            select = rand() % train_set_size ;
 
-    
-    vector<float> input = getInputs( train );  
+            list_check = find(selections.begin(), selections.end(), select);    
+        }
 
-    Ann.testing( input );
+        selections.push_back(select) ;
 
+        sample = temp_trainer[select] ;
 
+        temp_trainer.erase(temp_trainer.begin() + select) ;
 
-    // do other stuff, such as output the sweetest of results for all to see
+        ann.training( temp_trainer, max_iterations);
 
+        result = ann.testing( sample.input );
+
+        cout << fVector[select].year << ": [" ;
+
+        for(int i = 0; i < result.size(); i++)
+            cout << round(result[i]) << " " ;
+
+        cout << "]  [ " ;
+
+        for(int i = 0; i < sample.output.size(); i++)
+            cout << sample.output[i] << " " ;
+
+        cout << "]" << endl ;
+    }
 
 
     return 0;

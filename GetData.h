@@ -18,7 +18,7 @@ struct PDSI
 	
 	float normAcresBurned;
 
-        float rawAcresBurned;
+    float rawAcresBurned;
 
 	vector<float> pdsiVal;
 

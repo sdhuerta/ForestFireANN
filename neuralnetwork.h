@@ -9,18 +9,31 @@
 #include <iostream>
 #include "makesets.h"
 #include "perceptron.h"
-#include "ParamParser.h"
+//#include "ParamParser.h"
 
 // TEMPORARY STRUCTURE FOR TESTING ONLY
 // REMOVE BEFORE SUBMISSION!!!
-struct Param{
-	vector<int> layers = { 5, 2, 3, 2 } ; // five inputs, 2 nodes in first h layer, 3 in second h layer, two nodes in o layer
-	float learning_rate ;
-	float momentum ;
-	float min_error;
-        string weightsFile = "FakeWeightsFile.txt";
+// struct Param{
+// 	vector<int> layers = { 5, 2, 3, 2 } ; // five inputs, 2 nodes in first h layer, 3 in second h layer, two nodes in o layer
+// 	float learning_rate ;
+// 	float momentum ;
+// 	float min_error;
+//         string weightsFile = "FakeWeightsFile.txt";
    
-} ;
+// } ;
+
+// struct Parameters{
+// 	vector<int> nodesPerLayer ;
+// 	float learningRate ;
+// 	float momentum ;
+// 	float errorThreshold;
+//   	string weightsFile;
+//   };
+
+// struct trainer{
+// 	vector<float> input;
+// 	vector<float> output;
+// };
 
 
 
@@ -54,7 +67,7 @@ public:
 private:
 	vector<int> layers;
 	vector<vector<Perceptron>> net ;
-        int weightLayers;
+    int weightLayers;
 
 	float learning;
 	float momentum;

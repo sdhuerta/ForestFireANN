@@ -1,5 +1,6 @@
 #include <vector>
 #include <stdio.h>
+#include <string> 
 #include "neuralnetwork.h"
 
 using namespace std;
@@ -95,24 +96,63 @@ void print_response(neuralnetwork net, vector<float> character);
 int main(int argc, char* argv[])
 {
 
-    Param definitions;
+    Parameters definitions;
 
     /* Se}up layers
     * intput = 20
     * hidden = 14
     * output = 8
     */
-    definitions.layers = {24,14,8} ;
+    definitions.nodesPerLayer = {24,14,8} ;
+    definitions.learningRate = 0.4;
+    definitions.momentum = .6 ;
+    definitions.errorThreshold = .01 ;
+    definitions.weightsFile = "test_weights.txt" ;
 
-    definitions.learning_rate = 0.4;
-    definitions.momentum = 0 ;
-    definitions.min_error = .1 ;
 
     neuralnetwork testnet = neuralnetwork(definitions) ;
 
-    vector<vector<float>> test_data = {A,B,C,D,E,F,One,Nine} ;
+    vector<trainer> train;
 
-    testnet.training(test_data, answers, 10000);
+    trainer a;
+    trainer b;
+    trainer c;
+    trainer d;
+    trainer e;
+    trainer f;
+    trainer one;
+    trainer nine;
+
+    a.input = A;
+    b.input = B;
+    c.input = C;
+    d.input = D;
+    e.input = E;
+    f.input = F;
+    one.input = One;
+    nine.input = Nine;
+
+    a.output = answers[0];
+    b.output = answers[1];
+    c.output = answers[2];
+    d.output = answers[3];
+    e.output = answers[4];
+    f.output = answers[5];
+    one.output = answers[6];
+    nine.output = answers[7];
+
+    train.push_back(a);
+    train.push_back(b);
+    train.push_back(c);
+    train.push_back(d);
+    train.push_back(e);
+    train.push_back(f);
+    train.push_back(one);
+    train.push_back(nine);
+
+    //vector<vector<float>> test_data = {A,B,C,D,E,F,One,Nine} ;
+
+    testnet.training(train, 10000);
 
     vector<float> response ;
 

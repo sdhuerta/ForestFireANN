@@ -43,7 +43,7 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 	float error = 0.0;
 	int select ;
 
-  //max_iterations = 5 ;
+  //max_iterations = 10 ;
 
 	while(iterations < max_iterations)
 	{ 
@@ -65,6 +65,8 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 
 		calc_output = feed_forward();
 
+    adjust_weights();
+
 		error += calc_error(calc_output) ;
 
 		// One iteration means that we have trained on the entire training
@@ -74,10 +76,10 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 			selections.clear();
 			iterations++ ;
 
-      if(iterations % 10 == 0)
-  		   printf("Epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
+      //if(iterations % 10 == 0)
+  		  //printf("Epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
 
-  		if( (error / train_set_size) < threshold) 
+  		if( (error / train_set_size) <= threshold) 
   		{
         printf("Epoch: %d  error: %.4f\n", iterations, (error / train_set_size));
   			//printf("NUM ITERATIONS: %d\n", iterations);
@@ -87,9 +89,8 @@ void neuralnetwork::training(vector<trainer> train, int max_iterations)
 		  error = 0 ;
     }
 
-    adjust_weights();
+    //print_weights(iterations) ;
 	}
-
 		
 }
 
@@ -109,23 +110,12 @@ vector<float> neuralnetwork::feed_forward()
 	vector<float> hidden_outputs;
 	vector<float> hidden_inputs;
 
-	//Start with input layer to hidden layer
-	for(int i = 0; i < net[0].size(); i++ )
-	{
-		hidden_outputs.push_back( net[0][i].calc_output( input ));
-	}
+  hidden_outputs = input; 
 
-
-	// NOW, for the hidden layers leading up to the output layer
-	// Start with 1 since we have taken care of the first hidden layer,
-	// subtract 1 from the size of the layers as we are not dealing with 
-	// the input layer
-	for(int i = 1; i < net.size(); i++)
+	for(int i = 0; i < net.size(); i++)
 	{
 		hidden_inputs = hidden_outputs ;
 		hidden_outputs.clear();
-
-		//printf("%d\n",i);
 
 		for(int j = 0; j < net[i].size(); j++)
 		{
@@ -134,8 +124,6 @@ vector<float> neuralnetwork::feed_forward()
 
 		hidden_inputs.clear();
 	}
-
-
 	// Return the calculated output layer outputs
 	return hidden_outputs ;
 }
@@ -145,36 +133,33 @@ vector<float> neuralnetwork::feed_forward()
 void neuralnetwork::adjust_weights()
 {	
 
-    for( int i = net.size()-1; i > -1; i-- )
-    {  
-    	
-        if( i == net.size()-1 )  // if we are processing the output layer
-        {
+  for( int i = net.size()-1; i > -1; i-- )
+  {  
+	
+    if( i == net.size()-1 )  // if we are processing the output layer
+    {
 
-            for( int j = 0; j < net[i].size(); j++ )
-            { 
-            	net[i][j].set_delta(output[j]);
-            }
-
-        }
-        else   // processing a hidden layer 
-        {
-
-            for( int j = 0; j < net[i].size(); j++)
-            {
-
-                net[i][j].set_delta(j, net[i+1]);
-            }
-        }
+      for( int j = 0; j < net[i].size(); j++ )
+      { 
+      	net[i][j].set_delta(output[j]);
+      }
 
     }
+    else   // processing a hidden layer 
+    {
+      for( int j = 0; j < net[i].size(); j++)
+      {
+          net[i][j].set_delta(j, net[i+1]);
+      }
+    }
 
-    for( int i = 0; i < net.size(); i++ )
-    	for(int j = 0; j < net[i].size(); j++)
-    	{
-    		//printf("Adjusting Layer: %d Node %d\n", i, j) ;
-    		net[i][j].adjust_weights();
-    	}
+  }
+
+  for( int i = 0; i < net.size(); i++ )
+  	for(int j = 0; j < net[i].size(); j++)
+  	{
+  		net[i][j].adjust_weights();
+  	}
 }
 
 

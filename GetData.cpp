@@ -75,11 +75,11 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
 
 
 		// search for max and min burn values for normalization later
-		if (feature.acresBurned > maxBurned)
-			maxBurned = feature.acresBurned;
+		if (feature.rawAcresBurned > maxBurned)
+			maxBurned = feature.rawAcresBurned;
 
-		if (feature.acresBurned < minBurned)
-			minBurned = feature.acresBurned;
+		if (feature.rawAcresBurned < minBurned)
+			minBurned = feature.rawAcresBurned;
 
 		if (feature.year == currYear)  // make sure only to read monthly values up to and including March if reading current year's data
 		{

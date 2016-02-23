@@ -1,5 +1,6 @@
 #include "ParamParser.h"
 #include "neuralnetwork.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -75,6 +76,9 @@ int main( int argc, char* argv[] )
 
     vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
 
+    // Change the order
+    reverse(fVector.begin(), fVector.end()) ;
+
     fin.close();   // streams should be closed but never crossed!
 
     //The birth of the neural network
@@ -90,19 +94,30 @@ int main( int argc, char* argv[] )
     
     train = createSet( fVector, params );
 
+    vector<float> correct ;
+
     for(int i = 0; i < train.size(); i++ )
     {
 
         results = ann.testing( train[i].input );
+        correct = train[i].output;
+
 
         //Terminal Output
-        cout<<"Fire danger severity for year "<< fVector[i+1].year <<":"<<endl;
+        cout<<"Fire danger severity for year "<< fVector[i+1].year <<": [ ";
+
         for(resPos=0;resPos<results.size();resPos++)
         {
-            cout << results[resPos] << "     " ;
+            cout << round(results[resPos]) << "  " ;
         }
 
-        cout << endl;
+        cout << "]" << "\t[ ";
+
+        for(int j = 0; j < correct.size(); j++ )
+        {
+            cout << correct[j] << "  " ; 
+        }
+        cout << "]" << endl; 
     }
 
     //Return Success

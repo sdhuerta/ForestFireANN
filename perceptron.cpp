@@ -59,7 +59,7 @@ void Perceptron::activation()
 // For our hidden layer weights
 void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
 {
-    float delta = 0 ;
+    delta = 0 ;
     float next_delta;
     float next_weight;
 
@@ -75,17 +75,17 @@ void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
     }
 
     //REMOVE BEFORE SUBMISSION!!!!!printf("delta: %6.4f    output: %6.4f\n", delta, output);
-
-    delta = delta * output * (1 - output) ;
+    delta = 2.0 * delta * output * (1 - output) ;
+    //printf("delta: %6.4f\n", delta);
 }
 
 // Four our output layer weights
 void Perceptron::set_delta(float correct_output)
 {
-    delta = -(correct_output - output) * output * (1.0 - output);
+    delta = -2.0 * (correct_output - output) * output * (1.0 - output);
     //REMOVE BEFORE SUBMISSION!!!!!
-    //printf("OUTPUT LAYER DELTA: %6.4f TARGET: %6.4f OUTPUT: %6.4f\n",delta,
-    //       correct_output, output);
+    // printf("OUTPUT LAYER DELTA: %6.4f TARGET: %6.4f OUTPUT: %6.4f\n",delta,
+    //        correct_output, output);
 }
 
 
@@ -106,10 +106,13 @@ void Perceptron::adjust_weights()
         temp_momentum =  momentum * (weights[i] - old_weights[i]);
 
         if( i < weights.size()-1)
-            weights[i] = weights[i] - alpha * delta * inputs[i] + temp_momentum;
-        ////REMOVE BEFORE SUBMISSION!!!!!printf("delta: %6.4f    input: %6.4f\n", delta, inputs[i]);
+        {
+            weights[i] = weights[i] - alpha * delta * inputs[i]; // + temp_momentum;
+        }
         else
-            weights[i] = weights[i] - alpha * delta + temp_momentum;
+            weights[i] = weights[i] - alpha * delta;// + temp_momentum;
+
+        ////REMOVE BEFORE SUBMISSION!!!!! printf("delta: %6.4f    input: %6.4f\n", delta, inputs[i]);
     }
 
     old_weights = weights ;
@@ -126,11 +129,3 @@ vector<float> Perceptron::get_weights()
 {
     return weights ;
 }
-
- // Writing weights to file
-
-
-// Setting weights to file
-
-
-// 

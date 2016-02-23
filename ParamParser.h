@@ -7,8 +7,6 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include "GetData.h"
-
 
 using namespace std;
 

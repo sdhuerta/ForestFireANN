@@ -13,6 +13,8 @@ using namespace std;
 
 int main( int argc, char* argv[] )
 {
+    srand(time(NULL));
+
     string parameterFile = "";
     int max_iterations = -1;
     vector<trainer> train ;
@@ -46,6 +48,9 @@ int main( int argc, char* argv[] )
 
     vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
 
+        // Change the order
+    reverse(fVector.begin(), fVector.end()) ;
+
     fin.close();   // streams should be closed but never crossed!
 
     
@@ -62,7 +67,6 @@ int main( int argc, char* argv[] )
         cout << "ERROR: saving weights was unsuccessful" << endl;
         return -1;
     }
-
 
 
     return 0;
