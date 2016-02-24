@@ -115,7 +115,7 @@ int main( int argc, char* argv[] )
     train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
 
 
-    Ann.training( train, max_iterations );  // training phase of the network
+    Ann.training( train, max_iterations, true );  // training phase of the network
 
 
     if( !Ann.save_weights() )  // save the weights to the file
