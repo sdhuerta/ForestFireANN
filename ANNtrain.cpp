@@ -1,3 +1,49 @@
+/*************************************************************************//**
+ * @file
+ *
+ * @mainpage Program #1 - Fire Detection Artificial Neural Network
+ *
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @date  February 24, 2016
+ *
+ * @par Professor: Dr. John Weiss
+ *         
+ * @par Course: CSC 447 - M001 -  9:00 am MWF
+ * 
+ * @par Location:  McLaury - 313
+ *        
+ * @details 
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * @section compile_section Compiling and Usage
+ *
+ * @par Compiling Instructions:
+ *     	g++ -g -Wall -std=c++11 
+ *
+ * @par Usage:
+ * 	@verbatim
+   c:\> make
+   c:\> ./ANNtrain <parameters>.prm
+   c:\> ./ANNtest <parameters>.prm
+   c:\> ./CrossValidate <parameters>.prm
+   @endverbatim
+ *
+ * @section todo_bugs_modification_section Todo, Bugs, and Modifications
+ *
+ * @bug None
+ *
+ * @todo None
+ *
+ *****************************************************************************/
+
 #include "ParamParser.h"
 #include "GetData.h"
 #include "neuralnetwork.h"
@@ -5,11 +51,21 @@
 #include <fstream>
 #include <iostream>
 
-
-
 using namespace std;
 
-
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 int main( int argc, char* argv[] )
 {

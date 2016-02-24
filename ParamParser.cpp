@@ -2,7 +2,7 @@
 
 
 /******************************************************************************
- * @authors Savoy Schuler
+ * @authors Steven Huerta, Luke Meyers, Savoy Schuler
  *
  * @par Description:
  * This function's primary purpose is storing information from the .prm in a 

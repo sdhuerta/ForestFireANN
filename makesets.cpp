@@ -1,5 +1,20 @@
 #include "makesets.h"
 
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
 {
 	int months_left = specs.monthsPDSIData;
@@ -74,6 +89,20 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
 	return train_set ;
 }
 
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 vector<float> createTest(vector<PDSI> data, Parameters specs)
 {

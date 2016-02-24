@@ -1,5 +1,20 @@
 #include "perceptron.h"
 
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 Perceptron::Perceptron(int num_in, float learning_rate, float mtm)
 {
     momentum = mtm ;
@@ -21,6 +36,20 @@ Perceptron::Perceptron(int num_in, float learning_rate, float mtm)
 }
 
 
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 float Perceptron::calc_output(vector <float> percept_inputs)
 {
     inputs = percept_inputs ;
@@ -34,6 +63,20 @@ float Perceptron::calc_output(vector <float> percept_inputs)
 }
 
 
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 void Perceptron::sum_weights()
 {
     sum = 0;
@@ -46,11 +89,40 @@ void Perceptron::sum_weights()
 }
 
 
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 void Perceptron::activation()
 {
     //Sigmoid function
     output = 1.0 / (1 + exp(-sum)) ;
 }
+
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 // BACKPROP
 
@@ -65,19 +137,33 @@ void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
 
     // FOR EVERY NODE IN THE FOLLOWING LAYER 
     // delta of that layer * connecting weight
-    //REMOVE BEFORE SUBMISSION!!!!! printf("HIDDEN NODE BACKPROP\n");
+
     for(int i = 0; i < next_layer.size(); i++ )
     {
         next_delta = next_layer[i].get_delta(); 
         next_weight = next_layer[i].get_weights()[position] ;
-        //REMOVE BEFORE SUBMISSION!!!!!printf("delta: %6.4f    weight: %6.4f\n", next_delta, next_weight);
+       
         delta += next_delta * next_weight   ;
     }
 
-    //REMOVE BEFORE SUBMISSION!!!!!printf("delta: %6.4f    output: %6.4f\n", delta, output);
+
     delta = 2.0 * delta * output * (1 - output) ;
-    //printf("delta: %6.4f\n", delta);
 }
+
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 // Four our output layer weights
 void Perceptron::set_delta(float correct_output)
@@ -89,12 +175,40 @@ void Perceptron::set_delta(float correct_output)
 }
 
 
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 // So we can reach back for those hidden layers
 float Perceptron::get_delta()
 {
     return delta ;
 }
 
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 // Let's adjust weights for all layers
 void Perceptron::adjust_weights()
@@ -107,12 +221,11 @@ void Perceptron::adjust_weights()
 
         if( i < weights.size()-1)
         {
-            weights[i] = weights[i] - alpha * delta * inputs[i]; // + temp_momentum;
+            weights[i] = weights[i] - alpha * delta * inputs[i]; 
+	    // + temp_momentum;
         }
         else
             weights[i] = weights[i] - alpha * delta;// + temp_momentum;
-
-        ////REMOVE BEFORE SUBMISSION!!!!! printf("delta: %6.4f    input: %6.4f\n", delta, inputs[i]);
     }
 
     old_weights = weights ;
@@ -120,10 +233,39 @@ void Perceptron::adjust_weights()
 }
 
 
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 void Perceptron::set_weights(vector<float> new_weights)
 {
     weights = new_weights; 
 }
+
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 vector<float> Perceptron::get_weights()
 {

@@ -7,11 +7,22 @@
 #include <stdlib.h>
 #include <time.h>
 
-
-
 using namespace std;
 
 
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 int main( int argc, char* argv[] )
 {

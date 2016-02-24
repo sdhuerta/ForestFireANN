@@ -8,7 +8,7 @@ using namespace std;
 
 
 /******************************************************************************
- * @authors Savoy Schuler
+ * @authors Steven Huerta, Luke Meyer, Savoy Schuler
  *
  * @par Description:
  * This main is used for testing the ANN after it has been trained and cross

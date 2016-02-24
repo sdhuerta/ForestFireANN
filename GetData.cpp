@@ -1,5 +1,19 @@
-
 #include "GetData.h"
+
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 void normalizePdsiData(vector<PDSI> &fVector, float maxBurned, float minBurned, float maxRating, float minRating)
 {
@@ -20,6 +34,21 @@ void normalizePdsiData(vector<PDSI> &fVector, float maxBurned, float minBurned, 
 	
 }
 
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
+
 int getYear()
 {
 	time_t currentTime;
@@ -37,6 +66,21 @@ int getYear()
 	return currYear;
 
 }
+
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 vector<PDSI> pdsiFeatureVector(ifstream &fin)
 {
