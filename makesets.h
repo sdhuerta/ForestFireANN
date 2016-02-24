@@ -12,13 +12,13 @@
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
  * 
  * @par Description: 
- * Struct for object movie
+ * Struct to contain the input and output for each perceptron
  ******************************************************************************/
 
 
 struct trainer {
-    vector<float> input ;		/*!<   */
-    vector<float> output ;		/*!<   */
+    vector<float> input ;	/*!< vector contains input data for a perepctron */
+    vector<float> output ;	/*!< vector contains output data from a perceptron */
 };
 
 

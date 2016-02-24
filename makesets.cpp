@@ -4,14 +4,18 @@
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function creates a training set from the vector of
+ *structs that contain .csv burn data. A parameter struct containing configuration
+ *settings, originating from a parameter input file, is utilized to specifically
+ * parse the .csv data vector. Again, the result is a feature vector to be used
+ * as input for the training process.  
  *
  *
- * @param[in]
+ * @param[in] vector<PDSI> data - contains normalized .csv burn data
  *
- * @param[in]
+ * @param[in] Parameters specs - struct containing parameter configuration data
  *
- * @returns
+ * @returns vector<trainer> - the true feature vector to be fed into the ANN
  *
  *****************************************************************************/
 
@@ -93,14 +97,15 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function creates a feature vector (of sorts) to be
+ * used as input for the testing process. 
  *
  *
- * @param[in]
+ * @param[in] vector<PDSI> - contains normalized .csv burn data
  *
- * @param[in]
+ * @param[in] Parameters specs - struct containing parameter configuration data
  *
- * @returns
+ * @returns vector<float> - the true feature vector to be used as input for testing
  *
  *****************************************************************************/
 
