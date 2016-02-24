@@ -96,6 +96,9 @@ int main( int argc, char* argv[] )
 
     vector<float> correct ;
 
+    printf("Parameter File: %s\n", parameterFile.c_str());
+    printf("Data File: %s\n", params.trainFile.c_str());
+
     for(int i = 0; i < train.size(); i++ )
     {
 
@@ -103,21 +106,8 @@ int main( int argc, char* argv[] )
         correct = train[i].output;
 
 
-        //Terminal Output
-        cout<<"Fire danger severity for year "<< fVector[i+1].year <<": [ ";
+        
 
-        for(resPos=0;resPos<results.size();resPos++)
-        {
-            cout << round(results[resPos]) << "  " ;
-        }
-
-        cout << "]" << "\t[ ";
-
-        for(int j = 0; j < correct.size(); j++ )
-        {
-            cout << correct[j] << "  " ; 
-        }
-        cout << "]" << endl; 
     }
 
     //Return Success
