@@ -25,16 +25,13 @@ TARGET = ANNtest ANNtrain CrossValidate
 all:	$(TARGET)
 
 #Dependencies 
-ANNtest: ANNtest.o neuralnetwork.o ParamParser.o perceptron.o GetData.o
-	makesets.o 
+ANNtest: ANNtest.o neuralnetwork.o ParamParser.o perceptron.o GetData.o makesets.o 
 	$(LINK) $(CFLAGS) -o $@ $^
 
-ANNtrain: ANNtrain.o neuralnetwork.o ParamParser.o perceptron.o GetData.o 
-	  makesets.o 
+ANNtrain: ANNtrain.o neuralnetwork.o ParamParser.o perceptron.o GetData.o makesets.o 
 	$(LINK) $(CFLAGS) -o $@ $^
 
-CrossValidate: CrossValidate.o neuralnetwork.o ParamParser.o perceptron.o 
-	       GetData.o makesets.o 
+CrossValidate: CrossValidate.o neuralnetwork.o ParamParser.o perceptron.o GetData.o makesets.o 
 	$(LINK) $(CFLAGS) -o $@ $^
 
 #===============================================================================
