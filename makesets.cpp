@@ -1,6 +1,6 @@
 #include "makesets.h"
 
-vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
+vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 {
 	int months_left = specs.monthsPDSIData;
 	int burned_left = specs.yearsBurnedAcreage;
@@ -17,9 +17,6 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
 	int sample_size = (specs.monthsPDSIData - specs.endMonth) / 12 + 2;
 
 	int total_samples = data.size() - sample_size + 1;
-
-	if( !test_set)
-		sample++ ;
 
 	while( sample++ < total_samples )
 	{
