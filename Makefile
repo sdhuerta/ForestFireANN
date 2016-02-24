@@ -1,19 +1,44 @@
+# Makefile for Program #1 Artificial Neural Network
+
+# Author: Savoy Schuler
+# Class:  CSC447 Artificial Intelligence
+# Date:   Spring 2016
+
+# Usage:  make target1 target2 ...
+
+#===============================================================================
+
+# GNU C/C++ compiler and linker:
 LINK = g++
-CFLAGS = -Wall -O -g
+
+# Preprocessor and compiler flags
+#CFLAGS = -Wall -O -g
 CXXFLAGS = $(CFLAGS) -std=c++11
 
-TARGET = ANNtest ANNtrain 
+#===============================================================================
+
+# Targets
+TARGET = ANNtest ANNtrain CrossValidate
+
+#Build Everything
 
 all:	$(TARGET)
 
-ANNtest: ANNtest.o neuralnetwork.o ParamParser.o perceptron.o GetData.o makesets.o 
+#Dependencies 
+ANNtest: ANNtest.o neuralnetwork.o ParamParser.o perceptron.o GetData.o
+	makesets.o 
 	$(LINK) $(CFLAGS) -o $@ $^
 
 ANNtrain: ANNtrain.o neuralnetwork.o ParamParser.o perceptron.o GetData.o makesets.o 
 	$(LINK) $(CFLAGS) -o $@ $^
 
-clean:
-	rm -f *.o *~ core 
+CrossValidate: CrossValidate.o neuralnetwork.o ParamParser.o perceptron.o GetData.o makesets.o 
+	$(LINK) $(CFLAGS) -o $@ $^
 
-cleanall:
+#===============================================================================
+
+#Include option for clean sweep of objects and executables
+clean:
 	rm -f *.o *~ core $(TARGET)
+
+
