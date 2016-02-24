@@ -1,6 +1,19 @@
 #include "makesets.h"
 
-//REMOVE THIS COMMENT!
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 {
@@ -76,6 +89,20 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 	return train_set ;
 }
 
+
+/******************************************************************************
+ * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
+ *
+ * @par Description:
+ *
+ *
+ * @param[in]     
+ *                   
+ * @param[in]    
+ *
+ * @returns 
+ *
+ *****************************************************************************/
 
 vector<float> createTest(vector<PDSI> data, Parameters specs)
 {
