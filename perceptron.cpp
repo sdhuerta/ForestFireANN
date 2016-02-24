@@ -221,11 +221,10 @@ void Perceptron::adjust_weights()
 
         if( i < weights.size()-1)
         {
-            weights[i] = weights[i] - alpha * delta * inputs[i];
-            // + temp_momentum;
+            weights[i] = weights[i] - alpha * delta * inputs[i] + temp_momentum;
         }
         else
-            weights[i] = weights[i] - alpha * delta;// + temp_momentum;
+            weights[i] = weights[i] - alpha * delta + temp_momentum;
     }
 
     old_weights = weights ;
