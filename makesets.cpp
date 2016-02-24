@@ -18,8 +18,9 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 
 	int total_samples = data.size() - sample_size + 1;
 
-	while( sample++ < total_samples )
+	while( sample < total_samples )
 	{
+
 		months_left = specs.monthsPDSIData;
 		input_set.clear();
 		output_set.clear();
@@ -53,10 +54,10 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 
 		output_set.assign(specs.numClasses, 0);
 
-		if( data[i].rawAcresBurned < specs.lowCutoff )
+		if( data[sample].rawAcresBurned < specs.lowCutoff )
 			output_set[0] = 1.0 ;
 
-		else if ( data[i].rawAcresBurned < specs.highCutoff)
+		else if ( data[sample].rawAcresBurned < specs.highCutoff)
 			output_set[1] = 1.0 ;
 
 		else
@@ -65,6 +66,8 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 		new_set.output = output_set ;
 
 		train_set.push_back(new_set) ;
+     
+                sample += 1;
 
 	}
 

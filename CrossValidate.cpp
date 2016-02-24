@@ -4,6 +4,7 @@
 #include "makesets.h"
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 #include <stdlib.h>
 #include <time.h>
 
@@ -17,6 +18,9 @@ int main( int argc, char* argv[] )
 {
     srand(time(NULL));
 
+    bool isEqual = true;
+    bool printFlag = false;
+
     vector<trainer> temp_trainer ;
     vector<int> selections ;
     vector<int>::iterator list_check ;
@@ -28,7 +32,13 @@ int main( int argc, char* argv[] )
     int randIndex = -1;
     int train_set_size ;
     int select ;
+    int errorCount = 0;
+    int processedCount = 0;
     trainer sample ;
+
+    float meanSquareError = 0.0;
+    float totalError = 0.0;
+    
 
     if( argc != 2 )  // check to make sure user is passing a parameter file with the executable
     {
@@ -65,38 +75,59 @@ int main( int argc, char* argv[] )
 
     vector<trainer> train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
 
+
     vectSize = train.size();
 
-    train_set_size = vectSize - 1 ;
+    train_set_size = vectSize;
 
-    for(int i = 0 ; i < train_set_size ; i++ )
+    cout << "Year,  Burned,  Predicted,  Actual,  Mean Square error " << endl;
+
+    for(int i = 0 ; i < train_set_size; i++ )
     {
         neuralnetwork ann(params);  // the birth of the neural network
 
         temp_trainer = train ;
 
-        select = rand() % train_set_size ;
+       // select = rand() % train_set_size ;
 
-        list_check = find(selections.begin(), selections.end(), select);
+        //list_check = find(selections.begin(), selections.end(), select);
 
-        while( list_check != selections.end() )
-        {
-            select = rand() % train_set_size ;
+       // while( list_check != selections.end() )
+      //  {
+            //select = rand() % train_set_size ;
 
-            list_check = find(selections.begin(), selections.end(), select);    
-        }
+           // list_check = find(selections.begin(), selections.end(), select);    
+        //}
 
-        selections.push_back(select) ;
+        //selections.push_back(select) ;
 
-        sample = temp_trainer[select] ;
+        //sample = temp_trainer[select] ;
+        
+        sample = temp_trainer[i];
 
-        temp_trainer.erase(temp_trainer.begin() + select) ;
+        temp_trainer.erase(temp_trainer.begin() + i) ;
 
-        ann.training( temp_trainer, max_iterations);
+        meanSquareError = ann.training( temp_trainer, max_iterations, printFlag);  // get error for current training cycle
+   
+       // totalError += meanSquareError;  // accumulate error data for future total error calculation
+        processedCount += 1;
 
         result = ann.testing( sample.input );
 
-        cout << fVector[select].year << ": [" ;
+        int z = 0;
+
+        while( z < result.size() && isEqual )  // check for error relative to expected vs actual results
+        {
+            if( round(result[z]) != sample.output[z] )
+            {
+                isEqual = false;
+            }
+
+            z += 1;
+        }
+
+        // ouput stuff to the console
+        cout << fVector[i].year << ": " << setw(8) << fVector[i].rawAcresBurned <<  "  [" ;
 
         for(int i = 0; i < result.size(); i++)
             cout << round(result[i]) << " " ;
@@ -106,8 +137,21 @@ int main( int argc, char* argv[] )
         for(int i = 0; i < sample.output.size(); i++)
             cout << sample.output[i] << " " ;
 
-        cout << "]" << endl ;
+        cout << "]";
+
+        if( !isEqual )
+        {
+            cout << "*";
+            errorCount += 1;
+        }
+        
+        cout << "  " << setw(6) << meanSquareError << endl;
+
+        isEqual = true;  // re initialize flag
     }
+
+    cout << endl;
+    cout << "The overall accuracy is:  " << (float)errorCount/(float)processedCount * 100 << "%" << endl;
 
 
     return 0;
