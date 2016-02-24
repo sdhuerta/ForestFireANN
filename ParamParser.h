@@ -1,7 +1,9 @@
+/*****************************************************************************/
+/* @file                      ParamParser.h                                  */
+/*****************************************************************************/
+
 #ifndef PARAMPARSER_H
 #define PARAMPARSER_H
-
-
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -11,9 +13,8 @@
 using namespace std;
 
 
-//struct
 /******************************************************************************
- * @authors Savoy Schuler
+ * @authors Steven Huerta, Luke Meyer, Savoy Schuler
  *
  * @par Description:
  * This struct is desgined to hold all the parameter values defined for the
@@ -26,43 +27,50 @@ using namespace std;
 struct Parameters {
 
     //Params PARAMETERS
-    //name of Params weights file
-    string weightsFile;
-    //Number of training epochs
-    int numEpochs;
-    float learningRate;
-    float momentum;
-    //Number of training epochs
-    float errorThreshold;
-    //layers of adjustable weights (one less than layers of nodes)
-    int numLayers;
-    // how many nodes in each layer
-    vector<int> nodesPerLayer;
+   
+    string weightsFile;		/*!< name of Params weights file  */
+
+    int numEpochs;		/*!< Number of training epochs  */	
+   
+    float learningRate;		/*!<   */
+
+    float momentum;		/*!<   */
+
+    float errorThreshold;	/*!< Number of training epochs  */
+    
+    int numLayers;		/*!< layers of adjustable weights 
+				(one less than layers of nodes)  */
+     
+    vector<int> nodesPerLayer;	/*!< how many nodes in each layer  */
 
     //TRAINING AND TESTING FILE
-    string trainFile;
+
+    string trainFile;		/*!< training file .prm  */
 
     //INPUT FEATURE VECTOR INFO
-    //num of years burned acreage
-    int yearsBurnedAcreage;
-    //NO less than # input layer nodes
-    int monthsPDSIData;
-    //end month of current year (numerically)
-    int endMonth;
+    
+    int yearsBurnedAcreage;	/*!< num of years burned acreage  */
+    
+    int monthsPDSIData;		/*!< NO less than # input layer nodes  */
+  
+    int endMonth;		/*!< end month of current year (numerically)*/
 
     //OUTPUT CLASS INFO
-    //NO LESS than of input layer nodes
-    int numClasses;
+    
+    int numClasses;		/*!< NO LESS than of input layer nodes  */
 
     //FIRE SEVERITY PARAMETERS
-    //fire severity cutoffs (burned acres) high and low
-    int lowCutoff;
-    int highCutoff;
+
+    int lowCutoff;		/*!< high fire severity cutoffs(burned acres)*/
+   
+    int highCutoff;		/*!< low fire severity cutoffs (burned acres)*/
 };
 
 
+/*******************************************************************************
+ *                         Function Prototypes
+ ******************************************************************************/
 
-//functions
 Parameters getParams(string fileName);
 
 #endif
