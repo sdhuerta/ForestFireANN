@@ -49,7 +49,7 @@ public:
 	void load_weights();
         bool save_weights();
 
-	void training(vector<trainer> train, int max_iterations);
+	float training(vector<trainer> train, int max_iterations, bool print_interval);
 
 	vector<float> testing(vector<float> test_inputs);
 
