@@ -30,7 +30,7 @@ neuralnetwork::neuralnetwork(Parameters net_define)
 
 
 
-float neuralnetwork::training(vector<trainer> train, int max_iterations)
+float neuralnetwork::training(vector<trainer> train, int max_iterations, bool print_interval)
 {
 	// Get the training block needed
 	// Training block will be larger 
@@ -76,8 +76,8 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations)
 			selections.clear();
 			iterations++ ;
 
-      if( print_interval == true  && iterations % 10 == 0))
-  		  printf("Epoch: %6d  Mean Square Error: %6.4f\n", iterations, (error / train_set_size));
+      if( print_interval == true  && iterations % 10 == 0)
+  		  printf("Epoch: %-6d\tMSE: %6.4f\n", iterations, (error / train_set_size));
 
   		if( (error / train_set_size) <= threshold) 
   		{
