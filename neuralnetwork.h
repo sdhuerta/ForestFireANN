@@ -1,3 +1,8 @@
+/*****************************************************************************/
+/* @file                       neuralnetwork.h                               */
+/*****************************************************************************/
+
+//include files
 #ifndef NEURALNETWORK_H
 #define NEURALNETWORK_H
 #include <vector>
@@ -11,10 +16,18 @@
 using namespace std;
 
 
+/**************************************************************************//** 
+ * @author Steven Huerta, Luke Meyer, Savoy Schuler
+ * 
+ * @par Description: 
+ * 
+ ******************************************************************************/
+
 class neuralnetwork {
 
 
 public:
+    //public function prototypes
     neuralnetwork(Parameters net_define);
 
     void load_weights();
@@ -36,10 +49,12 @@ public:
 
 
 private:
+    //private variables
     vector<int> layers;
     vector<vector<Perceptron>> net ;
     int weightLayers;
 
+    //
     float learning;
     float momentum;
     float threshold;
@@ -49,11 +64,11 @@ private:
     vector<float> input ;
     vector<float> output ;
 
+    //
     vector<float> feed_forward();
     void adjust_weights();
     float calc_error(vector<float> estimates);
-    //void load_weights();
-    //void save_weights():
+
 
 };
 
