@@ -146,16 +146,15 @@ void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
  * @par Description: This function calculates the delta values for output 
  * layer nodes. 
  *
- * @param[in]   
- *
- * @param[in]
- *
- * @returns
+ * @param[in] correct_output - the expected output term
  *
  *****************************************************************************/
 
 void Perceptron::set_delta(float correct_output)
 {
+    // calculate delta term
+    // Delta term calculated as described in 
+    // Fundamentals of Natural Computing, Leandro Nunes de Castro
     delta = -2.0 * (correct_output - output) * output * (1.0 - output);
 }
 
@@ -163,18 +162,12 @@ void Perceptron::set_delta(float correct_output)
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: Return the delta for this perceptron
  *
- *
- * @param[in]
- *
- * @param[in]
- *
- * @returns
+ * @returns delta - the delta term for the perceptron
  *
  *****************************************************************************/
 
-// So we can reach back for those hidden layers
 float Perceptron::get_delta()
 {
     return delta ;
@@ -202,17 +195,16 @@ void Perceptron::adjust_weights()
         //...and unless its the bias...
         if( i < weights.size()-1)
         {
-<<<<<<< HEAD
+
             //...we'll subtract a fraction of the product of the delta and
             // and the input, then add some back(momentum)...
-=======
->>>>>>> 6a8c111297e16f5c740c55d6ac41005eff4c7bce
             weights[i] = weights[i] - alpha * delta * inputs[i] + temp_momentum;
         }
-        else
+        else // adjust the bias weight
             weights[i] = weights[i] - alpha * delta + temp_momentum;
     }
 
+    // track the current weights as old weights to later generate momentum
     old_weights = weights ;
 
 }

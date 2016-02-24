@@ -17,7 +17,10 @@ using namespace std;
 /**************************************************************************//** 
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
  * 
- * @par Description: 
+ * @par Description: The Perceptron class models a simple description of a 
+ * neuron. The perceptron is able to receive inputs and generate an activation
+ * response [0,1]. The perceptron is also capable of adjusting its weights 
+ * whether it is on the output layer or hidden layer.
  * 
  ******************************************************************************/
 
