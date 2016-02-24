@@ -5,13 +5,25 @@
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
  * @par Description:
+ * Normalizes the .csv data to better suit this particular application of an ANN
  *
  *
- * @param[in]
+ * @param[in/out] vector<PDSI> fVector - feature vector containing raw .csv data to 
+ *                                   be normalized
  *
- * @param[in]
+ * @param[in] float maxBurned - contains the largest value of burned acres
+ *                              across all of the data read in from the .csv
  *
- * @returns
+ * @param[in] float minBurned - contains the smallest value of burned acres
+ *                              across all of the data read in from the .csv
+ *
+ * @param[in] float maxRating - contains the largest PDSI value across all data
+ *                              read from the .csv
+ *
+ * @params[in] float minRating - contains the smallest PDSI value across all data
+ *                               read from the .csv
+ *
+ * @returns void
  *
  *****************************************************************************/
 
@@ -39,13 +51,13 @@ void normalizePdsiData(vector<PDSI> &fVector, float maxBurned, float minBurned, 
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
  * @par Description:
+ * Returns the current calendar year
  *
  *
- * @param[in]
+ * @param[in] - none
  *
- * @param[in]
  *
- * @returns
+ * @returns currYear - integer value representing the current year
  *
  *****************************************************************************/
 
@@ -56,7 +68,7 @@ int getYear()
     struct tm *localTime;
 
     time(&currentTime);
-    localTime = localtime(&currentTime); // localtime() usage will throw warning 4996. I currently have warnings disabled in my project (_CRT_SECURE_NO_WARNINGS). May need to change to a non-deprecated function call.
+    localTime = localtime(&currentTime); 
 
     int currYear = localTime->tm_year + 1900;
 
@@ -71,14 +83,15 @@ int getYear()
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function facilitates the parsing of a .csv file
+ *containing yearly burn data and also populates a feature vector with said
+ *data to be used as input for the neural network during the training phase. 
  *
  *
- * @param[in]
+ * @param[in] ifstream fin - input file stream for .csv data
  *
- * @param[in]
  *
- * @returns
+ * @returns vector<PDSI> - returns a populated feature vector
  *
  *****************************************************************************/
 

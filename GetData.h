@@ -20,7 +20,8 @@ using namespace std;
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
  * 
  * @par Description: 
- * Struct for object movie
+ * Struct to contain the .csv file data for a single year.
+ * Also contains the normalized burned acreage data
  ******************************************************************************/
 
 struct PDSI

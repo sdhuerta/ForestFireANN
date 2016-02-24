@@ -14,14 +14,18 @@ using namespace std;
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: Performs the "leave one out" cross validation technique
+ * upon the currently trained ANN to measure the quality of the training/testing
+ * process.
  *
  *
- * @param[in]
+ * @param[in] int argc - contains the number of command line arguments
  *
- * @param[in]
+ * @param[in] char* argv[] - contains the command line arugments specified
+ *                           by the user
  *
- * @returns
+ * @returns 0 - cross validation process ran to completion successfully
+ *          -1 - an error occured during the execution of cross validation
  *
  *****************************************************************************/
 
@@ -95,17 +99,20 @@ int main( int argc, char* argv[] )
     {
         neuralnetwork ann(params);  // the birth of the neural network
 
-        temp_trainer = train ;
+        temp_trainer = train;
 
+      
+        // choose a sample to remove; "leave one out" cross validation
         sample = temp_trainer[i];
 
-        temp_trainer.erase(temp_trainer.begin() + i) ;
+        temp_trainer.erase(temp_trainer.begin() + i) ;  
+
 
         meanSquareError = ann.training( temp_trainer, max_iterations, printFlag);  // get error for current training cycle
 
         processedCount += 1;
 
-        result = ann.testing( sample.input );
+        result = ann.testing( sample.input );  // testing process
 
         int z = 0;
 
@@ -122,17 +129,17 @@ int main( int argc, char* argv[] )
         // ouput stuff to the console
         cout << fVector[i].year << ": " << setw(8) << fVector[i].rawAcresBurned <<  "  [" ;
 
-        for(int i = 0; i < result.size(); i++)
+        for(int i = 0; i < result.size(); i++)  // output actual result
             cout << round(result[i]) << " " ;
 
         cout << "]  [ " ;
 
-        for(int i = 0; i < sample.output.size(); i++)
+        for(int i = 0; i < sample.output.size(); i++)  // output expected result
             cout << sample.output[i] << " " ;
 
         cout << "]";
 
-        if( !isEqual )
+        if( !isEqual )  // flag where expected result != actual result
         {
             cout << "*";
             errorCount += 1;
@@ -144,7 +151,7 @@ int main( int argc, char* argv[] )
     }
 
     cout << endl;
-    cout << "The overall accuracy is:  " << 100 - (float)errorCount/(float)processedCount * 100 << "%" << endl;
+    cout << "The overall accuracy is:  " << 100 - (float)errorCount/(float)processedCount * 100 << "%" << endl;  // output total accuracy to console
 
 
     return 0;
