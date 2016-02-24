@@ -14,13 +14,13 @@ using namespace std;
  * This main is used for testing the ANN after it has been trained and cross
  * checked. It starts by turning the given .prm file (in argv[1]) into a string
  * and passing it to getParams() to generate a paramter struct for populating
- * parameter feilds for the ANN. It then makes function calls to load the 
+ * parameter feilds for the ANN. It then makes function calls to load the
  * weights file and generate a vector of floats for the testing input. The
  * function tests the ANN on the input vector and stores the results in the
- * restults vector for output. 
+ * restults vector for output.
  *
  * @param[in]      argc - a count of the command line arguments provide in call
- * 
+ *
  * @param[in]      argv - the parameter file being used to define the ANN, read
  *                        in as a character array
  *
@@ -42,7 +42,7 @@ int main( int argc, char* argv[] )
     string parameterFile = "";
 
     //position in results vector
-    int resPos; 
+    int resPos;
 
     //vector of floats storing input data
     vector<float> testInput ;
@@ -57,7 +57,7 @@ int main( int argc, char* argv[] )
 
 
     //check for .prm file and excutable
-    if( argc != 2 )  
+    if( argc != 2 )
     {
         cout << "ANNtest requires a parameter file as an argument" << endl;
         cout << "USAGE: test [parameter file] " << endl;
@@ -65,9 +65,9 @@ int main( int argc, char* argv[] )
     }
 
     //Get .prm file name and store in string value
-    parameterFile = argv[1];  
-    
-    //Call getParams to store .prm values into parameter struct for quick access 
+    parameterFile = argv[1];
+
+    //Call getParams to store .prm values into parameter struct for quick access
     params = getParams(parameterFile);
 
     ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
@@ -88,15 +88,15 @@ int main( int argc, char* argv[] )
     fin.close();   // streams should be closed but never crossed!
 
     //The birth of the neural network
-    neuralnetwork ann(params);  
-  
+    neuralnetwork ann(params);
+
     //load weights for the network
-    ann.load_weights();  
-  
+    ann.load_weights();
+
     //call function to produce input set as vector of floats
 
-    //test network on input vector and stor 
-    
+    //test network on input vector and stor
+
     train = createSet( fVector, params );
 
     vector<float> correct ;
@@ -113,7 +113,7 @@ int main( int argc, char* argv[] )
         results = ann.testing( train[i].input );
         correct = train[i].output;
 
-        flag = true ;   
+        flag = true ;
 
         printf(" %-7d [",fVector[i].year);
 
@@ -141,7 +141,7 @@ int main( int argc, char* argv[] )
 
         printf("\n");
 
-        total_error += error_sum ; 
+        total_error += error_sum ;
     }
 
     mse = total_error / train.size() ;
@@ -154,6 +154,6 @@ int main( int argc, char* argv[] )
 
 
 
-    
+
 
 

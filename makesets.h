@@ -4,9 +4,9 @@
 #include "GetData.h"
 #include "ParamParser.h"
 
-struct trainer{
-	vector<float> input ;
-	vector<float> output ;
+struct trainer {
+    vector<float> input ;
+    vector<float> output ;
 };
 
 

@@ -19,7 +19,7 @@
 // 	float momentum ;
 // 	float min_error;
 //         string weightsFile = "FakeWeightsFile.txt";
-   
+
 // } ;
 
 // struct Parameters{
@@ -40,18 +40,18 @@
 using namespace std;
 
 
-class neuralnetwork{
+class neuralnetwork {
 
 
 public:
-	neuralnetwork(Parameters net_define);	
+    neuralnetwork(Parameters net_define);
 
-	void load_weights();
-        bool save_weights();
+    void load_weights();
+    bool save_weights();
 
-	float training(vector<trainer> train, int max_iterations, bool print_interval);
+    float training(vector<trainer> train, int max_iterations, bool print_interval);
 
-	vector<float> testing(vector<float> test_inputs);
+    vector<float> testing(vector<float> test_inputs);
 
     int get_number_o_layers();
 
@@ -60,29 +60,29 @@ public:
     vector<float> get_perceptron_weights( int layerIndex, int nodeIndex );
 
 
-	void print_weights(int training_iter);
+    void print_weights(int training_iter);
 
 
 
 private:
-	vector<int> layers;
-	vector<vector<Perceptron>> net ;
+    vector<int> layers;
+    vector<vector<Perceptron>> net ;
     int weightLayers;
 
-	float learning;
-	float momentum;
-	float threshold;
+    float learning;
+    float momentum;
+    float threshold;
     string weightsFile;
 
-	// For training and testing
-	vector<float> input ;
-	vector<float> output ;
+    // For training and testing
+    vector<float> input ;
+    vector<float> output ;
 
-	vector<float> feed_forward();
-	void adjust_weights();
-	float calc_error(vector<float> estimates);
-	//void load_weights();
-        //void save_weights():
+    vector<float> feed_forward();
+    void adjust_weights();
+    float calc_error(vector<float> estimates);
+    //void load_weights();
+    //void save_weights():
 
 };
 

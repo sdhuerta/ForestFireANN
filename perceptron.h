@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <math.h>
-#include <time.h> 
+#include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-class Perceptron{
+class Perceptron {
 public:
     // CONSTRUCTOR
     Perceptron(int num_in, float learning_rate, float mtm);
@@ -40,7 +40,7 @@ private:
     vector<float> weights;
     vector<float> inputs;
     vector<float> old_weights;
-    
+
     float sum ; // sum after application of weights
     float output ; // result of sigmoid of sum
 

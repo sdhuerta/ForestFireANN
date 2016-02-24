@@ -7,11 +7,11 @@
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -42,11 +42,11 @@ Perceptron::Perceptron(int num_in, float learning_rate, float mtm)
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -69,18 +69,18 @@ float Perceptron::calc_output(vector <float> percept_inputs)
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
 void Perceptron::sum_weights()
 {
     sum = 0;
-    
+
     for(int i = 0; i < num_inputs; i++)
         sum += inputs[i] * weights[i] ;
 
@@ -95,11 +95,11 @@ void Perceptron::sum_weights()
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -116,11 +116,11 @@ void Perceptron::activation()
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -135,14 +135,14 @@ void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
     float next_delta;
     float next_weight;
 
-    // FOR EVERY NODE IN THE FOLLOWING LAYER 
+    // FOR EVERY NODE IN THE FOLLOWING LAYER
     // delta of that layer * connecting weight
 
     for(int i = 0; i < next_layer.size(); i++ )
     {
-        next_delta = next_layer[i].get_delta(); 
+        next_delta = next_layer[i].get_delta();
         next_weight = next_layer[i].get_weights()[position] ;
-       
+
         delta += next_delta * next_weight   ;
     }
 
@@ -157,11 +157,11 @@ void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -181,11 +181,11 @@ void Perceptron::set_delta(float correct_output)
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -202,11 +202,11 @@ float Perceptron::get_delta()
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -221,8 +221,8 @@ void Perceptron::adjust_weights()
 
         if( i < weights.size()-1)
         {
-            weights[i] = weights[i] - alpha * delta * inputs[i]; 
-	    // + temp_momentum;
+            weights[i] = weights[i] - alpha * delta * inputs[i];
+            // + temp_momentum;
         }
         else
             weights[i] = weights[i] - alpha * delta;// + temp_momentum;
@@ -239,17 +239,17 @@ void Perceptron::adjust_weights()
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
 void Perceptron::set_weights(vector<float> new_weights)
 {
-    weights = new_weights; 
+    weights = new_weights;
 }
 
 
@@ -259,11 +259,11 @@ void Perceptron::set_weights(vector<float> new_weights)
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 

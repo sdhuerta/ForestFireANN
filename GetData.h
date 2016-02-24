@@ -14,13 +14,13 @@ using namespace std;
 
 struct PDSI
 {
-	int year;
-	
-	float normAcresBurned;
+    int year;
+
+    float normAcresBurned;
 
     float rawAcresBurned;
 
-	vector<float> pdsiVal;
+    vector<float> pdsiVal;
 
 };
 

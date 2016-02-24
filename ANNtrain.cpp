@@ -8,12 +8,12 @@
  * @date  February 24, 2016
  *
  * @par Professor: Dr. John Weiss
- *         
+ *
  * @par Course: CSC 447 - M001 -  9:00 am MWF
- * 
+ *
  * @par Location:  McLaury - 313
- *        
- * @details 
+ *
+ * @details
  *
  *
  *
@@ -26,7 +26,7 @@
  * @section compile_section Compiling and Usage
  *
  * @par Compiling Instructions:
- *     	g++ -g -Wall -std=c++11 
+ *     	g++ -g -Wall -std=c++11
  *
  * @par Usage:
  * 	@verbatim
@@ -59,11 +59,11 @@ using namespace std;
  * @par Description:
  *
  *
- * @param[in]     
- *                   
- * @param[in]    
+ * @param[in]
  *
- * @returns 
+ * @param[in]
+ *
+ * @returns
  *
  *****************************************************************************/
 
@@ -84,14 +84,14 @@ int main( int argc, char* argv[] )
 
     }
 
-    parameterFile = argv[1];  // get name of parameter file 
+    parameterFile = argv[1];  // get name of parameter file
 
-    
+
     Parameters params = getParams( parameterFile );  // get params via the parameter file
 
     max_iterations = params.numEpochs;   // get the max number of epochs to train for
 
-    
+
     ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
 
     if( !fin )
@@ -104,12 +104,12 @@ int main( int argc, char* argv[] )
 
     vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
 
-        // Change the order
+    // Change the order
     reverse(fVector.begin(), fVector.end()) ;
 
     fin.close();   // streams should be closed but never crossed!
 
-    
+
     neuralnetwork Ann( params );  // the birth of the neural network
 
     train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
