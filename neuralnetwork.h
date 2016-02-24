@@ -1,7 +1,10 @@
+/*****************************************************************************/
+/* @file                       neuralnetwork.h                               */
+/*****************************************************************************/
+
+//include files
 #ifndef NEURALNETWORK_H
 #define NEURALNETWORK_H
-
-
 #include <vector>
 #include <string>
 #include <fstream>
@@ -9,41 +12,22 @@
 #include <iostream>
 #include "makesets.h"
 #include "perceptron.h"
-//#include "ParamParser.h"
-
-// TEMPORARY STRUCTURE FOR TESTING ONLY
-// REMOVE BEFORE SUBMISSION!!!
-// struct Param{
-// 	vector<int> layers = { 5, 2, 3, 2 } ; // five inputs, 2 nodes in first h layer, 3 in second h layer, two nodes in o layer
-// 	float learning_rate ;
-// 	float momentum ;
-// 	float min_error;
-//         string weightsFile = "FakeWeightsFile.txt";
-
-// } ;
-
-// struct Parameters{
-// 	vector<int> nodesPerLayer ;
-// 	float learningRate ;
-// 	float momentum ;
-// 	float errorThreshold;
-//   	string weightsFile;
-//   };
-
-// struct trainer{
-// 	vector<float> input;
-// 	vector<float> output;
-// };
-
-
 
 using namespace std;
 
+
+/**************************************************************************//** 
+ * @author Steven Huerta, Luke Meyer, Savoy Schuler
+ * 
+ * @par Description: 
+ * 
+ ******************************************************************************/
 
 class neuralnetwork {
 
 
 public:
+    //public function prototypes
     neuralnetwork(Parameters net_define);
 
     void load_weights();
@@ -65,10 +49,12 @@ public:
 
 
 private:
+    //private variables
     vector<int> layers;
     vector<vector<Perceptron>> net ;
     int weightLayers;
 
+    //
     float learning;
     float momentum;
     float threshold;
@@ -78,11 +64,11 @@ private:
     vector<float> input ;
     vector<float> output ;
 
+    //
     vector<float> feed_forward();
     void adjust_weights();
     float calc_error(vector<float> estimates);
-    //void load_weights();
-    //void save_weights():
+
 
 };
 

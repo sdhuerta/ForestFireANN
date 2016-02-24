@@ -1,6 +1,10 @@
+/*****************************************************************************/
+/* @file                        perceptron.h                                 */
+/*****************************************************************************/
+
+//include files
 #ifndef PERCEPTRON_H
 #define PERCEPTRON_H
-
 #include <vector>
 #include <math.h>
 #include <time.h>
@@ -10,6 +14,12 @@
 using namespace std;
 
 
+/**************************************************************************//** 
+ * @author Steven Huerta, Luke Meyer, Savoy Schuler
+ * 
+ * @par Description: 
+ * 
+ ******************************************************************************/
 
 class Perceptron {
 public:

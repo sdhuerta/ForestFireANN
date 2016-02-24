@@ -202,8 +202,11 @@ void Perceptron::adjust_weights()
         //...and unless its the bias...
         if( i < weights.size()-1)
         {
+<<<<<<< HEAD
             //...we'll subtract a fraction of the product of the delta and
             // and the input, then add some back(momentum)...
+=======
+>>>>>>> 6a8c111297e16f5c740c55d6ac41005eff4c7bce
             weights[i] = weights[i] - alpha * delta * inputs[i] + temp_momentum;
         }
         else
