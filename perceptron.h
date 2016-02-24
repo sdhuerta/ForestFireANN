@@ -1,8 +1,6 @@
 /*****************************************************************************/
 /* @file                        perceptron.h                                 */
 /*****************************************************************************/
-
-//include files
 #ifndef PERCEPTRON_H
 #define PERCEPTRON_H
 #include <vector>
@@ -13,58 +11,90 @@
 
 using namespace std;
 
-
 /**************************************************************************//** 
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
  * 
- * @par Description: The Perceptron class models a simple description of a 
- * neuron. The perceptron is able to receive inputs and generate an activation
- * response [0,1]. The perceptron is also capable of adjusting its weights 
- * whether it is on the output layer or hidden layer.
+ * @par Description: Perceptron is the base unit of a neural network. It is a 
+ * simple model of a neuron. It accumulates and sums products to produce an
+ * activation signal[1,0]. This perceptron is capable of adjusting its weights
+ * when in a network to better classify the inputs.
  * 
  ******************************************************************************/
-
 class Perceptron {
 public:
-    // CONSTRUCTOR
+    /*!
+     * @brief CONSTRUCTOR
+     */
     Perceptron(int num_in, float learning_rate, float mtm);
 
-    // Feed the perceptron some inputs and get some output
+    /*!
+     * @brief Calculates the activation signal for the perceptron
+     */
     float calc_output(vector <float> inputs);
-    float get_output(); // grab what has been calculated
 
-    // Getting the delta from the previous weights
+    /*!
+     * @brief Returns the output signal
+     */
+    float get_output(); 
+
+    /*!
+     * @brief Returns the delta value for perceptron
+     */
     float get_delta();
-    void adjust_weights(); //may make this a private function
 
-    // Setters and getters
+    /*!
+     * @brief Adjusts the weights of the perceptron
+     */
+    void adjust_weights(); 
+
+    /*!
+     * @brief Sets the weights of the perceptron
+     */
     void set_weights(vector<float> new_weights);
+
+    /*!
+     * @brief Returns the weights of the perceptron
+     */
     vector<float> get_weights();
 
+    /*!
+     * @brief Calculates the delta for a hidden layer perceptron
+     */
     void set_delta(int position, vector<Perceptron> next_layer);
+
+    /*!
+     * @brief Calculates the delta for an output layer perceptron
+     */
     void set_delta(float correct_output);
 
-
 private:
-    void activation(); // Activation function, using sigmoid function
-    void sum_weights(); // Calculate the output
 
-    // Store our weights and inputs between previous and current layer
-    vector<float> weights;
-    vector<float> inputs;
-    vector<float> old_weights;
+    /*!
+     * @brief Activation function, using sigmoid function
+     */
+    void activation();
+    /*!
+     * @brief Sum the product of the inputs and the weights
+     */
+    void sum_weights();
 
-    float sum ; // sum after application of weights
-    float output ; // result of sigmoid of sum
+    vector<float> weights;/*!< Perceptron weights  */
 
-    // USED LATER WITH ADJUSTING WEIGHTS
-    float sig_prime ; // the derivative of sigmoid applied to sum
-    float delta ;
+    vector<float> inputs;/*!<  Inputs received by the perceptron */
 
-    int num_inputs; // do i need num_inputs if I'm carrying a vector of inputs??
+    vector<float> old_weights;/*!<  Perceptron weights from previous iteration */
 
-    float alpha ;
-    float momentum ;
+    float sum ; /*!< sum of products of weights and inputs  */
+
+    float output ; /*!<  sigmoid applied to sum */
+
+    float delta ;/*!<  gradient */
+
+    int num_inputs;/*!<   */ // do i need num_inputs if I'm carrying a vector of inputs??
+
+    float alpha ;/*!<  learning rate */
+
+    float momentum ;/*!< momentum value - how strongly we want to carry our previous weight adjustment forward  */
 };
 
 #endif
