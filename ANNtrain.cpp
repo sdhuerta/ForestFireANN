@@ -14,12 +14,12 @@
  * @par Location:  McLaury - 313
  *
  * @details
- *
- *
- *
- *
- *
- *
+ * This portion of the programming assigment consists of the methods
+ * and processes relating to the training of an artificial neural network.
+ * We use the general feed-forward back propogation methedology to do so, also
+ * utilizing a momentum term to reach solution convergence quicker. Upon execution
+ * the training process will output, to console, the mean squared error of 
+ * every 10th epoch of training conducted. 
  *
  *
  *
@@ -56,14 +56,22 @@ using namespace std;
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Name: main
+ * @par Description: this is the main function that is responsible for the 
+ * execution of the training process upon an artificial neural network. All
+ * significant functions/methods regarding the training process are called
+ * from this function. 
  *
  *
- * @param[in]
+ * @param[in] int argc - integer count of the number of command line arguments
+ *                       that the user specified, as well as the name of the 
+ *                       file itself
  *
- * @param[in]
+ * @param[in] char* argv[] - character array containing command line arguments
+ *                           supplied by the user
  *
- * @returns
+ * @returns 0 - training process ran to completion successfully
+ *          -1 - an error occured during the execution of this program
  *
  *****************************************************************************/
 
@@ -104,10 +112,10 @@ int main( int argc, char* argv[] )
 
     vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
 
-    // Change the order
+    // Change the order to better suit our algorithm
     reverse(fVector.begin(), fVector.end()) ;
 
-    fin.close();   // streams should be closed but never crossed!
+    fin.close();   // streams should be closed
 
 
     neuralnetwork Ann( params );  // the birth of the neural network
