@@ -32,6 +32,12 @@ using namespace std;
 
 int main( int argc, char* argv[] )
 {
+    float error_sum = 0;
+    float total_error = 0;
+    float mse;
+    bool flag ;
+    int num_correct = 0 ;
+
     //string of paramater file name
     string parameterFile = "";
 
@@ -88,7 +94,6 @@ int main( int argc, char* argv[] )
     ann.load_weights();  
   
     //call function to produce input set as vector of floats
-    //testInput = createTest(fVector, params);
 
     //test network on input vector and stor 
     
@@ -97,19 +102,52 @@ int main( int argc, char* argv[] )
     vector<float> correct ;
 
     printf("Parameter File: %s\n", parameterFile.c_str());
-    printf("Data File: %s\n", params.trainFile.c_str());
+    printf("Data File: %s\n\n", params.trainFile.c_str());
+
+    printf(" YEAR\t RESULT\t\t CORRECT OUTPUT\n");
 
     for(int i = 0; i < train.size(); i++ )
     {
+        error_sum = 0 ;
 
         results = ann.testing( train[i].input );
         correct = train[i].output;
 
+        flag = true ;   
 
-        
+        printf(" %-7d [",fVector[i].year);
 
+        for(int j = 0; j < results.size(); j++)
+        {
+            error_sum += pow((correct[j] - results[j]), 2);
+
+            printf(" %d ",(int) round(results[j]));
+
+            if( round(results[j]) != correct[j] )
+                flag = false ;
+        }
+
+        printf("]\t [");
+
+        for(int j = 0; j < correct.size(); j++)
+            printf(" %d ",(int) round(correct[j]));
+
+        printf("]");
+
+        if(flag == false)
+            printf("*");
+        else
+            num_correct++;
+
+        printf("\n");
+
+        total_error += error_sum ; 
     }
 
+    mse = total_error / train.size() ;
+
+    printf("\nMSE: %6.4f\n", mse);
+    printf("Accuracy: %4.2f%%\n", (num_correct/(float)train.size() * 100) ) ;
     //Return Success
     return 0;
 }
