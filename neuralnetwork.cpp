@@ -59,7 +59,8 @@ neuralnetwork::neuralnetwork(Parameters net_define)
  *
  *****************************************************************************/
 
-float neuralnetwork::training(vector<trainer> train, int max_iterations, bool print_interval)
+float neuralnetwork::training(vector<trainer> train, int max_iterations, 
+                              bool print_interval)
 {
     // Get the training block needed
     // Training block will be larger
