@@ -19,7 +19,9 @@ using namespace std;
 /**************************************************************************//** 
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
  * 
- * @par Description: 
+ * @par Description: This object creates a back prob network consisting of 
+ * a number of hidden layers and perceptrons per layer defined by the 
+ * parameters passed to it.
  * 
  ******************************************************************************/
 
@@ -27,48 +29,66 @@ class neuralnetwork {
 
 
 public:
-    //public function prototypes
+     /*!
+     * @brief CONSTRUCTOR
+     */
     neuralnetwork(Parameters net_define);
 
+    /*!
+     * @brief loads the weights from a file
+     */
     void load_weights();
+
+    /*!
+     * @brief saves the weights to a file
+     */
     bool save_weights();
 
+    /*!
+     * @brief trains the network on a set of input sets
+     */
     float training(vector<trainer> train, int max_iterations, bool print_interval);
 
+    /*!
+     * @brief returns output from inputs given to the network
+     */
     vector<float> testing(vector<float> test_inputs);
 
-    int get_number_o_layers();
-
-    int get_number_o_nodes( int index );
-
-    vector<float> get_perceptron_weights( int layerIndex, int nodeIndex );
-
-
+    /*!
+     * @brief prints the weights to the console
+     */
     void print_weights(int training_iter);
 
 
 
 private:
-    //private variables
-    vector<int> layers;
-    vector<vector<Perceptron>> net ;
-    int weightLayers;
-
-    //
-    float learning;
-    float momentum;
-    float threshold;
-    string weightsFile;
-
-    // For training and testing
-    vector<float> input ;
-    vector<float> output ;
-
-    //
+	/*!
+     * @brief calculates the output of the network
+     */
     vector<float> feed_forward();
+
+    /*!
+     * @brief adjusts the weights of the network
+     */
     void adjust_weights();
+
+    /*!
+     * @brief calculates the SSE
+     */
     float calc_error(vector<float> estimates);
 
+    //private variables
+    vector<int> layers; /*!< size of each network layer */
+    vector<vector<Perceptron>> net ; /*!< network of perceptrons  */
+
+    float learning; /*!< learning rate  */
+    float momentum; /*!< momentum value  */
+    float threshold; /*!< minimum error threshold  */
+    string weightsFile; /*!< name of the weights file  */
+
+    // For training and testing
+    vector<float> input ; /*!< Inputs to the network */
+    vector<float> output ; /*!< Expected outputs  */
 
 };
 
