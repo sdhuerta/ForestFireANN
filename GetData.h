@@ -20,19 +20,19 @@ using namespace std;
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
  * 
  * @par Description: 
- * Struct to contain the .csv file data for a single year.
+ * Struct to contain the normalized .csv file data for a single year.
  * Also contains the normalized burned acreage data
  ******************************************************************************/
 
 struct PDSI
 {
-    int year;		 	/*!<   */
+    int year;		 	/*!<  year of data  */
 
-    float normAcresBurned;	/*!<   */
+    float normAcresBurned;	/*!<  normalized burn acreage */
 
-    float rawAcresBurned;	/*!<   */
+    float rawAcresBurned;	/*!<  un-normalized burn acreage */
 
-    vector<float> pdsiVal;	/*!<   */
+    vector<float> pdsiVal;	/*!<  normalized pdsi rating */
 
 };
 

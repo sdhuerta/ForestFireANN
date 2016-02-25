@@ -4,14 +4,18 @@
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function creates a training set from the vector of
+ *structs that contain .csv burn data. A parameter struct containing configuration
+ *settings, originating from a parameter input file, is utilized to specifically
+ * parse the .csv data vector. Again, the result is a set of training data to be used
+ * as input for the training process.  
  *
  *
- * @param[in]
+ * @param[in] vector<PDSI> data - contains normalized .csv burn data
  *
- * @param[in]
+ * @param[in] Parameters specs - struct containing parameter configuration data
  *
- * @returns
+ * @returns vector<trainer> - the true feature vector to be fed into the ANN
  *
  *****************************************************************************/
 
@@ -34,8 +38,8 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
     int total_samples = data.size() - sample_size + 1;
 
     while( sample < total_samples )
-    {
-
+    {  
+        //important initializations
         months_left = specs.monthsPDSIData;
         input_set.clear();
         output_set.clear();
@@ -51,7 +55,7 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
             months_left--;
         }
 
-        next_year = 1 ;
+        next_year = 1 ; // initialize year counter
 
         while( months_left > 0 )
         {
@@ -65,11 +69,13 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
             next_year++ ;
         }
 
-        new_set.input = input_set ;
+        new_set.input = input_set ;  
 
         output_set.assign(specs.numClasses, 0);
 
-        if( data[sample].rawAcresBurned < specs.lowCutoff )
+
+        // set the expected output/ classification of the input data set
+        if( data[sample].rawAcresBurned < specs.lowCutoff ) 
             output_set[0] = 1.0 ;
 
         else if ( data[sample].rawAcresBurned < specs.highCutoff)
@@ -80,7 +86,8 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 
         new_set.output = output_set ;
 
-        train_set.push_back(new_set) ;
+        //add to training set 
+        train_set.push_back(new_set) ;  
 
         sample += 1;
 
@@ -93,14 +100,15 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function creates a test data set to be
+ * used as input for the testing process. 
  *
  *
- * @param[in]
+ * @param[in] vector<PDSI> - contains normalized .csv burn data
  *
- * @param[in]
+ * @param[in] Parameters specs - struct containing parameter configuration data
  *
- * @returns
+ * @returns vector<float> - the true feature vector to be used as input for testing
  *
  *****************************************************************************/
 
@@ -112,11 +120,17 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
     vector<float> test_input ;
     int next_year = 1 ;
 
+    /*populate the test set with data from the PDSI structure
+      containing normalized .csv data */
+    
+
+    // normalized burned acreage
     for(int i = 0; i < burned_left; i++ )
     {
         test_input.push_back(data[i].normAcresBurned);
     }
-
+ 
+    //normalized pdsi ratings data
     for(int i = 0; i < end_month; i++)
     {
         test_input.push_back(data[0].pdsiVal[i]);
