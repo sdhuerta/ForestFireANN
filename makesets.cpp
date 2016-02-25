@@ -137,11 +137,13 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
         months_left-- ;
     }
 
+    // keep adding pdsi data while there are months left
     while(months_left > 0)
     {
         for(int i = 0; i < 12 && months_left > 0; i++)
         {
-            test_input.push_back(data[next_year].pdsiVal[i]);
+        	// walk backwards with adding months Dec to Jan
+            test_input.push_back(data[next_year].pdsiVal[11-i]);
             months_left-- ;
         }
 

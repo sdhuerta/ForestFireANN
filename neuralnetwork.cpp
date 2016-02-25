@@ -72,6 +72,9 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
     float last_error = 0;
     float error = 0;
     int select ;
+    int stuck = 0;
+
+    //max_iterations = 5 ;
 
     // While we haven't reach our iteration limit
     while(iterations < max_iterations)
@@ -115,7 +118,7 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
             iterations++ ;
 
             // calculate MSE
-            error  = error / train_set_size ;
+            error  = error / (float)train_set_size ;
 
             if( print_interval == true  && iterations % 10 == 0)
                 printf("Epoch: %-6d\tMSE: %6.4f\n", iterations, error);
@@ -125,11 +128,19 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
                 return  error;
 
             // insufficient error change
-            else if( abs(last_error - error) < .002) 
-              return error ;
+            if( abs(last_error - error) < .005)
+            {
+                stuck++ ;
+
+                if(stuck > 50)
+                    return error ;
+            } 
+            else
+                stuck = 0 ;
 
             // if we have trained the max number of iterations specified, exit
-            else if( iterations == max_iterations ;
+            
+            if( iterations == max_iterations )
                 return error;
 
             last_error = error ;
@@ -155,7 +166,7 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
 
 vector<float> neuralnetwork::testing(vector<float> test_inputs)
 {
-    // save this input to the class for later use
+    // save this input to the class for use in the feed forward
     input = test_inputs ;
 
     // return the outputs
@@ -166,14 +177,11 @@ vector<float> neuralnetwork::testing(vector<float> test_inputs)
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function is responsible for carrying the outputs of
+ * the previous layer to be fed into the inputs of the next layer until the
+ * entire network is traversed.
  *
- *
- * @param[in]
- *
- * @param[in]
- *
- * @returns
+ * @returns hidden_outputs - vector of floats from the output layer
  *
  *****************************************************************************/
 

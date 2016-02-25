@@ -155,7 +155,7 @@ void Perceptron::set_delta(float correct_output)
     // calculate delta term
     // Delta term calculated as described in 
     // Fundamentals of Natural Computing, Leandro Nunes de Castro
-    delta = -2.0 * (correct_output - output) * output * (1.0 - output);
+    delta = -2.0* (correct_output - output) * output * (1.0 - output);
 }
 
 
