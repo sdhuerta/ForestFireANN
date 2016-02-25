@@ -129,7 +129,7 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
 
             // insufficient error change, let's kick out and call it trained
             // as we may have found ourselves in a local min.
-            if( abs(last_error - error) < .005)
+            if( abs(last_error - error) < .0005)
             {
                 stuck++ ;
 

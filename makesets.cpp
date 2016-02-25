@@ -49,10 +49,7 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
 
         // Let's load our burned data first.
         for(int j = 0; j < burned_left; j++)
-        {
-        	printf("%-6d %f\n", data[sample].year, data[sample+1].rawAcresBurned);
             input_set.push_back(data[sample+1].normAcresBurned);
-        }
 
         // Load up our end months
         for(int j = 0; j < end_month; j++ )

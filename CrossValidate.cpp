@@ -135,12 +135,12 @@ int main( int argc, char* argv[] )
         }
 
         // ouput stuff to the console
-        printf(" %-5d %6.0f\t[", fVector[i].year, fVector[i].rawAcresBurned);
+        printf(" %-5d %6.0f\t[", fVector[i+1].year, fVector[i+1].rawAcresBurned);
 
         for(int i = 0; i < result.size(); i++)  // output actual result
             printf(" %d",(int)round(result[i])) ;
 
-        printf(" ]    [") ;
+        printf(" ]  [") ;
 
         for(int i = 0; i < sample.output.size(); i++)  // output expected result
             printf(" %d",(int)sample.output[i]);

@@ -108,6 +108,7 @@ int main( int argc, char* argv[] )
 
     printf(" YEAR\t RESULT\t\t CORRECT OUTPUT\n");
 
+    // This is the output loop to print our comparisons
     for(int i = 0; i < train.size(); i++ )
     {
         error_sum = 0 ;
@@ -129,19 +130,32 @@ int main( int argc, char* argv[] )
                 flag = false ;
         }
 
-        printf("]\t [");
+        // Special casing so that we are not comparing 
+        // expected output when we don't have any
+        // This would not generalize to other files than
+        // those provided.
+        if( i != 0 )
+        {
+            printf("]\t [");
 
-        for(int j = 0; j < correct.size(); j++)
-            printf(" %d ",(int) round(correct[j]));
+            for(int j = 0; j < correct.size(); j++)
+                printf(" %d ",(int) round(correct[j]));
 
-        printf("]");
+            printf("]");
 
-        if(flag == false)
-            printf("*");
+            if(flag == false)
+                printf("*");
+            else
+                num_correct++;
+
+            printf("\n");
+        }
+
         else
-            num_correct++;
+        {
+            printf("]\t WAIT AND SEE \n");
+        }
 
-        printf("\n");
 
         total_error += error_sum ;
     }
