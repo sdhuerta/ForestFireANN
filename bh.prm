@@ -55,7 +55,7 @@ PDSI_BH_1978-2015.csv
 # burned acres cutoffs, corresponding to low/medium/high fire severity
 #------------------------------------------
 
-2000
-20000
+1000
+10000
 
 #************************** Parameter.prm ***********************************
