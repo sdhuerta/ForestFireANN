@@ -42,7 +42,9 @@ struct PDSI
  ******************************************************************************/
 
 
-void normalizePdsiData( vector<PDSI> &fVector, float maxBurned, float minBurned, float maxRating, float minRating );
+void normalizePdsiData( vector<PDSI> &fVector, float maxBurned, float minBurned,
+	 float maxRating, float minRating );
+
 vector<PDSI> pdsiFeatureVector(ifstream &fin);
 
 int getYear();

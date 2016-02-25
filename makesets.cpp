@@ -19,7 +19,7 @@
  *
  *****************************************************************************/
 
-vector<trainer> createSet(vector<PDSI> data, Parameters specs)
+vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
 {
     int months_left = specs.monthsPDSIData;
     int burned_left = specs.yearsBurnedAcreage;
@@ -28,6 +28,9 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
     int correct_output;
     vector<trainer> train_set ;
     int sample = 0 ;
+
+    if(!test_set)
+    	sample++ ;
 
     trainer new_set;
     vector<float> input_set;
@@ -46,7 +49,10 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs)
 
         // Let's load our burned data first.
         for(int j = 0; j < burned_left; j++)
+        {
+        	printf("%-6d %f\n", data[sample].year, data[sample+1].rawAcresBurned);
             input_set.push_back(data[sample+1].normAcresBurned);
+        }
 
         // Load up our end months
         for(int j = 0; j < end_month; j++ )

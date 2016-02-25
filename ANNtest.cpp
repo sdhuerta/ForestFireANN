@@ -70,7 +70,8 @@ int main( int argc, char* argv[] )
     //Call getParams to store .prm values into parameter struct for quick access
     params = getParams(parameterFile);
 
-    ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
+    //open the file containing training data
+    ifstream fin( params.trainFile.c_str()) ; 
 
     if( !fin )
     {
@@ -80,7 +81,8 @@ int main( int argc, char* argv[] )
 
     }
 
-    vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
+    // get input data and put into feature vector
+    vector<PDSI> fVector = pdsiFeatureVector( fin );  
 
     // Change the order
     reverse(fVector.begin(), fVector.end()) ;

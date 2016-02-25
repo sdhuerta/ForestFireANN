@@ -47,7 +47,8 @@ public:
     /*!
      * @brief trains the network on a set of input sets
      */
-    float training(vector<trainer> train, int max_iterations, bool print_interval);
+    float training(vector<trainer> train, int max_iterations, 
+	bool print_interval);
 
     /*!
      * @brief returns output from inputs given to the network

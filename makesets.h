@@ -17,8 +17,8 @@
 
 
 struct trainer {
-    vector<float> input ;	/*!< vector contains input data for a perepctron */
-    vector<float> output ;	/*!< vector contains output data from a perceptron */
+    vector<float> input ;  /*!< vector contains input data for a perepctron */
+    vector<float> output ; /*!< vector contains output data from a perceptron */
 };
 
 

@@ -52,10 +52,10 @@ int main( int argc, char* argv[] )
     float meanSquareError = 0.0;
     float totalError = 0.0;
 
-
-    if( argc != 2 )  // check to make sure user is passing a parameter file with the executable
+    // check to make sure user is passing a parameter file with the executable
+    if( argc != 2 )  
     {
-        cout << "CrossValidate requires a parameter file as an argument" << endl;
+        cout << "CrossValidate requires a parameter file as an argument" <<endl;
         cout << "USAGE: CrossValidate [parameter file] " << endl;
         return -1;
 
@@ -63,30 +63,33 @@ int main( int argc, char* argv[] )
 
     parameterFile = argv[1];  // get name of parameter file
 
+    // get parameters via the parameter file
+    Parameters params = getParams( parameterFile );  
 
-    Parameters params = getParams( parameterFile );  // get parameters via the parameter file
+    // get the max number of epochs to train for
+    max_iterations = params.numEpochs;   
 
-    max_iterations = params.numEpochs;   // get the max number of epochs to train for
-
-
-    ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
-
-    if( !fin )
+    // open the file containing training data
+    ifstream fin( params.trainFile.c_str()) ;   
+    
+   if( !fin )
     {
 
         cout << "There was an error opening the training data";
         return -1;
 
     }
+    
+    // get input data and put into feature vector
+    vector<PDSI> fVector = pdsiFeatureVector( fin );  
 
-    vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
-
-    reverse(fVector.begin(), fVector.end()) ;  // reverse the
+    reverse(fVector.begin(), fVector.end()) ;  
 
     fin.close();
 
+    // populate the trainer object to be passed into the neural net training process
+    vector<trainer> train = createSet( fVector, params, false );  
 
-    vector<trainer> train = createSet( fVector, params, false );  // populate the trainer object to be passed into the neural net training process
 
     // We're not validating on the most current year, because that is nonsense
     // We don't have the data to predict the future
@@ -109,7 +112,10 @@ int main( int argc, char* argv[] )
 
         temp_trainer.erase(temp_trainer.begin() + i) ;  
 
-        meanSquareError = ann.training( temp_trainer, max_iterations, printFlag);  // get error for current training cycle
+        // get error for current training cycleHEAD
+        meanSquareError = ann.training( temp_trainer, max_iterations, printFlag); 
+
+	   // get error for current training cycle
 
         processedCount += 1;
 
@@ -117,7 +123,8 @@ int main( int argc, char* argv[] )
 
         int z = 0;
 
-        while( z < result.size() && isEqual )  // check for error; assertion on expected vs actual results
+	// check for error; assertion on expected vs actual results
+        while( z < result.size() && isEqual )  
         {
             if( round(result[z]) != sample.output[z] )
             {
@@ -128,7 +135,6 @@ int main( int argc, char* argv[] )
         }
 
         // ouput stuff to the console
-
         printf(" %-5d %6.0f\t[", fVector[i].year, fVector[i].rawAcresBurned);
 
         for(int i = 0; i < result.size(); i++)  // output actual result
@@ -153,7 +159,10 @@ int main( int argc, char* argv[] )
     }
 
     // output total accuracy to console
-    printf("The overall accuracy is: %-6.2f%%\n",(100 - (float)errorCount/(float)processedCount * 100));  
+
+    printf("The overall accuracy is: %-6.2f%%\n",(100 - \
+        (float)errorCount/(float)processedCount * 100));  
+
 
 
     return 0;

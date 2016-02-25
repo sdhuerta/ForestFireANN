@@ -82,7 +82,7 @@ private:
 
     vector<float> inputs;/*!<  Inputs received by the perceptron */
 
-    vector<float> old_weights;/*!<  Perceptron weights from previous iteration */
+    vector<float> old_weights;/*!<  Perceptron weights from previous iteration*/
 
     float sum ; /*!< sum of products of weights and inputs  */
 
@@ -90,11 +90,13 @@ private:
 
     float delta ;/*!<  gradient */
 
-    int num_inputs;/*!<   */ // do i need num_inputs if I'm carrying a vector of inputs??
+    int num_inputs;	/*!<do i need num_inputs if I'm carrying a vector of 
+		  	inputs??*/
 
     float alpha ;/*!<  learning rate */
 
-    float momentum ;/*!< momentum value - how strongly we want to carry our previous weight adjustment forward  */
+    float momentum ;	/*!< momentum value - how strongly we want to carry our 
+			previous weight adjustment forward  */
 };
 
 #endif

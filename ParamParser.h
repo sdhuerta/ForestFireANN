@@ -32,9 +32,13 @@ struct Parameters {
 
     int numEpochs;		/*!< Number of training epochs  */	
    
-    float learningRate;		/*!<   */
+    float learningRate;		/*!< provides additional momentum to the 
+				gradient descent - prevents lingering in 
+				narrowing local mins*/
 
-    float momentum;		/*!<   */
+    float momentum;		/*!<  affects how aggressively the gradient 
+				descent performs - can cause  overshooting, but 
+				also increases the rate of convergence */
 
     float errorThreshold;	/*!< Number of training epochs  */
     

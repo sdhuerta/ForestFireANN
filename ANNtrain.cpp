@@ -17,9 +17,9 @@
  * This portion of the programming assigment consists of the methods
  * and processes relating to the training of an artificial neural network.
  * We use the general feed-forward back propogation methedology to do so, also
- * utilizing a momentum term to reach solution convergence quicker. Upon execution
- * the training process will output, to console, the mean squared error of 
- * every 10th epoch of training conducted. 
+ * utilizing a momentum term to reach solution convergence quicker. Upon 
+ * executionthe training process will output, to console, the mean squared error
+ * of every 10th epoch of training conducted. 
  *
  *
  *
@@ -83,8 +83,8 @@ int main( int argc, char* argv[] )
     int max_iterations = -1;
     vector<trainer> train ;
 
-
-    if( argc != 2 )  // check to make sure user is passing a parameter file with the executable
+    // check to make sure user is passing a parameter file with the executable
+    if( argc != 2 )  
     {
         cout << "ANNtrain requires a parameter file as an argument" << endl;
         cout << "USAGE: ANNtrain [parameter file] " << endl;
@@ -94,13 +94,14 @@ int main( int argc, char* argv[] )
 
     parameterFile = argv[1];  // get name of parameter file
 
+    // get params via the parameter file
+    Parameters params = getParams( parameterFile );  
 
-    Parameters params = getParams( parameterFile );  // get params via the parameter file
+    // get the max number of epochs to train for
+    max_iterations = params.numEpochs;   
 
-    max_iterations = params.numEpochs;   // get the max number of epochs to train for
-
-
-    ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
+    // open the file containing training data
+    ifstream fin( params.trainFile.c_str()) ;   
 
     if( !fin )
     {
@@ -109,21 +110,23 @@ int main( int argc, char* argv[] )
         return -1;
 
     }
-
-    vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
+ 
+    // get input data and put into feature vector
+    vector<PDSI> fVector = pdsiFeatureVector( fin );  
 
     // Change the order to better suit our algorithm
     reverse(fVector.begin(), fVector.end()) ;
 
     fin.close();   // streams should be closed
 
+    // the birth of the neural network
+    neuralnetwork Ann( params );  
 
-    neuralnetwork Ann( params );  // the birth of the neural network
+    // populate the trainer object to be passed into the neural net training process
+    train = createSet( fVector, params, false );  
 
-    train = createSet( fVector, params, false );  // populate the trainer object to be passed into the neural net training process
-
-
-    Ann.training( train, max_iterations, true );  // training phase of the network
+    // training phase of the network
+    Ann.training( train, max_iterations, true );  
 
 
     if( !Ann.save_weights() )  // save the weights to the file
