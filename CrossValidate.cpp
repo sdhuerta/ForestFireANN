@@ -52,10 +52,10 @@ int main( int argc, char* argv[] )
     float meanSquareError = 0.0;
     float totalError = 0.0;
 
-
-    if( argc != 2 )  // check to make sure user is passing a parameter file with the executable
+    // check to make sure user is passing a parameter file with the executable
+    if( argc != 2 )  
     {
-        cout << "CrossValidate requires a parameter file as an argument" << endl;
+        cout << "CrossValidate requires a parameter file as an argument" <<endl;
         cout << "USAGE: CrossValidate [parameter file] " << endl;
         return -1;
 
@@ -63,30 +63,33 @@ int main( int argc, char* argv[] )
 
     parameterFile = argv[1];  // get name of parameter file
 
+    // get parameters via the parameter file
+    Parameters params = getParams( parameterFile );  
 
-    Parameters params = getParams( parameterFile );  // get parameters via the parameter file
+    // get the max number of epochs to train for
+    max_iterations = params.numEpochs;   
 
-    max_iterations = params.numEpochs;   // get the max number of epochs to train for
-
-
-    ifstream fin( params.trainFile.c_str()) ;   // open the file containing training data
-
-    if( !fin )
+    // open the file containing training data
+    ifstream fin( params.trainFile.c_str()) ;   
+    
+   if( !fin )
     {
 
         cout << "There was an error opening the training data";
         return -1;
 
     }
+    
+    // get input data and put into feature vector
+    vector<PDSI> fVector = pdsiFeatureVector( fin );  
 
-    vector<PDSI> fVector = pdsiFeatureVector( fin );  // get input data and put into feature vector
-
-    reverse(fVector.begin(), fVector.end()) ;  // reverse the
+    reverse(fVector.begin(), fVector.end()) ;  
 
     fin.close();
 
-
-    vector<trainer> train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
+    /* populate the trainer object to be passed into the neural net training 
+    process */
+    vector<trainer> train = createSet( fVector, params );  
 
 
     vectSize = train.size();
@@ -107,8 +110,8 @@ int main( int argc, char* argv[] )
 
         temp_trainer.erase(temp_trainer.begin() + i) ;  
 
-
-        meanSquareError = ann.training( temp_trainer, max_iterations, printFlag);  // get error for current training cycle
+	// get error for current training cycle
+        meanSquareError = ann.training(temp_trainer,max_iterations,printFlag);  
 
         processedCount += 1;
 
@@ -116,7 +119,8 @@ int main( int argc, char* argv[] )
 
         int z = 0;
 
-        while( z < result.size() && isEqual )  // check for error; assertion on expected vs actual results
+	// check for error; assertion on expected vs actual results
+        while( z < result.size() && isEqual )  
         {
             if( round(result[z]) != sample.output[z] )
             {
@@ -127,7 +131,8 @@ int main( int argc, char* argv[] )
         }
 
         // ouput stuff to the console
-        cout << fVector[i].year << ": " << setw(8) << fVector[i].rawAcresBurned <<  "  [" ;
+        cout << fVector[i].year << ": " << setw(8)
+		 << fVector[i].rawAcresBurned <<  "  [" ;
 
         for(int i = 0; i < result.size(); i++)  // output actual result
             cout << round(result[i]) << " " ;
@@ -150,8 +155,10 @@ int main( int argc, char* argv[] )
         isEqual = true;  // re initialize flag
     }
 
-    cout << endl;
-    cout << "The overall accuracy is:  " << 100 - (float)errorCount/(float)processedCount * 100 << "%" << endl;  // output total accuracy to console
+    // output total accuracy to console
+    cout << endl << "The overall accuracy is:  " 
+	<< 100 - (float)errorCount/(float)processedCount * 100 
+	<< "%" << endl;  
 
 
     return 0;
