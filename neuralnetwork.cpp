@@ -4,42 +4,43 @@
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function is the constructor of the neural network
+ * It takes in the parameters and generates the network layers, sets the
+ * learning and momentum values. It also sets the error threshold. It also
+ * creates the needed perceptrons for each layer.
  *
- *
- * @param[in]
- *
- * @param[in]
- *
- * @returns
+ * @param[in] net_define - Structure containing the definitions of the network
  *
  *****************************************************************************/
 
 neuralnetwork::neuralnetwork(Parameters net_define)
 {
+    layers = net_define.nodesPerLayer ; // set nodes per layer
+    learning = net_define.learningRate ; // set the learning rate
+    momentum = net_define.momentum ; // set the momentum for learning
+    threshold = net_define.errorThreshold; // set the threshold for error
+    weightsFile = net_define.weightsFile; // set the file to save/load from
 
-    layers = net_define.nodesPerLayer ;
-    learning = net_define.learningRate ;
-    momentum = net_define.momentum ;
-    threshold = net_define.errorThreshold;
-    weightsFile = net_define.weightsFile;
-
-    // Skip the input layer node.
+    // Create every layer after the input layer.
     for(int i = 1; i < layers.size() ; i++)
     {
+        // create a container for our layer of perceptrons
         vector<Perceptron> layer ;
 
+        // for each layer...
         for(int j = 0; j < layers[i]; j++)
         {
-            Perceptron new_node = Perceptron(layers[i-1],learning, momentum) ;
+            // ...Let's create another node feeding the number of inputs
+            // , learning, and the momentum.
+            Perceptron new_node(layers[i-1],learning, momentum) ;
 
+            // We push it into our layer container
             layer.push_back(new_node) ;
         }
 
+        // push each layer into our network container
         net.push_back(layer) ;
-
     }
-
 }
 
 
@@ -49,11 +50,12 @@ neuralnetwork::neuralnetwork(Parameters net_define)
  * @par Description:
  *
  *
- * @param[in]
+ * @param[in] train - vector containing a set of inputs and associated outputs
+ * @param[in] max_iterations - the maximum number of iterations
+ * @param[in] print_interval - a bool that turns on/off training console
+ *                             output
  *
- * @param[in]
- *
- * @returns
+ * @returns error - the MSE of the last epoch of training
  *
  *****************************************************************************/
 
@@ -67,17 +69,19 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
     vector<int>::iterator list_check ;
     vector<float> calc_output ;
     int iterations = 0 ;
-    float error = 0.0;
+    float last_error = 0;
+    float error = 0;
     int select ;
 
-    //max_iterations = 10 ;
-
+    // While we haven't reach our iteration limit
     while(iterations < max_iterations)
     {
+        // take a sample from our sample set
         select = rand() % train_set_size ;
 
         list_check = find(selections.begin(), selections.end(), select);
 
+        // if the sample has been selected before, grab another!
         while( list_check != selections.end() )
         {
             select = rand() % train_set_size ;
@@ -85,13 +89,19 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
             list_check = find(selections.begin(), selections.end(), select);
         }
 
+        // add this selection to our list of selected samples
         selections.push_back(select) ;
 
+        // get the inputs of the sample
         input = train[select].input ;
+
+        // get the outputs of the sample
         output = train[select].output ;
 
+        // calculate the outputs from first pass through network
         calc_output = feed_forward();
 
+        // adjust the weights
         adjust_weights();
 
         error += calc_error(calc_output) ;
@@ -100,26 +110,32 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
         // set once.
         if( selections.size() == train_set_size )
         {
+            // clear our list and increment our epochs by 1
             selections.clear();
             iterations++ ;
 
+            // calculate MSE
+            error  = error / train_set_size ;
+
             if( print_interval == true  && iterations % 10 == 0)
-                printf("Epoch: %-6d\tMSE: %6.4f\n", iterations, (error / train_set_size));
+                printf("Epoch: %-6d\tMSE: %6.4f\n", iterations, error);
 
-            if( (error / train_set_size) <= threshold)
-            {
-                return  error / train_set_size;
-            }
+            // If we have trained sufficiently let's stop training
+            if( error <= threshold)
+                return  error;
 
-            if( iterations == max_iterations )
-            {
-                return error / train_set_size ;
-            }
+            // insufficient error change
+            else if( abs(last_error - error) < .002) 
+              return error ;
+
+            // if we have trained the max number of iterations specified, exit
+            else if( iterations == max_iterations ;
+                return error;
+
+            last_error = error ;
 
             error = 0 ;
         }
-
-        //print_weights(iterations) ;
     }
 
 }
@@ -128,23 +144,22 @@ float neuralnetwork::training(vector<trainer> train, int max_iterations, bool pr
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description:
+ * @par Description: This function feeds the inputs through the network layers
+ * generating an output(classification)
  *
+ * @param[in] test_inputs - vector containing the normalized inputs
  *
- * @param[in]
- *
- * @param[in]
- *
- * @returns
+ * @returns output - vector of floats containing output from the network
  *
  *****************************************************************************/
 
 vector<float> neuralnetwork::testing(vector<float> test_inputs)
 {
+    // save this input to the class for later use
     input = test_inputs ;
 
+    // return the outputs
     return feed_forward();
-
 }
 
 
