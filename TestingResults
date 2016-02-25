@@ -1,4 +1,4 @@
-Train results from standard bh.prm:
+Train results from standard bh.prm: 
 
 Epoch 10: MSE - 0.5845
 Epoch 100: MSE - 0.3438
@@ -6,7 +6,7 @@ Epoch 500: MSE - 0.1641
 Epoch 1000: MSE - 0.1366 // very little movement from Epoch 740
 
 
-Test results on standard bh.prm trained with bh.prm:
+Test results on standard bh.prm trained with bh.prm:              f
 
 MSE: 0.1342  Accuracy 91.67% 
 
