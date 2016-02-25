@@ -86,8 +86,10 @@ int main( int argc, char* argv[] )
     fin.close();
 
 
-    vector<trainer> train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
+    vector<trainer> train = createSet( fVector, params, false );  // populate the trainer object to be passed into the neural net training process
 
+    // We're not validating on the most current year, because that is nonsense
+    // We don't have the data to predict the future
 
     vectSize = train.size();
 
@@ -106,7 +108,6 @@ int main( int argc, char* argv[] )
         sample = temp_trainer[i];
 
         temp_trainer.erase(temp_trainer.begin() + i) ;  
-
 
         meanSquareError = ann.training( temp_trainer, max_iterations, printFlag);  // get error for current training cycle
 
@@ -127,31 +128,32 @@ int main( int argc, char* argv[] )
         }
 
         // ouput stuff to the console
-        cout << fVector[i].year << ": " << setw(8) << fVector[i].rawAcresBurned <<  "  [" ;
+
+        printf(" %-5d %6.0f\t[", fVector[i].year, fVector[i].rawAcresBurned);
 
         for(int i = 0; i < result.size(); i++)  // output actual result
-            cout << round(result[i]) << " " ;
+            printf(" %d",(int)round(result[i])) ;
 
-        cout << "]  [ " ;
+        printf(" ]    [") ;
 
         for(int i = 0; i < sample.output.size(); i++)  // output expected result
-            cout << sample.output[i] << " " ;
+            printf(" %d",(int)sample.output[i]);
 
-        cout << "]";
+        printf(" ]");
 
         if( !isEqual )  // flag where expected result != actual result
         {
-            cout << "*";
+            printf("*");
             errorCount += 1;
         }
 
-        cout << "  " << setw(6) << meanSquareError << endl;
+        printf("\t %6.4f\n",meanSquareError);
 
         isEqual = true;  // re initialize flag
     }
 
-    cout << endl;
-    cout << "The overall accuracy is:  " << 100 - (float)errorCount/(float)processedCount * 100 << "%" << endl;  // output total accuracy to console
+    // output total accuracy to console
+    printf("The overall accuracy is: %-6.2f%%\n",(100 - (float)errorCount/(float)processedCount * 100));  
 
 
     return 0;

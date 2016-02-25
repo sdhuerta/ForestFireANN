@@ -120,7 +120,7 @@ int main( int argc, char* argv[] )
 
     neuralnetwork Ann( params );  // the birth of the neural network
 
-    train = createSet( fVector, params );  // populate the trainer object to be passed into the neural net training process
+    train = createSet( fVector, params, false );  // populate the trainer object to be passed into the neural net training process
 
 
     Ann.training( train, max_iterations, true );  // training phase of the network

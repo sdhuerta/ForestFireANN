@@ -97,7 +97,7 @@ int main( int argc, char* argv[] )
 
     //test network on input vector and stor
 
-    train = createSet( fVector, params );
+    train = createSet( fVector, params, true );
 
     vector<float> correct ;
 

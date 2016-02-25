@@ -26,7 +26,7 @@ struct trainer {
  *                         Function Prototypes
  ******************************************************************************/
 
-vector<trainer> createSet(vector<PDSI> data, Parameters specs);
+vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set) ;
 vector<float> createTest(vector<PDSI> data, Parameters specs);
 
 
