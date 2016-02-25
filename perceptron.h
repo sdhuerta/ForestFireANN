@@ -11,14 +11,14 @@
 
 using namespace std;
 
-/**************************************************************************//** 
+/**************************************************************************//**
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
- * 
- * @par Description: Perceptron is the base unit of a neural network. It is a 
+ *
+ * @par Description: Perceptron is the base unit of a neural network. It is a
  * simple model of a neuron. It accumulates and sums products to produce an
  * activation signal[1,0]. This perceptron is capable of adjusting its weights
  * when in a network to better classify the inputs.
- * 
+ *
  ******************************************************************************/
 class Perceptron {
 public:
@@ -35,7 +35,7 @@ public:
     /*!
      * @brief Returns the output signal
      */
-    float get_output(); 
+    float get_output();
 
     /*!
      * @brief Returns the delta value for perceptron
@@ -45,7 +45,7 @@ public:
     /*!
      * @brief Adjusts the weights of the perceptron
      */
-    void adjust_weights(); 
+    void adjust_weights();
 
     /*!
      * @brief Sets the weights of the perceptron
@@ -90,12 +90,12 @@ private:
 
     float delta ;/*!<  gradient */
 
-    int num_inputs;	/*!<do i need num_inputs if I'm carrying a vector of 
+    int num_inputs;	/*!<do i need num_inputs if I'm carrying a vector of
 		  	inputs??*/
 
     float alpha ;/*!<  learning rate */
 
-    float momentum ;	/*!< momentum value - how strongly we want to carry our 
+    float momentum ;	/*!< momentum value - how strongly we want to carry our
 			previous weight adjustment forward  */
 };
 

@@ -8,10 +8,10 @@
 #include "GetData.h"
 #include "ParamParser.h"
 
-/**************************************************************************//** 
+/**************************************************************************//**
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
- * 
- * @par Description: 
+ *
+ * @par Description:
  * Struct to contain the input and output for each perceptron
  ******************************************************************************/
 

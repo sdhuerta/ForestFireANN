@@ -16,10 +16,10 @@
 using namespace std;
 
 
-/**************************************************************************//** 
+/**************************************************************************//**
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
- * 
- * @par Description: 
+ *
+ * @par Description:
  * Struct to contain the normalized .csv file data for a single year.
  * Also contains the normalized burned acreage data
  ******************************************************************************/
@@ -43,7 +43,7 @@ struct PDSI
 
 
 void normalizePdsiData( vector<PDSI> &fVector, float maxBurned, float minBurned,
-	 float maxRating, float minRating );
+                        float maxRating, float minRating );
 
 vector<PDSI> pdsiFeatureVector(ifstream &fin);
 

@@ -8,7 +8,7 @@
  *structs that contain .csv burn data. A parameter struct containing configuration
  *settings, originating from a parameter input file, is utilized to specifically
  * parse the .csv data vector. Again, the result is a set of training data to be used
- * as input for the training process.  
+ * as input for the training process.
  *
  *
  * @param[in] vector<PDSI> data - contains normalized .csv burn data
@@ -30,7 +30,7 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
     int sample = 0 ;
 
     if(!test_set)
-    	sample++ ;
+        sample++ ;
 
     trainer new_set;
     vector<float> input_set;
@@ -41,7 +41,7 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
     int total_samples = data.size() - sample_size + 1;
 
     while( sample < total_samples )
-    {  
+    {
         //important initializations
         months_left = specs.monthsPDSIData;
         input_set.clear();
@@ -72,13 +72,13 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
             next_year++ ;
         }
 
-        new_set.input = input_set ;  
+        new_set.input = input_set ;
 
         output_set.assign(specs.numClasses, 0);
 
 
         // set the expected output/ classification of the input data set
-        if( data[sample].rawAcresBurned < specs.lowCutoff ) 
+        if( data[sample].rawAcresBurned < specs.lowCutoff )
             output_set[0] = 1.0 ;
 
         else if ( data[sample].rawAcresBurned < specs.highCutoff)
@@ -89,8 +89,8 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
 
         new_set.output = output_set ;
 
-        //add to training set 
-        train_set.push_back(new_set) ;  
+        //add to training set
+        train_set.push_back(new_set) ;
 
         sample += 1;
 
@@ -104,7 +104,7 @@ vector<trainer> createSet(vector<PDSI> data, Parameters specs, bool test_set)
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
  * @par Description: This function creates a test data set to be
- * used as input for the testing process. 
+ * used as input for the testing process.
  *
  *
  * @param[in] vector<PDSI> - contains normalized .csv burn data
@@ -125,14 +125,14 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
 
     /*populate the test set with data from the PDSI structure
       containing normalized .csv data */
-    
+
 
     // normalized burned acreage
     for(int i = 0; i < burned_left; i++ )
     {
         test_input.push_back(data[i].normAcresBurned);
     }
- 
+
     //normalized pdsi ratings data
     for(int i = 0; i < end_month; i++)
     {
@@ -145,7 +145,7 @@ vector<float> createTest(vector<PDSI> data, Parameters specs)
     {
         for(int i = 0; i < 12 && months_left > 0; i++)
         {
-        	// walk backwards with adding months Dec to Jan
+            // walk backwards with adding months Dec to Jan
             test_input.push_back(data[next_year].pdsiVal[11-i]);
             months_left-- ;
         }

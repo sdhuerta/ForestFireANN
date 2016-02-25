@@ -16,22 +16,22 @@
 using namespace std;
 
 
-/**************************************************************************//** 
+/**************************************************************************//**
  * @author Steven Huerta, Luke Meyer, Savoy Schuler
- * 
- * @par Description: This object creates a back prob network consisting of 
- * a number of hidden layers and perceptrons per layer defined by the 
+ *
+ * @par Description: This object creates a back prob network consisting of
+ * a number of hidden layers and perceptrons per layer defined by the
  * parameters passed to it.
- * 
+ *
  ******************************************************************************/
 
 class neuralnetwork {
 
 
 public:
-     /*!
-     * @brief CONSTRUCTOR
-     */
+    /*!
+    * @brief CONSTRUCTOR
+    */
     neuralnetwork(Parameters net_define);
 
     /*!
@@ -47,8 +47,8 @@ public:
     /*!
      * @brief trains the network on a set of input sets
      */
-    float training(vector<trainer> train, int max_iterations, 
-	bool print_interval);
+    float training(vector<trainer> train, int max_iterations,
+                   bool print_interval);
 
     /*!
      * @brief returns output from inputs given to the network
@@ -63,7 +63,7 @@ public:
 
 
 private:
-	/*!
+    /*!
      * @brief calculates the output of the network
      */
     vector<float> feed_forward();

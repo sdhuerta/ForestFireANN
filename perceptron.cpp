@@ -4,13 +4,13 @@
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description: Perceptron contructor. The constructor takes in the 
- * number of inputs it will receive, as well as the learning rate and 
+ * @par Description: Perceptron contructor. The constructor takes in the
+ * number of inputs it will receive, as well as the learning rate and
  * momentum values. It will generate a vector for weights, initializing
  * them to a random value. It will also add a bias weight.
  *
  * @param[in] num_in - the number of inputs for the perceptron
- * @param[in] learning_rate - the learning rate factor 
+ * @param[in] learning_rate - the learning rate factor
  * @param[in] mtm - the momentum factor for the perceptron
  *
  *****************************************************************************/
@@ -86,7 +86,7 @@ void Perceptron::sum_weights()
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description: This function calculates the output by applying the 
+ * @par Description: This function calculates the output by applying the
  * sigmoid function to the sum of the products.
  *****************************************************************************/
 
@@ -100,19 +100,19 @@ void Perceptron::activation()
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description: This function calculates the delta for the perceptron 
+ * @par Description: This function calculates the delta for the perceptron
  * located in the hidden layer. The function grabs the weights and deltas
  * from the next layer to calculate the delta for this perceptron.
  *
  * @param[in] position - position in the current layer among other perceptrons
- * @param[in] next_layer - vector of perceptrons from the next layer of the 
+ * @param[in] next_layer - vector of perceptrons from the next layer of the
  *                         network.
  *****************************************************************************/
 
 void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
 {
-    delta = 0 ; // reset our delta to 0 
-    float next_delta; 
+    delta = 0 ; // reset our delta to 0
+    float next_delta;
     float next_weight;
 
     // FOR EVERY NODE IN THE FOLLOWING LAYER
@@ -143,8 +143,8 @@ void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description: This function calculates the delta values for output 
- * layer nodes. 
+ * @par Description: This function calculates the delta values for output
+ * layer nodes.
  *
  * @param[in] correct_output - the expected output term
  *
@@ -153,7 +153,7 @@ void Perceptron::set_delta(int position, vector<Perceptron> next_layer)
 void Perceptron::set_delta(float correct_output)
 {
     // calculate delta term
-    // Delta term calculated as described in 
+    // Delta term calculated as described in
     // Fundamentals of Natural Computing, Leandro Nunes de Castro
     delta = -2.0* (correct_output - output) * output * (1.0 - output);
 }
@@ -177,8 +177,8 @@ float Perceptron::get_delta()
 /******************************************************************************
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
- * @par Description: This function makes a change to each of the weights 
- * for the perceptron. 
+ * @par Description: This function makes a change to each of the weights
+ * for the perceptron.
  *
  *****************************************************************************/
 

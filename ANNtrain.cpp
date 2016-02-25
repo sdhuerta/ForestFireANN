@@ -17,9 +17,9 @@
  * This portion of the programming assigment consists of the methods
  * and processes relating to the training of an artificial neural network.
  * We use the general feed-forward back propogation methedology to do so, also
- * utilizing a momentum term to reach solution convergence quicker. Upon 
+ * utilizing a momentum term to reach solution convergence quicker. Upon
  * executionthe training process will output, to console, the mean squared error
- * of every 10th epoch of training conducted. 
+ * of every 10th epoch of training conducted.
  *
  *
  *
@@ -57,14 +57,14 @@ using namespace std;
  * @authors  Steven Huerta, Luke Meyer, Savoy Schuler
  *
  * @par Name: main
- * @par Description: this is the main function that is responsible for the 
+ * @par Description: this is the main function that is responsible for the
  * execution of the training process upon an artificial neural network. All
  * significant functions/methods regarding the training process are called
- * from this function. 
+ * from this function.
  *
  *
  * @param[in] int argc - integer count of the number of command line arguments
- *                       that the user specified, as well as the name of the 
+ *                       that the user specified, as well as the name of the
  *                       file itself
  *
  * @param[in] char* argv[] - character array containing command line arguments
@@ -84,7 +84,7 @@ int main( int argc, char* argv[] )
     vector<trainer> train ;
 
     // check to make sure user is passing a parameter file with the executable
-    if( argc != 2 )  
+    if( argc != 2 )
     {
         cout << "ANNtrain requires a parameter file as an argument" << endl;
         cout << "USAGE: ANNtrain [parameter file] " << endl;
@@ -95,13 +95,13 @@ int main( int argc, char* argv[] )
     parameterFile = argv[1];  // get name of parameter file
 
     // get params via the parameter file
-    Parameters params = getParams( parameterFile );  
+    Parameters params = getParams( parameterFile );
 
     // get the max number of epochs to train for
-    max_iterations = params.numEpochs;   
+    max_iterations = params.numEpochs;
 
     // open the file containing training data
-    ifstream fin( params.trainFile.c_str()) ;   
+    ifstream fin( params.trainFile.c_str()) ;
 
     if( !fin )
     {
@@ -110,9 +110,9 @@ int main( int argc, char* argv[] )
         return -1;
 
     }
- 
+
     // get input data and put into feature vector
-    vector<PDSI> fVector = pdsiFeatureVector( fin );  
+    vector<PDSI> fVector = pdsiFeatureVector( fin );
 
     // Change the order to better suit our algorithm
     reverse(fVector.begin(), fVector.end()) ;
@@ -120,13 +120,13 @@ int main( int argc, char* argv[] )
     fin.close();   // streams should be closed
 
     // the birth of the neural network
-    neuralnetwork Ann( params );  
+    neuralnetwork Ann( params );
 
     // populate the trainer object to be passed into the neural net training process
-    train = createSet( fVector, params, false );  
+    train = createSet( fVector, params, false );
 
     // training phase of the network
-    Ann.training( train, max_iterations, true );  
+    Ann.training( train, max_iterations, true );
 
 
     if( !Ann.save_weights() )  // save the weights to the file

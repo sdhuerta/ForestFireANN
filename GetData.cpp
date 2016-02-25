@@ -8,7 +8,7 @@
  * Normalizes the .csv data to better suit this particular application of an ANN
  *
  *
- * @param[in/out] vector<PDSI> fVector - feature vector containing raw .csv data 
+ * @param[in/out] vector<PDSI> fVector - feature vector containing raw .csv data
  *                                  to be normalized
  *
  * @param[in] float maxBurned - contains the largest value of burned acres
@@ -20,30 +20,30 @@
  * @param[in] float maxRating - contains the largest PDSI value across all data
  *                              read from the .csv
  *
- * @params[in] float minRating - contains the smallest PDSI value across all 
+ * @params[in] float minRating - contains the smallest PDSI value across all
  *                               data read from the .csv
  *
  * @returns void
  *
  *****************************************************************************/
 
-void normalizePdsiData(vector<PDSI> &fVector, float maxBurned, float minBurned, 
-			float maxRating, float minRating)
+void normalizePdsiData(vector<PDSI> &fVector, float maxBurned, float minBurned,
+                       float maxRating, float minRating)
 {
     float denomB = maxBurned - minBurned;
     float denomR = maxRating - minRating;
 
     for (int i = 0; i < fVector.size(); i++)
     {
-	// normalize the acres burned
-        fVector[i].normAcresBurned = 
-			(fVector[i].normAcresBurned - minBurned) / denomB;  
+        // normalize the acres burned
+        fVector[i].normAcresBurned =
+            (fVector[i].normAcresBurned - minBurned) / denomB;
 
         vector<float> pdsiData = fVector[i].pdsiVal;
 
-        for (int j = 0; j < fVector[i].pdsiVal.size(); j++ )  
+        for (int j = 0; j < fVector[i].pdsiVal.size(); j++ )
         {
-	    // normalize the monthly ratings
+            // normalize the monthly ratings
             fVector[i].pdsiVal[j] = (fVector[i].pdsiVal[j] - minRating) /denomR;
         }
     }
@@ -72,7 +72,7 @@ int getYear()
     struct tm *localTime;
 
     time(&currentTime);
-    localTime = localtime(&currentTime); 
+    localTime = localtime(&currentTime);
 
     int currYear = localTime->tm_year + 1900;
 
@@ -86,7 +86,7 @@ int getYear()
  *
  * @par Description: This function facilitates the parsing of a .csv file
  *containing yearly burn data and also populates a feature vector with said
- *data to be used as input for the neural network during the training phase. 
+ *data to be used as input for the neural network during the training phase.
  *
  *
  * @param[in] ifstream fin - input file stream for .csv data
@@ -119,7 +119,7 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
     int currYear = getYear();
 
     // while there are still rows in the csv, read the year
-    while (getline(fin, temp, ',') && !thisYear) 
+    while (getline(fin, temp, ',') && !thisYear)
     {
         PDSI feature;
         float data = 0.0;
@@ -130,8 +130,8 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
         getline(fin, temp, ',');
         feature.normAcresBurned = atof(temp.c_str());
 
-	//preserve the unnormalized arcres burned data
-        feature.rawAcresBurned = feature.normAcresBurned;  
+        //preserve the unnormalized arcres burned data
+        feature.rawAcresBurned = feature.normAcresBurned;
 
 
         // search for max and min burn values for normalization later
@@ -151,21 +151,21 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
                 data = atof(temp.c_str());
 
                 feature.pdsiVal.push_back(data);
-		// search for max and min rating value for normalization later
-                if (data > maxRating)  
+                // search for max and min rating value for normalization later
+                if (data > maxRating)
                     maxRating = data;
 
                 if (data < minRating)
                     minRating = data;
             }
 
-            thisYear = true; /* set flag if processing current year as to not 
+            thisYear = true; /* set flag if processing current year as to not
 				read data beyond March of the current year */
         }
         else
         {
-	    // if it is not the current year's data, read all months
-            for (int i = 0; i < 12; i++) 
+            // if it is not the current year's data, read all months
+            for (int i = 0; i < 12; i++)
             {
                 if (i != 11)
                 {
@@ -181,8 +181,8 @@ vector<PDSI> pdsiFeatureVector(ifstream &fin)
 
                 feature.pdsiVal.push_back(data);
 
-		// search for max and min rating value for normalization later
-                if (data > maxRating)  
+                // search for max and min rating value for normalization later
+                if (data > maxRating)
                     maxRating = data;
 
                 if (data < minRating)

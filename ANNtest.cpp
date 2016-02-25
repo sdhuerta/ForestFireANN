@@ -71,7 +71,7 @@ int main( int argc, char* argv[] )
     params = getParams(parameterFile);
 
     //open the file containing training data
-    ifstream fin( params.trainFile.c_str()) ; 
+    ifstream fin( params.trainFile.c_str()) ;
 
     if( !fin )
     {
@@ -82,7 +82,7 @@ int main( int argc, char* argv[] )
     }
 
     // get input data and put into feature vector
-    vector<PDSI> fVector = pdsiFeatureVector( fin );  
+    vector<PDSI> fVector = pdsiFeatureVector( fin );
 
     // Change the order
     reverse(fVector.begin(), fVector.end()) ;
@@ -130,7 +130,7 @@ int main( int argc, char* argv[] )
                 flag = false ;
         }
 
-        // Special casing so that we are not comparing 
+        // Special casing so that we are not comparing
         // expected output when we don't have any
         // This would not generalize to other files than
         // those provided.

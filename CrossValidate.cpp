@@ -53,7 +53,7 @@ int main( int argc, char* argv[] )
     float totalError = 0.0;
 
     // check to make sure user is passing a parameter file with the executable
-    if( argc != 2 )  
+    if( argc != 2 )
     {
         cout << "CrossValidate requires a parameter file as an argument" <<endl;
         cout << "USAGE: CrossValidate [parameter file] " << endl;
@@ -64,31 +64,31 @@ int main( int argc, char* argv[] )
     parameterFile = argv[1];  // get name of parameter file
 
     // get parameters via the parameter file
-    Parameters params = getParams( parameterFile );  
+    Parameters params = getParams( parameterFile );
 
     // get the max number of epochs to train for
-    max_iterations = params.numEpochs;   
+    max_iterations = params.numEpochs;
 
     // open the file containing training data
-    ifstream fin( params.trainFile.c_str()) ;   
-    
-   if( !fin )
+    ifstream fin( params.trainFile.c_str()) ;
+
+    if( !fin )
     {
 
         cout << "There was an error opening the training data";
         return -1;
 
     }
-    
-    // get input data and put into feature vector
-    vector<PDSI> fVector = pdsiFeatureVector( fin );  
 
-    reverse(fVector.begin(), fVector.end()) ;  
+    // get input data and put into feature vector
+    vector<PDSI> fVector = pdsiFeatureVector( fin );
+
+    reverse(fVector.begin(), fVector.end()) ;
 
     fin.close();
 
     // populate the trainer object to be passed into the neural net training process
-    vector<trainer> train = createSet( fVector, params, false );  
+    vector<trainer> train = createSet( fVector, params, false );
 
 
     // We're not validating on the most current year, because that is nonsense
@@ -106,16 +106,16 @@ int main( int argc, char* argv[] )
 
         temp_trainer = train;
 
-      
+
         // choose a sample to remove; "leave one out" cross validation
         sample = temp_trainer[i];
 
-        temp_trainer.erase(temp_trainer.begin() + i) ;  
+        temp_trainer.erase(temp_trainer.begin() + i) ;
 
         // get error for current training cycleHEAD
-        meanSquareError = ann.training( temp_trainer, max_iterations, printFlag); 
+        meanSquareError = ann.training( temp_trainer, max_iterations, printFlag);
 
-	   // get error for current training cycle
+        // get error for current training cycle
 
         processedCount += 1;
 
@@ -123,8 +123,8 @@ int main( int argc, char* argv[] )
 
         int z = 0;
 
-	// check for error; assertion on expected vs actual results
-        while( z < result.size() && isEqual )  
+        // check for error; assertion on expected vs actual results
+        while( z < result.size() && isEqual )
         {
             if( round(result[z]) != sample.output[z] )
             {
@@ -161,7 +161,7 @@ int main( int argc, char* argv[] )
     // output total accuracy to console
 
     printf("The overall accuracy is: %-6.2f%%\n",(100 - \
-        (float)errorCount/(float)processedCount * 100));  
+            (float)errorCount/(float)processedCount * 100));
 
 
 
