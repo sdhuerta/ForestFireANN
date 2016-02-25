@@ -1,80 +1,75 @@
 Train results from standard bh.prm:
 
-Epoch 10: MSE - 0.5722
-Epoch 100: MSE - 0.4051
-Epoch 500: MSE - 0.0663
-Epoch 1000: MSE - 0.0518 // very little movement from Epoch 600
+Epoch 10: MSE - 0.5845
+Epoch 100: MSE - 0.3438
+Epoch 500: MSE - 0.1641
+Epoch 1000: MSE - 0.1366 // very little movement from Epoch 740
 
 
-Test results on standard bh.prm:
+Test results on standard bh.prm trained with bh.prm:
 
-MSE: 0.0537  Accuracy 97.22%  (only misclassified one year)
+MSE: 0.1342  Accuracy 91.67% 
 
 
-Test results on standard nw.prm:
+Test results on standard nw.prm trained with bh.prm:
 
-MSE: 0.9900  Accuracy: 6.25% (only one was classified correctly)
+MSE: 2.0646  Accuracy: 0.00% (only one was classified correctly)
+
+
+Train results from standard nw.prm:
+Epoch 10: MSE - 0.5240
+Epoch 100: MSE - 0.1665
+Epoch 150: MSE - 0.0553
+Epoch 220: MSE - 0.0140  // training terminated on epoch 220
+
+Test results from standard nw.prm trained with nw.prm
+MSE: 0.0123 Accuracy - 100.00%
+
+
+Test results from standard bh.prm trained with nw.prm
+MSE: 1.9976  Accuracy - 0.00%
+
 
 
 Train results with 3 layers of weights and the number of nodes per layer to 25 4 5 3:
 
-Epoch 10: MSE - 0.5725
-Epoch 100: MSE - 0.3708
-Epoch 500: MSE - 0.2042
-Epoch 1000: MSE - 0.1933 // very little movement from Epoch 800
+Epoch 10: MSE - 0.5241
+Epoch 100: MSE - 0.3445
+Epoch 500: MSE - 0.0964
+Epoch 760: MSE - 0.0816 // training terminated on Epoch 760
 
 
 Test results on modified bh.prm:
-MSE: 0.1897  Accuracy: 88.89%
+MSE: 0.0799  Accuracy: 94.44%  // two were misclassified
 
-Test results on nw.prm with ANN trained on modified bh.prm above:
-MSE: 1.0783    Accuracy: 43.75%
 
 
 Train results from bh.prm with 5 months burn data, 12 months of pdsi:
-Epoch 10: MSE - 0.5472
-Epoch 100: MSE - 0.4069
-Epoch 500: MSE - 0.4028
-Epoch 1000: MSE - 0.3950  // gets stuck around Epoch 100
+Epoch 10: MSE - 0.5268
+Epoch 100: MSE - 0.3311
+Epoch 500: MSE - 0.2330
+Epoch 1000: MSE - 0.1483  // gets stuck around Epoch 100
 
 
-Test results on nw.prm with ANN trained in above modified bh.prm:
-MSE: 0.7621  Accuracy: 41.18%
-
-
-Test results on modied bh.prm:
-MSE: 0.3424    Accuracy: 75.68%
-
-
-Train results from bh.prm with 10000 epochs:
-Epoch 10: MSE - 0.5650
-Epoch 100: MSE - 0.2974
-Epoch 500: MSE - 0.1578
-Epoch 1000: MSE - 0.1483
-Epoch 5000: MSE - 0.1237
-Epoch 10000: MSE - 0.1223   // gets stuck around Epoch 5000
-
-Test results on modified bh.prm:
-MSE - 0.1144    Accuracy - 83.33%
-
-Test results on modified nw.prm ( 10000 training epochs was the only change to the file):
-MSE - 1.5557    Accuracy - 0.00%
+Test results on modifed bh.prm:
+MSE: 0.2144    Accuracy: 86.49%
 
 
 
 Train results from bh.prm with burn severity cutoffs changed to 2000, 20000 respectively:
 
-Epoch 10: MSE - 0.4869
-Epoch 100: MSE - 0.1992
-Epoch 500: MSE - 0.0982
-Epoch 1000: MSE - 0.0812  // stuck around Epoch 770
+Epoch 10: MSE - 0.5281
+Epoch 100: MSE - 0.2209
+Epoch 500: MSE - 0.1419
+Epoch 1000: MSE - 0.0826 // very little movement from Epoch 740
 
 
-Test results from modified bh.prm:
-MSE - 0.0799    Accuracy - 94.44%
+
+Test results on modified bh.prm:
+
+MSE: 0.0814  Accuracy 94.44%  (misclassified two years)
 
 
-Test results from nw.prm from ANN trained with above modified bh.prm:
-MSE - 1.0413     Accuracy - 6.25%
+
 
 
