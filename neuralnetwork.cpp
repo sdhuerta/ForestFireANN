@@ -402,10 +402,12 @@ bool neuralnetwork::save_weights()
     for( int i = 0; i < net.size(); i++ )  // for each layer in the ANN
     {
 
-        for( int j = 0; j < net[i].size(); j++)  // for each perceptron in current layer
+	// for each perceptron in current layer
+        for( int j = 0; j < net[i].size(); j++)  
         {
 
-            vector<float> curr_weights =  net[i][j].get_weights();  // get the weights
+	    // get the weights
+            vector<float> curr_weights =  net[i][j].get_weights();  
 
 
             for( int k = 0; k < curr_weights.size(); k++ )
